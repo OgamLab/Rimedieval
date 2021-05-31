@@ -1,0 +1,11 @@
+{
+  "version": 2,
+  "dgSpecHash": "42uE1aYjfZ7FbLWWJ5Ao9G7jNLje7HsJ/Vdgp9nkWBSNv1/9QwmbhM5m0gouJ45ouT+0+Ydii7YOBJJ4tn+JWQ==",
+  "success": true,
+  "projectFilePath": "c:\\GAMES\\Rimworld\\Mods\\Rimedieval\\1.2\\Source\\Rimedieval\\Rimedieval.csproj",
+  "expectedPackageFiles": [
+    "C:\\Users\\Vova\\.nuget\\packages\\krafs.rimworld.ref\\1.2.2905\\krafs.rimworld.ref.1.2.2905.nupkg.sha512",
+    "C:\\Users\\Vova\\.nuget\\packages\\lib.harmony\\2.0.4\\lib.harmony.2.0.4.nupkg.sha512"
+  ],
+  "logs": []
+}

@@ -1,0 +1,8 @@
+c:\GAMES\Rimworld\Mods\Rimedieval\1.2\Source\Rimedieval\obj\Debug\Rimedieval.csprojAssemblyReference.cache
+c:\GAMES\Rimworld\Mods\Rimedieval\1.2\Source\Rimedieval\obj\Debug\Rimedieval.csproj.CoreCompileInputs.cache
+c:\GAMES\Rimworld\Mods\Rimedieval\1.2\Source\Rimedieval\bin\Debug\Rimedieval.dll
+c:\GAMES\Rimworld\Mods\Rimedieval\1.2\Source\Rimedieval\bin\Debug\Rimedieval.pdb
+c:\GAMES\Rimworld\Mods\Rimedieval\1.2\Source\Rimedieval\bin\Debug\0Harmony.dll
+c:\GAMES\Rimworld\Mods\Rimedieval\1.2\Source\Rimedieval\obj\Debug\Rimedieval.csproj.CopyComplete
+c:\GAMES\Rimworld\Mods\Rimedieval\1.2\Source\Rimedieval\obj\Debug\Rimedieval.dll
+c:\GAMES\Rimworld\Mods\Rimedieval\1.2\Assemblies\Rimedieval.dll
