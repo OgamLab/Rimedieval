@@ -1,8 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ModMetaData>
+
 	<name>Rimedieval</name>
-	<author>Ogam</author>
+	<author>Ogam;Taranchuk;ILuvSilicon</author>
 	<supportedVersions><li>1.2</li></supportedVersions>
 	<packageId>Ogam.Rimedieval</packageId>
-	<description>Rimedieval</description>
+	<description> OPEN BETA Version
+	What is Rimedieval?
+	Rimedieval is ultimately compatible replacement for "Medieval - Vanilla". A new way to immerse yourself in a true medieval RPG with all your favorite mods and provide you a new end game quest!
+	
+	How it works?
+	Instead of removing technologies and things, mod patches each pawn and faction, hiding technologies higher than the medieval ones.
+	Now every faction have it`s own marker with current tech level in the description.
+	And even more! We've patched all the quest rewards, which Medieval - Vanilla didn't. 
+	
+	Compatibility:
+	Compatible with almost any mod and currently compatible with saved games. 
+	However, given that the mod hides all technology after the Middle Ages, adding high-tech mods makes no sense and will be completely useless.
+	Any modded race and faction will be automaticaly patched to hide all the advanced technology and prevent it from spawn.
+	Combat Extended compatibility planned.
+	
+	Features to do:
+	- Hide mechanoids
+	- Patch for Royalty DLC to make it permanent medieval. Replace shuttle and drop pod textures made by Ogam and AOBA.
+	- Integrate the system of progress on technical levels as in Tech Advancing. Make a patch for Tech Advancing.
+	- Bug fix according to the results of tests with mods to make the build as efficient as possible under any conditions. Patch for CE.
+	- Limit player technologies to industrial ones. When the industrial level is reached, start the end game quest.
+	- Make new end game quest. If the quest is completed, remove the restrictions on the player's and NPC's technologies in order to continue the endless adventure, or offer to finish the game.
+
+	Credits:
+	Commissioned by Ogam, SirLalaPyon, Mio Hondai
+	Code: C# - Taranchuk, XML - ILuvSilicon
+	Art: Ogam
+	</description>
 </ModMetaData>
