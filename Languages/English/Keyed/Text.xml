@@ -2,4 +2,5 @@
 <LanguageData>
 
 	<RM.FactionTechLevelInfo>Tech level: {0}</RM.FactionTechLevelInfo>
+	<RM.DisableMechanoids>Disable mechanoids</RM.DisableMechanoids>
 </LanguageData>

@@ -93,4 +93,125 @@ namespace Rimedieval
             }
         }
     }
+
+    [HarmonyPatch(typeof(MainTabWindow_Research), "VisibleResearchProjects", MethodType.Getter)]
+    public static class VisibleResearchProjects_Patch
+    {
+        public static void Postfix(ref List<ResearchProjectDef> __result)
+        {
+            __result = __result.Where(x => x.techLevel < TechLevel.Spacer).ToList();
+        }
+    }
+
+    [HarmonyPatch(typeof(IncidentWorker_RaidEnemy))]
+    [HarmonyPatch("FactionCanBeGroupSource")]
+    public static class FactionCanBeGroupSourcePatch
+    {
+        public static void Postfix(ref bool __result, Faction f)
+        {
+            if (__result && f?.def == FactionDefOf.Mechanoid && RimedievalMod.settings.disableMechanoids)
+            {
+                __result = false;
+            }
+        }
+    }
+
+    [HarmonyPatch(typeof(IncidentWorker_RaidEnemy))]
+    [HarmonyPatch("TryExecuteWorker")]
+    public static class TryExecuteWorkerPatch
+    {
+        public static bool Prefix(IncidentParms parms)
+        {
+            if (parms.faction != null && parms.faction.def == FactionDefOf.Mechanoid && RimedievalMod.settings.disableMechanoids)
+            {
+                return false;
+            }
+            return true;
+        }
+    }
+
+    [HarmonyPatch(typeof(IncidentWorker_RaidEnemy))]
+    [HarmonyPatch("TryResolveRaidFaction")]
+    public static class TryResolveRaidFactionPatch
+    {
+        public static void Postfix(ref bool __result, IncidentParms parms)
+        {
+            if (__result && parms.faction?.def == FactionDefOf.Mechanoid && RimedievalMod.settings.disableMechanoids)
+            {
+                __result = false;
+            }
+        }
+    }
+
+    [HarmonyPatch(typeof(Pawn))]
+    [HarmonyPatch("SpawnSetup")]
+    public static class Pawn_SpawnSetup
+    {
+        public static void Postfix(Pawn __instance)
+        {
+            if (RimedievalMod.settings.disableMechanoids && __instance.RaceProps.IsMechanoid)
+            {
+                __instance.Destroy();
+            }
+        }
+    }
+
+    [HarmonyPatch(typeof(GenStep_ScatterShrines))]
+    [HarmonyPatch("CanScatterAt")]
+    public static class CanScatterAt
+    {
+        public static bool Prefix(ref bool __result)
+        {
+            if (RimedievalMod.settings.disableMechanoids)
+            {
+                __result = false;
+                return false;
+            }
+            return true;
+        }
+    }
+
+    [HarmonyPatch(typeof(GenStep_MechCluster))]
+    [HarmonyPatch("Generate")]
+    public static class Generate
+    {
+        public static bool Prefix()
+        {
+            if (RimedievalMod.settings.disableMechanoids)
+            {
+                return false;
+            }
+            return true;
+        }
+    }
+
+    [HarmonyPatch(typeof(IncidentWorker_MechCluster))]
+    [HarmonyPatch("TryExecuteWorker")]
+    public static class TryExecuteWorker
+    {
+        public static bool Prefix(ref bool __result)
+        {
+            if (RimedievalMod.settings.disableMechanoids)
+            {
+                __result = false;
+                return false;
+            }
+            return true;
+        }
+    }
+
+    [HarmonyPatch(typeof(MechClusterUtility))]
+    [HarmonyPatch("SpawnCluster")]
+    public static class SpawnCluster
+    {
+        public static bool Prefix(ref List<Thing> __result)
+        {
+            if (RimedievalMod.settings.disableMechanoids)
+            {
+                __result = new List<Thing>();
+                return false;
+            }
+            return true;
+        }
+    }
 }

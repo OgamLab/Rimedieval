@@ -41,6 +41,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="RimedievalMod.cs" />
+    <Compile Include="RimedievalSettings.cs" />
     <Compile Include="Utils.cs" />
     <Compile Include="HarmonyPatches.cs" />
     <Compile Include="FactionTracker.cs" />
