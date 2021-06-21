@@ -42,6 +42,7 @@ namespace Rimedieval
         public static void Prefix(Pawn pawn, PawnGenerationRequest request)
         {
             Commonality_Patch.pawnToLookInto = pawn;
+
         }
         private static void Postfix(Pawn pawn, PawnGenerationRequest request)
         {
@@ -57,7 +58,7 @@ namespace Rimedieval
         {
             if (pawnToLookInto?.Faction != null && !pawnToLookInto.Faction.IsPlayer)
             {
-                if (Utils.GetTechLevelFor(__instance.thing) > pawnToLookInto.Faction.def.techLevel)
+                if (Utils.GetTechLevelFor(__instance.thing) > TechLevel.Medieval)
                 {
                     __result = 0f;
                     return false;
