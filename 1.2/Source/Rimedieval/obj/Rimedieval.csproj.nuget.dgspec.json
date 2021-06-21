@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "c:\\GAMES\\Rimworld\\Mods\\Rimedieval\\1.2\\Source\\Rimedieval\\Rimedieval.csproj": {}
+    "C:\\Games\\Rimworld\\Mods\\Rimedieval\\1.2\\Source\\Rimedieval\\Rimedieval.csproj": {}
   },
   "projects": {
-    "c:\\GAMES\\Rimworld\\Mods\\Rimedieval\\1.2\\Source\\Rimedieval\\Rimedieval.csproj": {
+    "C:\\Games\\Rimworld\\Mods\\Rimedieval\\1.2\\Source\\Rimedieval\\Rimedieval.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "c:\\GAMES\\Rimworld\\Mods\\Rimedieval\\1.2\\Source\\Rimedieval\\Rimedieval.csproj",
+        "projectUniqueName": "C:\\Games\\Rimworld\\Mods\\Rimedieval\\1.2\\Source\\Rimedieval\\Rimedieval.csproj",
         "projectName": "Rimedieval",
-        "projectPath": "c:\\GAMES\\Rimworld\\Mods\\Rimedieval\\1.2\\Source\\Rimedieval\\Rimedieval.csproj",
+        "projectPath": "C:\\Games\\Rimworld\\Mods\\Rimedieval\\1.2\\Source\\Rimedieval\\Rimedieval.csproj",
         "packagesPath": "C:\\Users\\Vova\\.nuget\\packages\\",
-        "outputPath": "c:\\GAMES\\Rimworld\\Mods\\Rimedieval\\1.2\\Source\\Rimedieval\\obj\\",
+        "outputPath": "C:\\Games\\Rimworld\\Mods\\Rimedieval\\1.2\\Source\\Rimedieval\\obj\\",
         "projectStyle": "PackageReference",
         "skipContentFileWrite": true,
         "configFilePaths": [

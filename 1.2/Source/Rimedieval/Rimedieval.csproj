@@ -31,6 +31,11 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="0MultiplayerAPI, Version=0.1.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <SpecificVersion>False</SpecificVersion>
+      <HintPath>..\..\Assemblies\0MultiplayerAPI.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -43,6 +48,18 @@
   <ItemGroup>
     <Compile Include="RimedievalMod.cs" />
     <Compile Include="RimedievalSettings.cs" />
+    <Compile Include="TechAdvancing\ConfigTabValueSavedAttribute.cs" />
+    <Compile Include="TechAdvancing\Extensions.cs" />
+    <Compile Include="TechAdvancing\HarmonyDetours.cs" />
+    <Compile Include="TechAdvancing\LogOutput.cs" />
+    <Compile Include="TechAdvancing\Main.cs" />
+    <Compile Include="TechAdvancing\MapComponentInjector.cs" />
+    <Compile Include="TechAdvancing\MapCompSaveHandler.cs" />
+    <Compile Include="TechAdvancing\ModSettings.cs" />
+    <Compile Include="TechAdvancing\Rules.cs" />
+    <Compile Include="TechAdvancing\TechAdvancing_Config_Tab.cs" />
+    <Compile Include="TechAdvancing\Util.cs" />
+    <Compile Include="TechAdvancing\WorldCompSaveHandler.cs" />
     <Compile Include="Utils.cs" />
     <Compile Include="HarmonyPatches.cs" />
     <Compile Include="FactionTracker.cs" />
