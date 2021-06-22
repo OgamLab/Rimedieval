@@ -3,4 +3,5 @@
 
 	<RM.FactionTechLevelInfo>Tech level: {0}</RM.FactionTechLevelInfo>
 	<RM.DisableMechanoids>Disable mechanoids</RM.DisableMechanoids>
+	<RM.Locked>To access it you have to research 50% of current tech level.</RM.Locked>
 </LanguageData>

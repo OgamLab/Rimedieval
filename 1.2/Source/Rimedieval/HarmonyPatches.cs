@@ -118,6 +118,23 @@ namespace Rimedieval
         }
     }
 
+    [HarmonyPatch(typeof(MainTabWindow_Research), "DrawLeftRect")]
+    public static class DrawLeftRect_Patch
+    {
+        [TweakValue("000", 500, 800)] public static float yOffset = 560;
+        [TweakValue("000", 0, 80)] public static float xOffset = 5;
+        public static void Postfix(ResearchProjectDef ___selectedProject, Rect leftOutRect)
+        {
+            Rect position = leftOutRect;
+            GUI.BeginGroup(position);
+            if (___selectedProject != null && !FactionTracker.Instance.AllowedTechLevels().Contains(___selectedProject))
+            {
+                Rect rect = new Rect(xOffset, yOffset, position.width, 35f);
+                Widgets.Label(rect, "RM.Locked".Translate());
+            }
+            GUI.EndGroup();
+        }
+    }
 
     [HarmonyPatch(typeof(RaidStrategyWorker), "MinimumPoints")]
     public static class MinimumPoints_Patch
