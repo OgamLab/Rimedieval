@@ -101,7 +101,10 @@ namespace Rimedieval
     {
         public static void Postfix(ResearchProjectDef __instance, ref bool __result)
         {
-            __result = FactionTracker.Instance.AllowedTechLevels().Contains(__instance);
+            if (__result)
+            {
+                __result = FactionTracker.Instance.AllowedTechLevels().Contains(__instance);
+            }
         }
     }
 
