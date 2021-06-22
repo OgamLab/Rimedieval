@@ -97,11 +97,9 @@ namespace Rimedieval
         {
             var projects = DefDatabase<ResearchProjectDef>.AllDefs;
             playerTechLevel = DetermineCurrentPlayerTechLevel();
-            var microElectronics = DefDatabase<ResearchProjectDef>.GetNamed("MicroelectronicsBasics");
             var techLevelToUnlock = EnoughTechProgress() ? playerTechLevel + 1 : playerTechLevel;
             return projects.Where(x => x.techLevel <= techLevelToUnlock).ToList();
         }
-
         private TechLevel DetermineCurrentPlayerTechLevel()
         {
             var determinedTechLevel = TechLevel.Neolithic;

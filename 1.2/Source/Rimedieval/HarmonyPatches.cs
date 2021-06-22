@@ -96,6 +96,26 @@ namespace Rimedieval
         }
     }
 
+    [HarmonyPatch(typeof(ResearchProjectDef), "CanStartNow", MethodType.Getter)]
+    public static class CanStartNow_Patch
+    {
+        public static void Postfix(ResearchProjectDef __instance, ref bool __result)
+        {
+            __result = FactionTracker.Instance.AllowedTechLevels().Contains(__instance);
+        }
+    }
+
+    [HarmonyPatch(typeof(MainTabWindow_Research), "VisibleResearchProjects", MethodType.Getter)]
+    public static class VisibleResearchProjects_Patch
+    {
+        public static void Postfix(ref List<ResearchProjectDef> __result)
+        {
+            var microElectronics = DefDatabase<ResearchProjectDef>.GetNamed("MicroelectronicsBasics");
+            __result = __result.Where(x => !x.ContainsTechProjectAsPrerequisite(microElectronics)).ToList();
+        }
+    }
+
+
     [HarmonyPatch(typeof(RaidStrategyWorker), "MinimumPoints")]
     public static class MinimumPoints_Patch
     {
@@ -112,16 +132,7 @@ namespace Rimedieval
         }
     }
 
-    [HarmonyPatch(typeof(ResearchProjectDef), "CanStartNow", MethodType.Getter)]
-    public static class CanStartNow_Patch
-    {
-        public static void Postfix(ResearchProjectDef __instance, ref bool __result)
-        {
-            __result = FactionTracker.Instance.AllowedTechLevels().Contains(__instance);
-        }
-    }
-
-	[HarmonyPatch(typeof(IncidentWorker_RaidEnemy))]
+    [HarmonyPatch(typeof(IncidentWorker_RaidEnemy))]
     [HarmonyPatch("FactionCanBeGroupSource")]
     public static class FactionCanBeGroupSourcePatch
     {
