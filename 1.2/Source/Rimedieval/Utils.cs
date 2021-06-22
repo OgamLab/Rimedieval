@@ -16,7 +16,10 @@ namespace Rimedieval
         public static readonly Dictionary<ThingDef, TechLevel> thingsByTechLevels = new Dictionary<ThingDef, TechLevel>
         {
             {ThingDefOf.ComponentIndustrial, TechLevel.Industrial },
-            {ThingDefOf.ComponentSpacer, TechLevel.Spacer }
+            {ThingDefOf.ComponentSpacer, TechLevel.Spacer },
+            {ThingDefOf.Plasteel, TechLevel.Spacer },
+            {ThingDefOf.Hyperweave, TechLevel.Spacer },
+
         };
         public static TechLevel GetTechLevelFor(ThingDef thingDef)
         {
@@ -61,7 +64,38 @@ namespace Rimedieval
             }
             return thingDef.techLevel;
         }
+
+        public static bool ContainsTechProjectAsPrerequisite(this ResearchProjectDef def, ResearchProjectDef techProject)
+        {
+            if (def.prerequisites != null)
+            {
+                for (int i = 0; i < def.prerequisites.Count; i++)
+                {
+                    if (def.prerequisites[i] == techProject)
+                    {
+                        return true;
+                    }
+                    else if (ContainsTechProjectAsPrerequisite(def.prerequisites[i], techProject))
+                    {
+                        return true;
+                    }
+                }
+            }
+            if (def.hiddenPrerequisites != null)
+            {
+                for (int j = 0; j < def.hiddenPrerequisites.Count; j++)
+                {
+                    if (def.hiddenPrerequisites[j] == techProject)
+                    {
+                        return true;
+                    }
+                    else if (ContainsTechProjectAsPrerequisite(def.hiddenPrerequisites[j], techProject))
+                    {
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
     }
-
-
 }

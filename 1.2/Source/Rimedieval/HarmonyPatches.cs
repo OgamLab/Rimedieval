@@ -6,6 +6,7 @@ using System.Text;
 using HarmonyLib;
 using RimWorld;
 using RimWorld.Planet;
+using RimWorld.QuestGen;
 using UnityEngine;
 using Verse;
 
@@ -87,24 +88,40 @@ namespace Rimedieval
                 var techLevel = Utils.GetTechLevelFor(r);
                 if (techLevel < TechLevel.Industrial)
                 {
-                    Log.Message("GetAllowedThingDefs: " + r + " - " + techLevel);
-                    Log.ResetMessageCount();
+                    //Log.Message("GetAllowedThingDefs: " + r + " - " + techLevel);
+                    //Log.ResetMessageCount();
                     yield return r;
                 }
             }
         }
     }
 
-    [HarmonyPatch(typeof(MainTabWindow_Research), "VisibleResearchProjects", MethodType.Getter)]
-    public static class VisibleResearchProjects_Patch
+    [HarmonyPatch(typeof(RaidStrategyWorker), "MinimumPoints")]
+    public static class MinimumPoints_Patch
     {
-        public static void Postfix(ref List<ResearchProjectDef> __result)
+        public static void Prefix(ref Faction faction, ref PawnGroupKindDef groupKind)
         {
-            __result = __result.Where(x => x.techLevel < TechLevel.Spacer).ToList();
+            if (faction is null)
+            {
+                faction = Find.FactionManager.FirstFactionOfDef(FactionDef.Named("Pirate"));
+            }
+            if (groupKind is null)
+            {
+                groupKind = PawnGroupKindDefOf.Combat;
+            }
         }
     }
 
-    [HarmonyPatch(typeof(IncidentWorker_RaidEnemy))]
+    [HarmonyPatch(typeof(ResearchProjectDef), "CanStartNow", MethodType.Getter)]
+    public static class CanStartNow_Patch
+    {
+        public static void Postfix(ResearchProjectDef __instance, ref bool __result)
+        {
+            __result = FactionTracker.Instance.AllowedTechLevels().Contains(__instance);
+        }
+    }
+
+	[HarmonyPatch(typeof(IncidentWorker_RaidEnemy))]
     [HarmonyPatch("FactionCanBeGroupSource")]
     public static class FactionCanBeGroupSourcePatch
     {
@@ -213,6 +230,62 @@ namespace Rimedieval
                 return false;
             }
             return true;
+        }
+    }
+
+    [HarmonyPatch(typeof(FactionUtility), "HostileTo")]
+    public static class Patch_HostileTo
+    {
+        public static void Postfix(ref bool __result, Faction fac, Faction other)
+        {
+            if (__result && RimedievalMod.settings.disableMechanoids)
+            {
+                if (fac == Faction.OfMechanoids && other.IsPlayer)
+                {
+                    Log.Message(fac.def + " - " + other.def);
+                    __result = false;
+                }
+                else if (other == Faction.OfMechanoids && fac.IsPlayer)
+                {
+                    Log.Message(fac.def + " - " + other.def);
+                    __result = false;
+                }
+            }
+        }
+    }
+
+    [HarmonyPatch(typeof(QuestNode_GetFaction))]
+    [HarmonyPatch("IsGoodFaction")]
+    public static class IsGoodFaction_Patch
+    {
+        public static bool Prefix(ref bool __result, Faction faction, Slate slate)
+        {
+            if (RimedievalMod.settings.disableMechanoids && faction == Faction.OfMechanoids)
+            {
+                __result = false;
+                return false;
+            }
+            return true;
+        }
+    }
+
+    [HarmonyPatch(typeof(ThreatsGenerator))]
+    [HarmonyPatch("GetPossibleIncidents")]
+    public static class GetPossibleIncidents_Patch
+    {
+        public static IEnumerable<IncidentDef> Postfix(IEnumerable<IncidentDef> __result)
+        {
+            foreach (var r in __result)
+            {
+                if (r == IncidentDefOf.MechCluster && RimedievalMod.settings.disableMechanoids)
+                {
+                    continue;
+                }
+                else
+                {
+                    yield return r;
+                }
+            }
         }
     }
 }

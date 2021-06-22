@@ -6,6 +6,7 @@ using System.Reflection;
 using System.Runtime.CompilerServices;
 using HarmonyLib;
 using RimWorld;
+using RimWorld.QuestGen;
 using UnityEngine;
 using Verse;
 using Verse.AI;
@@ -50,10 +51,6 @@ namespace Rimedieval
             {
                 RimedievalMod.settings.rimedievalMechAddonWasLoaded = true;
                 RimedievalMod.settings.disableMechanoids = false;
-            }
-            foreach (var pawn in DefDatabase<PawnKindDef>.AllDefs)
-            {
-                pawn.apparelMoney.max = 99999f;
             }
             RemoveTechHediffs();
         }

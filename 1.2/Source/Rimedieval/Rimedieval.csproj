@@ -48,18 +48,7 @@
   <ItemGroup>
     <Compile Include="RimedievalMod.cs" />
     <Compile Include="RimedievalSettings.cs" />
-    <Compile Include="TechAdvancing\ConfigTabValueSavedAttribute.cs" />
-    <Compile Include="TechAdvancing\Extensions.cs" />
-    <Compile Include="TechAdvancing\HarmonyDetours.cs" />
-    <Compile Include="TechAdvancing\LogOutput.cs" />
-    <Compile Include="TechAdvancing\Main.cs" />
-    <Compile Include="TechAdvancing\MapComponentInjector.cs" />
-    <Compile Include="TechAdvancing\MapCompSaveHandler.cs" />
-    <Compile Include="TechAdvancing\ModSettings.cs" />
-    <Compile Include="TechAdvancing\Rules.cs" />
-    <Compile Include="TechAdvancing\TechAdvancing_Config_Tab.cs" />
-    <Compile Include="TechAdvancing\Util.cs" />
-    <Compile Include="TechAdvancing\WorldCompSaveHandler.cs" />
+    <Compile Include="TechExtension.cs" />
     <Compile Include="Utils.cs" />
     <Compile Include="HarmonyPatches.cs" />
     <Compile Include="FactionTracker.cs" />

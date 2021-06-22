@@ -12,14 +12,18 @@ namespace Rimedieval
     {
         public Dictionary<FactionDef, TechLevel> originalTechLevelValues;
         public Dictionary<FactionDef, TechLevel> changedTechLevelValues;
+
+        public TechLevel playerTechLevel = TechLevel.Neolithic;
+
+        public static FactionTracker Instance;
         public FactionTracker()
         {
-
+            Instance = this;
         }
 
         public FactionTracker(Game game)
         {
-
+            Instance = this;
         }
 
 
@@ -27,6 +31,7 @@ namespace Rimedieval
         {
             if (this.originalTechLevelValues == null) this.originalTechLevelValues = new Dictionary<FactionDef, TechLevel>();
             if (this.changedTechLevelValues == null) this.changedTechLevelValues = new Dictionary<FactionDef, TechLevel>();
+            Instance = this;
 
         }
         public override void LoadedGame()
@@ -42,6 +47,7 @@ namespace Rimedieval
             this.PreInit();
             RestoreTechLevelForAllFactions();
             ChangeTechLevelForFactions();
+            playerTechLevel = TechLevel.Neolithic;
         }
 
 
@@ -87,10 +93,50 @@ namespace Rimedieval
             }
         }
 
+        public List<ResearchProjectDef> AllowedTechLevels()
+        {
+            var projects = DefDatabase<ResearchProjectDef>.AllDefs;
+            playerTechLevel = DetermineCurrentPlayerTechLevel();
+            var microElectronics = DefDatabase<ResearchProjectDef>.GetNamed("MicroelectronicsBasics");
+            var techLevelToUnlock = EnoughTechProgress() ? playerTechLevel + 1 : playerTechLevel;
+            return projects.Where(x => x.techLevel <= techLevelToUnlock).ToList();
+        }
+
+        private TechLevel DetermineCurrentPlayerTechLevel()
+        {
+            var determinedTechLevel = TechLevel.Neolithic;
+            foreach (var techLevel in Enum.GetValues(typeof(TechLevel)).Cast<TechLevel>())
+            {
+                if (techLevel < TechLevel.Neolithic)
+                {
+                    continue;
+                }
+                var curTechProjects = DefDatabase<ResearchProjectDef>.AllDefs.Where(x => x.techLevel == techLevel).ToList();
+                if (curTechProjects.Any() && curTechProjects.All(x => x.IsFinished))
+                {
+                    determinedTechLevel = techLevel;
+                }
+            }
+            return determinedTechLevel;
+        }
+        private bool EnoughTechProgress()
+        {
+            var curTechProjects = DefDatabase<ResearchProjectDef>.AllDefs.Where(x => x.techLevel == playerTechLevel).ToList();
+            var keyTeckProjects = GetKeyProjectsFrom(curTechProjects, playerTechLevel).ToList();
+            return (float)((float)curTechProjects.Where(x => x.IsFinished).Count() / (float)curTechProjects.Count()) >= 0.5f && keyTeckProjects.All(x => x.IsFinished);
+        }
+
+        private IEnumerable<ResearchProjectDef> GetKeyProjectsFrom(List<ResearchProjectDef> list, TechLevel techLevel)
+        {
+            return list.Where(x => x.techLevel == techLevel && (x.GetModExtension<TechExtension>()?.isKeyProject ?? false));
+        }
+
         public override void ExposeData()
         {
             base.ExposeData();
             Scribe_Collections.Look(ref changedTechLevelValues, "changedTechLevelValues", LookMode.Def, LookMode.Value, ref defKeys, ref levelValues);
+            Scribe_Values.Look(ref playerTechLevel, "playerTechLevel", defaultValue: TechLevel.Neolithic);
+            Instance = this;
         }
         private List<FactionDef> defKeys;
         private List<TechLevel> levelValues;
