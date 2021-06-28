@@ -21,8 +21,22 @@ namespace Rimedieval
             {ThingDefOf.Hyperweave, TechLevel.Spacer },
 
         };
+
+        public static bool IsAllowed(ThingDef thingDef)
+        {
+            var defName = thingDef.defName;
+            if (defName.Contains("Psytrainer") || defName.Contains("Neurotrainer"))
+            {
+                return true;
+            }
+            return false;
+        }
         public static TechLevel GetTechLevelFor(ThingDef thingDef)
         {
+            if (thingDef.GetCompProperties<CompProperties_Techprint>() != null)
+            {
+                return thingDef.GetCompProperties<CompProperties_Techprint>().project.techLevel;
+            }
             if (thingsByTechLevels.TryGetValue(thingDef, out var level))
             {
                 return level;

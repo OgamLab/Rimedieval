@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Patch>
+
+	<Operation Class="PatchOperationSequence">
+		<operations>
+			<li Class="PatchOperationRemove">
+				<xpath>/Defs/ThingSetMakerDef[defName="Reward_ItemsStandard"]/root/options/li/thingSetMaker/options/li/thingSetMaker[@Class="ThingSetMaker_Techprints"]/..</xpath>
+			</li>
+		</operations>	
+	</Operation>
+
+</Patch>
