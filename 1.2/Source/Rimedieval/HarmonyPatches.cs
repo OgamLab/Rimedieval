@@ -62,6 +62,10 @@ namespace Rimedieval
         {
             if (pawnToLookInto?.Faction != null && !pawnToLookInto.Faction.IsPlayer)
             {
+                if (pawnToLookInto.Faction.def.techLevel > TechLevel.Medieval)
+                {
+                    FactionTracker.Instance.SetNewTechLevelForFaction(pawnToLookInto.Faction.def);
+                }
                 if (Utils.GetTechLevelFor(__instance.thing) > TechLevel.Medieval)
                 {
                     __result = 0f;
@@ -70,6 +74,14 @@ namespace Rimedieval
             }
             return true;
         }
+        private static void Postfix(ThingStuffPair __instance, ref float __result)
+        {
+            if (__instance.thing.IsRangedWeapon && __instance.thing.Verbs.Any(x => x.muzzleFlashScale > 0))
+            {
+                Log.Message("Reducing commonality of " + __instance.thing + " from " + __result);
+                __result = 0.25f;
+            }
+        }
     }
 
     [HarmonyPatch(typeof(Faction), "GetReportText", MethodType.Getter)]
@@ -77,6 +89,10 @@ namespace Rimedieval
     {
         public static void Postfix(Faction __instance, ref string __result)
         {
+            if (__instance.def.techLevel > TechLevel.Medieval)
+            {
+                FactionTracker.Instance.SetNewTechLevelForFaction(__instance.def);
+            }
             __result += "\n\n" + "RM.FactionTechLevelInfo".Translate(__instance.def.techLevel.ToStringHuman());
         }
     }
@@ -92,11 +108,6 @@ namespace Rimedieval
                 if (techLevel < TechLevel.Industrial || Utils.IsAllowed(r))
                 {
                     yield return r;
-                }
-                else
-                {
-                    Log.Message("Disallowed: " + r + " - " + techLevel);
-                    Log.ResetMessageCount();
                 }
             }
         }
@@ -159,13 +170,16 @@ namespace Rimedieval
     }
 
     [HarmonyPatch]
-    public class MechSpawn_Patch
+    public class ResearchPal_Patch
     {
-        [HarmonyTargetMethods]
-        public static IEnumerable<MethodBase> TargetMethods()
+        private static bool Prepare()
+        {
+            return ModLister.HasActiveModWithName("ResearchPal");
+        }
+
+        private static IEnumerable<MethodBase> TargetMethods()
         {
             var meth = AccessTools.Method("ResearchPal.Tree:PopulateNodes");
-            Log.Message("Meth: " + meth);
             if (meth != null)
             {
                 yield return meth;
@@ -352,12 +366,10 @@ namespace Rimedieval
             {
                 if (fac == Faction.OfMechanoids && other.IsPlayer)
                 {
-                    Log.Message(fac.def + " - " + other.def);
                     __result = false;
                 }
                 else if (other == Faction.OfMechanoids && fac.IsPlayer)
                 {
-                    Log.Message(fac.def + " - " + other.def);
                     __result = false;
                 }
             }
@@ -399,14 +411,26 @@ namespace Rimedieval
         }
     }
 
+
     [HarmonyPatch(typeof(SiegeBlueprintPlacer))]
     [HarmonyPatch("PlaceArtilleryBlueprints")]
     public static class PlaceArtilleryBlueprints_Patch
     {
-        public static bool Prefix(ref IEnumerable<Blueprint_Build> __result, ref float points, Map map, Faction ___faction, IntVec3 ___center)
+        [HarmonyPriority(Priority.Last)]
+        public static IEnumerable<Blueprint_Build> Postfix(IEnumerable<Blueprint_Build> __result, float points, Map map, Faction ___faction, IntVec3 ___center)
+        {
+            var list = PlaceArtilleryBlueprints(ref points, map, ___faction, ___center);
+            foreach (var r in list)
+            {
+                yield return r;
+            }
+        }
+
+        public static List<Blueprint_Build> PlaceArtilleryBlueprints(ref float points, Map map, Faction ___faction, IntVec3 ___center)
         {
             var list = new List<Blueprint_Build>();
-            IEnumerable<ThingDef> artyDefs = DefDatabase<ThingDef>.AllDefs.Where((ThingDef def) => def.building != null && def.building.buildingTags.Contains("MedievalArtillery_BaseDestroyer"));
+            IEnumerable<ThingDef> artyDefs = DefDatabase<ThingDef>.AllDefs.Where((ThingDef def) => def.building != null &&
+            (def.building.buildingTags.Contains("ArtilleryMedieval_BaseDestroyer") || def.building.buildingTags.Contains("ArtilleryMedieval")));
             if (artyDefs.Any())
             {
                 int numArtillery = Mathf.RoundToInt(points / 60f);
@@ -424,8 +448,8 @@ namespace Rimedieval
                     points -= 60f;
                 }
             }
-            __result = list;
-            return false;
+            points = 0;
+            return list;
         }
         private static IntVec3 FindArtySpot(ThingDef artyDef, Rot4 rot, Map map, IntVec3 center)
         {

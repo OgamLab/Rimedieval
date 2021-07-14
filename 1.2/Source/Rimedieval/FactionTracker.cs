@@ -61,13 +61,24 @@ namespace Rimedieval
                     originalTechLevelValues[factionDef] = factionDef.techLevel;
                     if (factionDef.techLevel > TechLevel.Medieval)
                     {
-                        factionDef.techLevel = GetRandomTechLevel();
-                        changedTechLevelValues[factionDef] = factionDef.techLevel;
+                        SetNewTechLevelForFaction(factionDef);
                     }
                 }
             }
         }
 
+        public void SetNewTechLevelForFaction(FactionDef factionDef)
+        {
+            if (factionDef == FactionDefOf.Empire || factionDef == FactionDef.Named("Pirate"))
+            {
+                factionDef.techLevel = TechLevel.Medieval;
+            }
+            else
+            {
+                factionDef.techLevel = GetRandomTechLevel();
+            }
+            changedTechLevelValues[factionDef] = factionDef.techLevel;
+        }
         private TechLevel GetRandomTechLevel()
         {
             var num = Rand.RangeInclusive(1, 2);
