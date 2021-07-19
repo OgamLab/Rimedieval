@@ -65,17 +65,11 @@ namespace Rimedieval
             MethodInfo methodInfo = AccessTools.Method(typeof(DefDatabase<ThingDef>), "Remove", null, null);
             foreach (var def in defs)
             {
-                Log.Message("Removing " + def);
                 methodInfo.Invoke(null, new object[]
                 {
                     def
                 });
             }
-            foreach (var def in DefDatabase<ThingDef>.AllDefs.Where(x => x.isTechHediff))
-            {
-                Log.Message("Remained tech hediff: " + def);
-            }
-
         }
         public static void DoDefsAlter()
         {

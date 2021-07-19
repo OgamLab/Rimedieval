@@ -32,7 +32,6 @@ namespace Rimedieval
             if (this.originalTechLevelValues == null) this.originalTechLevelValues = new Dictionary<FactionDef, TechLevel>();
             if (this.changedTechLevelValues == null) this.changedTechLevelValues = new Dictionary<FactionDef, TechLevel>();
             Instance = this;
-
         }
         public override void LoadedGame()
         {
@@ -69,7 +68,8 @@ namespace Rimedieval
 
         public void SetNewTechLevelForFaction(FactionDef factionDef)
         {
-            if (factionDef == FactionDefOf.Empire || factionDef == FactionDef.Named("Pirate"))
+            this.PreInit();
+            if (factionDef == FactionDefOf.Empire || factionDef == DefDatabase<FactionDef>.GetNamedSilentFail("Pirate"))
             {
                 factionDef.techLevel = TechLevel.Medieval;
             }
@@ -79,6 +79,7 @@ namespace Rimedieval
             }
             changedTechLevelValues[factionDef] = factionDef.techLevel;
         }
+
         private TechLevel GetRandomTechLevel()
         {
             var num = Rand.RangeInclusive(1, 2);
@@ -92,6 +93,7 @@ namespace Rimedieval
 
         public void RestoreTechLevelForAllFactions()
         {
+            this.PreInit();
             if (originalTechLevelValues != null)
             {
                 foreach (var factionDef in DefDatabase<FactionDef>.AllDefs)
