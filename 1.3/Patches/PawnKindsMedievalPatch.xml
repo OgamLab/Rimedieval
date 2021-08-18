@@ -1,0 +1,764 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Patch>
+
+<!-- ============ VANILLA ============ -->
+<Operation Class="PatchOperationSequence">
+		
+		<operations>
+		
+			<li Class="PatchOperationAdd">
+				<xpath>/Defs/ThingDef[defName="Apparel_Pants"]/apparel/tags</xpath>
+				<value>
+						<li>MedievalBasic</li>
+				</value>			
+			</li>
+			
+			<li Class="PatchOperationAdd">
+				<xpath>/Defs/ThingDef[defName="Apparel_BasicShirt"]/apparel/tags</xpath>
+				<value>
+						<li>MedievalBasic</li>
+				</value>
+			</li>
+			
+<!-- ============ SPECIAL ============ -->				
+			
+<!-- Slave -->		
+			<li Class="PatchOperationReplace"> 
+				<xpath>/Defs/PawnKindDef[defName="Slave"]/apparelTags</xpath>
+				<value>
+					<apparelTags Inherit="False">
+						<li>Neolithic</li>
+						<li>MedievalBasic</li>
+					</apparelTags>
+				</value>
+			</li>
+<!-- Stranger in black -->				
+			<li Class="PatchOperationReplace"> 
+				<xpath>/Defs/PawnKindDef[defName="StrangerInBlack"]/apparelTags</xpath>
+				<value>
+					<apparelTags Inherit="False">
+						<li>MedievalBasic</li>
+					</apparelTags>
+				</value>
+			</li>
+			<li Class="PatchOperationReplace"> 
+				<xpath>/Defs/PawnKindDef[defName="StrangerInBlack"]/apparelRequired</xpath>
+				<value>
+					<apparelRequired Inherit="False">
+						<li>Apparel_BasicShirt</li>
+						<li>Apparel_Pants</li>
+						<li>Apparel_PlateArmor</li>
+					</apparelRequired>
+				</value>
+			</li>
+			<li Class="PatchOperationReplace"> 
+				<xpath>/Defs/PawnKindDef[defName="StrangerInBlack"]/weaponTags</xpath>
+				<value>
+					<weaponTags Inherit="False">
+						<li>NeolithicRangedChief</li>
+					</weaponTags>
+				</value>
+			</li>
+
+<!-- ============ MERCENARY ============ -->			
+
+<!-- Grenadier_Destructive -->
+			<li Class="PatchOperationAdd"> 
+				<xpath>/Defs/PawnKindDef[defName="Grenadier_Destructive"]</xpath>
+				<value>
+					<apparelTags Inherit="False">
+						<li>MedievalBasic</li>
+						<li>MedievalMilitary</li>
+					</apparelTags>
+				</value>
+			</li>
+						<li Class="PatchOperationReplace"> 
+				<xpath>/Defs/PawnKindDef[defName="Grenadier_Destructive"]/weaponTags</xpath>
+				<value>
+					<weaponTags Inherit="False">
+						<li>NeolithicRangedDecent</li>
+					</weaponTags>
+				</value>
+			</li>
+<!-- Grenadier_EMP -->
+			<li Class="PatchOperationAdd"> 
+				<xpath>/Defs/PawnKindDef[defName="Grenadier_EMP"]</xpath>
+				<value>
+					<apparelTags Inherit="False">
+						<li>MedievalBasic</li>
+						<li>MedievalMilitary</li>
+					</apparelTags>
+				</value>
+			</li>
+						<li Class="PatchOperationReplace"> 
+				<xpath>/Defs/PawnKindDef[defName="Grenadier_EMP"]/weaponTags</xpath>
+				<value>
+					<weaponTags Inherit="False">
+						<li>NeolithicRangedDecent</li>
+					</weaponTags>
+				</value>
+			</li>
+<!-- Grenadier_Smoke -->
+			<li Class="PatchOperationAdd"> 
+				<xpath>/Defs/PawnKindDef[defName="Grenadier_Smoke"]</xpath>
+				<value>
+					<apparelTags Inherit="False">
+						<li>MedievalBasic</li>
+						<li>MedievalMilitary</li>
+					</apparelTags>
+				</value>
+			</li>
+						<li Class="PatchOperationReplace"> 
+				<xpath>/Defs/PawnKindDef[defName="Grenadier_Smoke"]/weaponTags</xpath>
+				<value>
+					<weaponTags Inherit="False">
+						<li>NeolithicRangedDecent</li>
+					</weaponTags>
+				</value>
+			</li>
+<!-- Mercenary_Gunner -->
+			<li Class="PatchOperationAdd"> 
+				<xpath>/Defs/PawnKindDef[defName="Mercenary_Gunner"]</xpath>
+				<value>
+					<apparelTags Inherit="False">
+						<li>MedievalBasic</li>
+						<li>MedievalMilitary</li>
+					</apparelTags>
+				</value>
+			</li>
+			<li Class="PatchOperationAdd"> 
+				<xpath>/Defs/PawnKindDef[defName="Mercenary_Gunner"]</xpath>
+				<value>
+					<weaponTags Inherit="False">
+						<li>NeolithicRangedBasic</li>
+						<li>NeolithicRangedDecent</li>
+						<li>NeolithicRangedHeavy</li>
+					</weaponTags>
+				</value>
+			</li>
+<!-- Mercenary_Gunner_Acidifier -->
+			<li Class="PatchOperationAdd"> 
+				<xpath>/Defs/PawnKindDef[defName="Mercenary_Gunner_Acidifier"]</xpath>
+				<value>
+					<apparelTags Inherit="False">
+						<li>MedievalBasic</li>
+						<li>MedievalMilitary</li>
+					</apparelTags>
+				</value>
+			</li>
+			<li Class="PatchOperationAdd"> 
+				<xpath>/Defs/PawnKindDef[defName="Mercenary_Gunner_Acidifier"]</xpath>
+				<value>
+					<weaponTags Inherit="False">
+						<li>NeolithicRangedBasic</li>
+						<li>NeolithicRangedDecent</li>
+						<li>NeolithicRangedHeavy</li>
+					</weaponTags>
+				</value>
+			</li>
+<!-- Mercenary_Sniper -->
+			<li Class="PatchOperationAdd"> 
+				<xpath>/Defs/PawnKindDef[defName="Mercenary_Sniper"]</xpath>
+				<value>
+					<apparelTags Inherit="False">
+						<li>MedievalBasic</li>
+						<li>MedievalMilitary</li>
+					</apparelTags>
+				</value>
+			</li>
+			<li Class="PatchOperationAdd"> 
+				<xpath>/Defs/PawnKindDef[defName="Mercenary_Sniper"]</xpath>
+				<value>
+					<weaponTags Inherit="False">
+						<li>NeolithicRangedChief</li>
+					</weaponTags>
+				</value>
+			</li>
+<!-- Mercenary_Sniper_Acidifier -->
+			<li Class="PatchOperationAdd"> 
+				<xpath>/Defs/PawnKindDef[defName="Mercenary_Sniper_Acidifier"]</xpath>
+				<value>
+					<apparelTags Inherit="False">
+						<li>MedievalBasic</li>
+						<li>MedievalMilitary</li>
+					</apparelTags>
+				</value>
+			</li>
+			<li Class="PatchOperationAdd"> 
+				<xpath>/Defs/PawnKindDef[defName="Mercenary_Sniper_Acidifier"]</xpath>
+				<value>
+					<weaponTags Inherit="False">
+						<li>NeolithicRangedChief</li>
+					</weaponTags>
+				</value>
+			</li>
+<!-- Mercenary_Slasher -->
+			<li Class="PatchOperationReplace"> 
+				<xpath>/Defs/PawnKindDef[defName="Mercenary_Slasher"]/apparelTags</xpath>
+				<value>
+					<apparelTags Inherit="False">
+						<li>MedievalBasic</li>
+						<li>MedievalMilitary</li>
+					</apparelTags>
+				</value>
+			</li>
+			<li Class="PatchOperationReplace"> 
+				<xpath>/Defs/PawnKindDef[defName="Mercenary_Slasher"]/weaponTags</xpath>
+				<value>
+					<weaponTags Inherit="False">
+						<li>MedievalMeleeBasic</li>
+						<li>MedievalMeleeDecent</li>
+					</weaponTags>
+				</value>
+			</li>
+<!-- Mercenary_Slasher_Acidifier -->
+			<li Class="PatchOperationAdd"> 
+				<xpath>/Defs/PawnKindDef[defName="Mercenary_Slasher_Acidifier"]</xpath>
+				<value>
+					<apparelTags Inherit="False">
+						<li>MedievalBasic</li>
+						<li>MedievalMilitary</li>
+					</apparelTags>
+				</value>
+			</li>
+			<li Class="PatchOperationAdd"> 
+				<xpath>/Defs/PawnKindDef[defName="Mercenary_Slasher_Acidifier"]</xpath>
+				<value>
+					<weaponTags Inherit="False">
+						<li>MedievalMeleeBasic</li>
+						<li>MedievalMeleeDecent</li>
+					</weaponTags>
+				</value>
+			</li>
+<!-- Mercenary_Heavy -->	
+			<li Class="PatchOperationReplace"> 
+				<xpath>/Defs/PawnKindDef[defName="Mercenary_Heavy"]/apparelTags</xpath>
+				<value>
+					<apparelTags Inherit="False">
+						<li>MedievalBasic</li>
+						<li>MedievalMilitary</li>
+					</apparelTags>
+				</value>
+			</li>
+			<li Class="PatchOperationReplace"> 
+				<xpath>/Defs/PawnKindDef[defName="Mercenary_Heavy"]/weaponTags</xpath>
+				<value>
+					<weaponTags Inherit="False">
+						<li>MedievalMeleeAdvanced</li>
+					</weaponTags>
+				</value>
+			</li>
+<!-- PirateBoss -->
+			<li Class="PatchOperationAdd"> 
+				<xpath>/Defs/PawnKindDef[defName="PirateBoss"]</xpath>
+				<value>
+					<apparelTags Inherit="False">
+						<li>MedievalBasic</li>
+						<li>MedievalMilitary</li>
+					</apparelTags>
+				</value>
+			</li>
+			<li Class="PatchOperationAdd"> 
+				<xpath>/Defs/PawnKindDef[defName="PirateBoss"]</xpath>
+				<value>
+					<weaponTags Inherit="False">
+						<li>NeolithicRangedChief</li>
+						<li>MedievalMeleeAdvanced</li>
+					</weaponTags>
+				</value>
+			</li>
+<!-- Mercenary_Elite -->
+			<li Class="PatchOperationAdd"> 
+				<xpath>/Defs/PawnKindDef[defName="Mercenary_Elite"]</xpath>
+				<value>
+					<apparelTags Inherit="False">
+						<li>MedievalBasic</li>
+						<li>MedievalMilitary</li>
+					</apparelTags>
+				</value>
+			</li>
+			<li Class="PatchOperationAdd"> 
+				<xpath>/Defs/PawnKindDef[defName="Mercenary_Elite"]</xpath>
+				<value>
+					<weaponTags Inherit="False">
+						<li>MedievalMeleeAdvanced</li>
+						<li>NeolithicRangedHeavy</li>
+					</weaponTags>
+				</value>
+			</li>
+<!-- Mercenary_Elite_Acidifier -->
+			<li Class="PatchOperationAdd"> 
+				<xpath>/Defs/PawnKindDef[defName="Mercenary_Elite_Acidifier"]</xpath>
+				<value>
+					<apparelTags Inherit="False">
+						<li>MedievalBasic</li>
+						<li>MedievalMilitary</li>
+					</apparelTags>
+				</value>
+			</li>
+			<li Class="PatchOperationAdd"> 
+				<xpath>/Defs/PawnKindDef[defName="Mercenary_Elite_Acidifier"]</xpath>
+				<value>
+					<weaponTags Inherit="False">
+						<li>MedievalMeleeAdvanced</li>
+						<li>NeolithicRangedHeavy</li>
+					</weaponTags>
+				</value>
+			</li>
+
+<!-- ============ PIRATE ============ -->	
+			
+<!-- Drifter -->
+			<li Class="PatchOperationReplace"> 
+				<xpath>/Defs/PawnKindDef[defName="Drifter"]/apparelTags</xpath>
+				<value>
+					<apparelTags Inherit="False">
+						<li>MedievalBasic</li>
+					</apparelTags>
+				</value>
+			</li>
+			<li Class="PatchOperationReplace"> 
+				<xpath>/Defs/PawnKindDef[defName="Drifter"]/weaponTags</xpath>
+				<value>
+					<weaponTags Inherit="False">
+						<li>MedievalMeleeBasic</li>
+						<li>NeolithicRangedBasic</li>
+					</weaponTags>
+				</value>
+			</li>
+<!-- Scavenger -->
+			<li Class="PatchOperationAdd"> 
+				<xpath>/Defs/PawnKindDef[defName="Scavenger"]</xpath>
+				<value>
+					<apparelTags Inherit="False">
+						<li>MedievalBasic</li>
+					</apparelTags>
+				</value>
+			</li>
+			<li Class="PatchOperationReplace"> 
+				<xpath>/Defs/PawnKindDef[defName="Scavenger"]/weaponTags</xpath>
+				<value>
+					<weaponTags Inherit="False">
+						<li>NeolithicRangedHeavy</li>
+					</weaponTags>
+				</value>
+			</li>
+<!-- Thrasher -->
+			<li Class="PatchOperationReplace"> 
+				<xpath>/Defs/PawnKindDef[defName="Thrasher"]/apparelTags</xpath>
+				<value>
+					<apparelTags Inherit="False">
+						<li>MedievalBasic</li>
+					</apparelTags>
+				</value>
+			</li>
+			<li Class="PatchOperationReplace"> 
+				<xpath>/Defs/PawnKindDef[defName="Thrasher"]/weaponTags</xpath>
+				<value>
+					<weaponTags Inherit="False">
+						<li>MedievalMeleeDecent</li>
+					</weaponTags>
+				</value>
+			</li>
+<!-- Pirate -->
+			<li Class="PatchOperationReplace"> 
+				<xpath>/Defs/PawnKindDef[defName="Pirate"]/apparelTags</xpath>
+				<value>
+					<apparelTags Inherit="False">
+						<li>MedievalBasic</li>
+						<li>MedievalMilitary</li>
+					</apparelTags>
+				</value>
+			</li>
+			<li Class="PatchOperationReplace"> 
+				<xpath>/Defs/PawnKindDef[defName="Pirate"]/weaponTags</xpath>
+				<value>
+					<weaponTags Inherit="False">
+						<li>NeolithicRangedBasic</li>
+						<li>NeolithicRangedHeavy</li>
+					</weaponTags>
+				</value>
+			</li>
+
+<!-- ============ OUTLANDER ============ -->
+
+<!-- Villager -->
+			<li Class="PatchOperationAdd"> 
+				<xpath>/Defs/PawnKindDef[defName="Villager"]</xpath>
+				<value>
+					<apparelTags Inherit="False">
+						<li>MedievalBasic</li>
+					</apparelTags>
+				</value>
+			</li>
+			<li Class="PatchOperationReplace"> 
+				<xpath>/Defs/PawnKindDef[defName="Villager"]/weaponTags</xpath>
+				<value>
+					<weaponTags Inherit="False">
+						<li>MedievalMeleeDecent</li>
+						<li>NeolithicRangedBasic</li>
+					</weaponTags>
+				</value>
+			</li>
+<!-- Town_Guard -->
+			<li Class="PatchOperationReplace"> 
+				<xpath>/Defs/PawnKindDef[defName="Town_Guard"]/apparelTags</xpath>
+				<value>
+					<apparelTags Inherit="False">
+						<li>MedievalBasic</li>
+						<li>MedievalMilitary</li>
+					</apparelTags>
+				</value>
+			</li>
+			<li Class="PatchOperationReplace"> 
+				<xpath>/Defs/PawnKindDef[defName="Town_Guard"]/weaponTags</xpath>
+				<value>
+					<weaponTags Inherit="False">
+						<li>MedievalMeleeDecent</li>
+						<li>NeolithicRangedBasic</li>
+						<li>NeolithicRangedDecent</li>
+					</weaponTags>
+				</value>
+			</li>
+<!-- Town_Trader -->
+			<li Class="PatchOperationReplace"> 
+				<xpath>/Defs/PawnKindDef[defName="Town_Trader"]/apparelTags</xpath>
+				<value>
+					<apparelTags Inherit="False">
+						<li>MedievalBasic</li>
+					</apparelTags>
+				</value>
+			</li>
+			<li Class="PatchOperationReplace"> 
+				<xpath>/Defs/PawnKindDef[defName="Town_Trader"]/weaponTags</xpath>
+				<value>
+					<weaponTags Inherit="False">
+						<li>MedievalMeleeBasic</li>
+					</weaponTags>
+				</value>
+			</li>
+<!-- Town_Councilman -->
+			<li Class="PatchOperationReplace"> 
+				<xpath>/Defs/PawnKindDef[defName="Town_Councilman"]/apparelTags</xpath>
+				<value>
+					<apparelTags Inherit="False">
+						<li>MedievalBasic</li>
+					</apparelTags>
+				</value>
+			</li>
+			<li Class="PatchOperationReplace"> 
+				<xpath>/Defs/PawnKindDef[defName="Town_Councilman"]/weaponTags</xpath>
+				<value>
+					<weaponTags Inherit="False">
+						<li>MedievalMeleeDecent</li>
+					</weaponTags>
+				</value>
+			</li>
+			
+<!-- ============ PLAYER ============ -->			
+
+<!-- Colonist -->
+			<li Class="PatchOperationReplace"> 
+				<xpath>/Defs/PawnKindDef[defName="Colonist"]/apparelTags</xpath>
+				<value>
+					<apparelTags Inherit="False">
+						<li>MedievalBasic</li>
+					</apparelTags>
+				</value>
+			</li>		
+		
+<!-- ============ SPACER ============ -->
+
+<!-- SpaceRefugee -->
+			<li Class="PatchOperationAdd"> 
+				<xpath>/Defs/PawnKindDef[defName="SpaceRefugee"]</xpath>
+				<value>
+					<apparelTags Inherit="False">
+						<li>MedievalBasic</li>
+					</apparelTags>
+				</value>
+			</li>
+
+<!-- SpaceRefugee_Clothed -->
+			<li Class="PatchOperationAdd"> 
+				<xpath>/Defs/PawnKindDef[defName="SpaceRefugee_Clothed"]</xpath>
+				<value>
+					<apparelTags Inherit="False">
+						<li>MedievalBasic</li>
+					</apparelTags>
+				</value>
+			</li>
+			
+<!-- AncientSoldier -->
+			<li Class="PatchOperationReplace"> 
+				<xpath>/Defs/PawnKindDef[defName="AncientSoldier"]/apparelTags</xpath>
+				<value>
+					<apparelTags Inherit="False">
+						<li>MedievalBasic</li>
+						<li>MedievalMilitary</li>
+					</apparelTags>
+				</value>
+			</li>
+			<li Class="PatchOperationReplace"> 
+				<xpath>/Defs/PawnKindDef[defName="AncientSoldier"]/weaponTags</xpath>
+				<value>
+					<weaponTags Inherit="False">
+						<li>NeolithicRangedBasic</li>
+						<li>NeolithicRangedHeavy</li>
+						<li>NeolithicRangedDecent</li>
+						<li>MedievalMeleeBasic</li>
+						<li>MedievalMeleeDecent</li>
+						<li>MedievalMeleeAdvanced </li>
+					</weaponTags>
+				</value>
+			</li>
+			
+		</operations>
+			
+</Operation>
+
+<!-- ============ ROYALTY DLC EMPIRE ============ -->
+<Operation Class="PatchOperationSequence">
+		
+		<operations>
+<!-- Empire_Common_Lodger -->
+			<li Class="PatchOperationReplace"> 
+				<xpath>/Defs/PawnKindDef[defName="Empire_Common_Lodger"]/apparelTags</xpath>
+				<value>
+					<apparelTags Inherit="False">
+						<li>MedievalBasic</li>
+					</apparelTags>
+				</value>
+			</li>
+			
+<!-- Empire_Common_Trader -->
+			<li Class="PatchOperationReplace"> 
+				<xpath>/Defs/PawnKindDef[defName="Empire_Common_Trader"]/apparelTags</xpath>
+				<value>
+					<apparelTags Inherit="False">
+						<li>MedievalBasic</li>
+					</apparelTags>
+				</value>
+			</li>
+			<li Class="PatchOperationReplace"> 
+				<xpath>/Defs/PawnKindDef[defName="Empire_Common_Trader"]/weaponTags</xpath>
+				<value>
+					<weaponTags Inherit="False">
+						<li>NeolithicRangedBasic</li>
+						<li>MedievalMeleeBasic</li>
+					</weaponTags>
+				</value>
+			</li>
+			
+<!-- Empire_Common_Laborer -->
+			<li Class="PatchOperationReplace"> 
+				<xpath>/Defs/PawnKindDef[defName="Empire_Common_Laborer"]/apparelTags</xpath>
+				<value>
+					<apparelTags Inherit="False">
+						<li>MedievalBasic</li>
+					</apparelTags>
+				</value>
+			</li>
+			
+<!-- Empire_Fighter_Trooper -->
+			<li Class="PatchOperationAdd"> 
+				<xpath>/Defs/PawnKindDef[defName="Empire_Fighter_Trooper"]</xpath>
+				<value>
+					<apparelTags Inherit="False">
+						<li>MedievalBasic</li>
+						<li>MedievalMilitary</li>
+					</apparelTags>
+				</value>
+			</li>
+			<li Class="PatchOperationAdd"> 
+				<xpath>/Defs/PawnKindDef[defName="Empire_Fighter_Trooper"]</xpath>
+				<value>
+					<apparelRequired Inherit="False">
+						<li>Apparel_PlateArmor</li>
+					</apparelRequired>
+				</value>
+			</li>
+			<li Class="PatchOperationAdd"> 
+				<xpath>/Defs/PawnKindDef[defName="Empire_Fighter_Trooper"]</xpath>
+				<value>
+					<weaponTags Inherit="False">
+						<li>NeolithicRangedBasic</li>
+						<li>NeolithicRangedDecent</li>
+					</weaponTags>
+				</value>
+			</li>
+			
+<!-- Empire_Fighter_Janissary -->
+			<li Class="PatchOperationAdd"> 
+				<xpath>/Defs/PawnKindDef[defName="Empire_Fighter_Janissary"]</xpath>
+				<value>
+					<apparelTags Inherit="False">
+						<li>MedievalBasic</li>
+						<li>MedievalMilitary</li>
+					</apparelTags>
+				</value>
+			</li>
+			<li Class="PatchOperationAdd"> 
+				<xpath>/Defs/PawnKindDef[defName="Empire_Fighter_Janissary"]</xpath>
+				<value>
+					<apparelRequired Inherit="False">
+						<li>Apparel_PlateArmor</li>
+					</apparelRequired>
+				</value>
+			</li>
+			<li Class="PatchOperationAdd"> 
+				<xpath>/Defs/PawnKindDef[defName="Empire_Fighter_Janissary"]</xpath>
+				<value>
+					<weaponTags Inherit="False">
+						<li>NeolithicRangedHeavy</li>
+						<li>NeolithicRangedDecent</li>
+					</weaponTags>
+				</value>
+			</li>
+			
+<!-- Empire_Fighter_Champion -->
+			<li Class="PatchOperationAdd"> 
+				<xpath>/Defs/PawnKindDef[defName="Empire_Fighter_Champion"]</xpath>
+				<value>
+					<apparelTags Inherit="False">
+						<li>MedievalBasic</li>
+						<li>MedievalMilitary</li>
+					</apparelTags>
+				</value>
+			</li>
+			<li Class="PatchOperationReplace"> 
+				<xpath>/Defs/PawnKindDef[defName="Empire_Fighter_Champion"]/apparelRequired</xpath>
+				<value>
+					<apparelRequired Inherit="False">
+						<li>Apparel_PlateArmor</li>
+					</apparelRequired>
+				</value>
+			</li>
+			<li Class="PatchOperationReplace"> 
+				<xpath>/Defs/PawnKindDef[defName="Empire_Fighter_Champion"]/weaponTags</xpath>
+				<value>
+					<weaponTags Inherit="False">
+						<li>MedievalMeleeDecent</li>
+						<li>MedievalMeleeAdvanced </li>
+					</weaponTags>
+				</value>
+			</li>
+			
+<!-- Empire_Fighter_Cataphract -->
+			<li Class="PatchOperationAdd"> 
+				<xpath>/Defs/PawnKindDef[defName="Empire_Fighter_Cataphract"]</xpath>
+				<value>
+					<apparelTags Inherit="False">
+						<li>MedievalBasic</li>
+						<li>MedievalMilitary</li>
+					</apparelTags>
+				</value>
+			</li>
+			<li Class="PatchOperationReplace"> 
+				<xpath>/Defs/PawnKindDef[defName="Empire_Fighter_Cataphract"]/apparelRequired</xpath>
+				<value>
+					<apparelRequired Inherit="False">
+						<li>Apparel_PlateArmor</li>
+					</apparelRequired>
+				</value>
+			</li>
+			<li Class="PatchOperationReplace"> 
+				<xpath>/Defs/PawnKindDef[defName="Empire_Fighter_Cataphract"]/weaponTags</xpath>
+				<value>
+					<weaponTags Inherit="False">
+						<li>MedievalMeleeDecent</li>
+						<li>MedievalMeleeAdvanced</li>
+						<li>NeolithicRangedHeavy</li>
+						<li>NeolithicRangedDecent</li>
+					</weaponTags>
+				</value>
+			</li>
+			
+<!-- Empire_Fighter_StellicGuardRanged -->
+			<li Class="PatchOperationAdd"> 
+				<xpath>/Defs/PawnKindDef[defName="Empire_Fighter_StellicGuardRanged"]</xpath>
+				<value>
+					<apparelTags Inherit="False">
+						<li>MedievalBasic</li>
+						<li>MedievalMilitary</li>
+					</apparelTags>
+				</value>
+			</li>
+			<li Class="PatchOperationAdd"> 
+				<xpath>/Defs/PawnKindDef[defName="Empire_Fighter_StellicGuardRanged"]</xpath>
+				<value>
+					<apparelRequired Inherit="False">
+						<li>Apparel_PlateArmor</li>
+					</apparelRequired>
+				</value>
+			</li>
+			<li Class="PatchOperationReplace"> 
+				<xpath>/Defs/PawnKindDef[defName="Empire_Fighter_StellicGuardRanged"]/weaponTags</xpath>
+				<value>
+					<weaponTags Inherit="False">
+						<li>NeolithicRangedHeavy</li>
+						<li>NeolithicRangedDecent</li>
+					</weaponTags>
+				</value>
+			</li>
+			
+<!-- Empire_Fighter_StellicGuardMelee -->
+			<li Class="PatchOperationAdd"> 
+				<xpath>/Defs/PawnKindDef[defName="Empire_Fighter_StellicGuardMelee"]</xpath>
+				<value>
+					<apparelTags Inherit="False">
+						<li>MedievalBasic</li>
+						<li>MedievalMilitary</li>
+					</apparelTags>
+				</value>
+			</li>
+			<li Class="PatchOperationReplace"> 
+				<xpath>/Defs/PawnKindDef[defName="Empire_Fighter_StellicGuardMelee"]</xpath>
+				<value>
+					<apparelRequired Inherit="False">
+						<li>Apparel_PlateArmor</li>
+					</apparelRequired>
+				</value>
+			</li>
+			
+<!-- 
+
+DOESN'T WORK			
+			
+			<li Class="PatchOperationReplace"> 
+				<xpath>/Defs/PawnKindDef[defName="Empire_Fighter_StellicGuardMelee"]/weaponTags</xpath>
+				<value>
+					<weaponTags Inherit="False">
+						<li>MedievalMeleeDecent</li>
+						<li>MedievalMeleeAdvanced</li>
+					</weaponTags>
+				</value>
+			</li>
+-->			
+			
+
+<!-- ============ ROYALTY DLC REFUGEE ============ -->
+			
+<!-- Refugee -->			
+			<li Class="PatchOperationReplace"> 
+				<xpath>/Defs/PawnKindDef[defName="Refugee"]/apparelTags</xpath>
+				<value>
+					<apparelTags Inherit="False">
+						<li>MedievalBasic</li>
+					</apparelTags>
+				</value>
+			</li>
+			<li Class="PatchOperationReplace"> 
+				<xpath>/Defs/PawnKindDef[defName="Refugee"]/weaponTags</xpath>
+				<value>
+					<weaponTags Inherit="False">
+						<li>MedievalMeleeDecent</li>
+						<li>NeolithicRangedBasic</li>
+					</weaponTags>
+				</value>
+			</li>
+		</operations>
+			
+</Operation>
+
+</Patch>

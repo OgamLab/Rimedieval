@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.30611.23
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Rimedieval", "Rimedieval.csproj", "{B60900A1-7A44-43D8-B42C-C945CEC427AF}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{B60900A1-7A44-43D8-B42C-C945CEC427AF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{B60900A1-7A44-43D8-B42C-C945CEC427AF}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{B60900A1-7A44-43D8-B42C-C945CEC427AF}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{B60900A1-7A44-43D8-B42C-C945CEC427AF}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {30B02BE2-545F-4BFA-80DB-DA4775CE22D9}
+	EndGlobalSection
+EndGlobal
