@@ -46,9 +46,18 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Quest\QuestNode_SendRaids.cs" />
+    <Compile Include="Quest\QuestNode_CreateNewIndustrialFactions.cs" />
+    <Compile Include="Quest\QuestNode_EndedSuccessfully.cs" />
+    <Compile Include="Quest\QuestNode_GenerateNewCityMarker.cs" />
+    <Compile Include="Quest\QuestNode_CreateNewColony.cs" />
+    <Compile Include="Quest\QuestNode_GetNewCitySketch.cs" />
+    <Compile Include="Quest\NewCityMarker.cs" />
+    <Compile Include="Quest\SketchResolver_NewCity.cs" />
     <Compile Include="RimedievalMod.cs" />
     <Compile Include="RimedievalSettings.cs" />
     <Compile Include="TechExtension.cs" />
+    <Compile Include="RimedievalDefOf.cs" />
     <Compile Include="Utils.cs" />
     <Compile Include="HarmonyPatches.cs" />
     <Compile Include="FactionTracker.cs" />

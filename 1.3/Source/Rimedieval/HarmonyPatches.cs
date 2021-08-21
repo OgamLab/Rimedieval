@@ -1,18 +1,13 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
+﻿using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Reflection.Emit;
-using System.Text;
 using HarmonyLib;
 using RimWorld;
-using RimWorld.Planet;
 using RimWorld.QuestGen;
 using UnityEngine;
 using Verse;
 using Verse.AI;
-using static RimWorld.PawnApparelGenerator;
 
 namespace Rimedieval
 {
@@ -21,8 +16,20 @@ namespace Rimedieval
     {
         static HarmonyPatches()
         {
-            var harmony = new Harmony("Ogam.Rimedieval");
-            harmony.PatchAll();
+            RimedievalMod.harmony.PatchAll();
+        }
+        public static IEnumerable<Thing> AllowedThings(IEnumerable<Thing> __result)
+        {
+            return __result.GetAllowedThings();
+        }
+    }
+
+    [HarmonyPatch(typeof(ThingSetMakerUtility), "GetAllowedThingDefs")]
+    public static class GetAllowedThingDefs_Patch
+    {
+        public static IEnumerable<ThingDef> Postfix(IEnumerable<ThingDef> __result)
+        {
+            return __result.GetAllowedThingDefs();
         }
     }
 
@@ -43,7 +50,7 @@ namespace Rimedieval
             var workingWeaponsField = AccessTools.Field(typeof(PawnWeaponGenerator), "workingWeapons");
             var methodToCall = AccessTools.Method(typeof(PawnWeaponGenerator_TryGenerateWeaponFor), "TryGenerateWeaponForOverride");
             var randomWeight = AccessTools.Method(typeof(GenCollection), "TryRandomElementByWeight", generics: new[] { typeof(ThingStuffPair) });
-
+        
             Label label = generator.DefineLabel();
             for (int i = 0; i < codes.Count; i++)
             {
@@ -55,7 +62,7 @@ namespace Rimedieval
                 {
                     yield return codes[i];
                 }
-
+        
                 if (codes[i].Calls(method))
                 {
                     var ldsFieldInd = codes.FirstIndexOf(x => codes.IndexOf(x) > i && x.LoadsField(workingWeaponsField));
@@ -86,7 +93,8 @@ namespace Rimedieval
             for (int i = 0; i < PawnWeaponGenerator.allWeaponPairs.Count; i++)
             {
                 ThingStuffPair w2 = PawnWeaponGenerator.allWeaponPairs[i];
-                if (!(w2.Price > randomInRange) && Utils.GetTechLevelFor(w2.thing) <= TechLevel.Medieval && weaponTags.Any((string tag) => w2.thing.weaponTags.Contains(tag)) 
+                if (!(w2.Price > randomInRange) && Utils.GetTechLevelFor(w2.thing) <= (pawn.Faction?.def?.techLevel ?? TechLevel.Medieval) 
+                    && weaponTags.Any((string tag) => w2.thing.weaponTags.Contains(tag)) 
                     && (pawn.kindDef.weaponStuffOverride == null || w2.stuff == pawn.kindDef.weaponStuffOverride) 
                     && (!w2.thing.IsRangedWeapon || !pawn.WorkTagIsDisabled(WorkTags.Shooting)) 
                     && (!(w2.thing.generateAllowChance < 1f) || Rand.ChanceSeeded(w2.thing.generateAllowChance, pawn.thingIDNumber ^ w2.thing.shortHash ^ 0x1B3B648)))
@@ -127,20 +135,19 @@ namespace Rimedieval
     }
 
     [HarmonyPatch(typeof(PawnApparelGenerator), "GenerateStartingApparelFor")]
-    internal static class Patch_GenerateStartingApparelFor
+    public class Patch_GenerateStartingApparelFor
     {
         [HarmonyPriority(0)]
         public static void Prefix(Pawn pawn, PawnGenerationRequest request)
         {
             Commonality_Patch.pawnToLookInto = pawn;
         }
-
-        [HarmonyDebug]
+    
         public static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions, ILGenerator generator)
         {
             var codes = instructions.ToList();
             var workingSetField = AccessTools.Field(typeof(PawnApparelGenerator), "workingSet");
-            var giveToPawnMeth = AccessTools.Method(typeof(PossibleApparelSet), "GiveToPawn");
+            var giveToPawnMeth = AccessTools.Method(typeof(PawnApparelGenerator.PossibleApparelSet), "GiveToPawn");
             var methodToCall = AccessTools.Method(typeof(Patch_GenerateStartingApparelFor), "TryGenerateStartingApparelForOverride");
             for (int i = 0; i < codes.Count; i++)
             {
@@ -154,7 +161,7 @@ namespace Rimedieval
                 yield return codes[i];
             }
         }
-
+        
         public static void TryGenerateStartingApparelForOverride(float randomInRange, Pawn pawn, PawnGenerationRequest request)
         {
             if (!PawnApparelGenerator.workingSet.IsNaked(pawn.gender) && !pawn.RaceProps.ToolUser || !pawn.RaceProps.IsFlesh)
@@ -162,58 +169,56 @@ namespace Rimedieval
                 return;
             }
             randomInRange = randomInRange - PawnApparelGenerator.workingSet.TotalPrice;
-            Log.Message(pawn + " - randomInRange: " + randomInRange);
             if (randomInRange <= 0)
             {
                 return;
             }
-
+        
             bool isOverwritten = false;
             if (PawnApparelGenerator.workingSet.TotalPrice <= 0)
             {
-                Log.Message(pawn + " is overriding");
                 pawn.apparel.DestroyAll();
                 pawn.outfits?.forcedHandler?.Reset();
                 isOverwritten = true;
             }
-
+        
             float mapTemperature;
-            NeededWarmth neededWarmth = ApparelWarmthNeededNow(pawn, request, out mapTemperature);
+            NeededWarmth neededWarmth = PawnApparelGenerator.ApparelWarmthNeededNow(pawn, request, out mapTemperature);
             bool allowHeadgear = Rand.Value < pawn.kindDef.apparelAllowHeadgearChance;
-
+        
             int @int = Rand.Int;
-            tmpApparelCandidates.Clear();
-            for (int i = 0; i < allApparelPairs.Count; i++)
+            PawnApparelGenerator.tmpApparelCandidates.Clear();
+            for (int i = 0; i < PawnApparelGenerator.allApparelPairs.Count; i++)
             {
-                ThingStuffPair thingStuffPair = allApparelPairs[i];
+                ThingStuffPair thingStuffPair = PawnApparelGenerator.allApparelPairs[i];
                 if (CanUsePairCustom(thingStuffPair, pawn, randomInRange, allowHeadgear, @int))
                 {
-                    tmpApparelCandidates.Add(thingStuffPair);
+                    PawnApparelGenerator.tmpApparelCandidates.Add(thingStuffPair);
                 }
             }
             if (randomInRange < 0.001f)
             {
-                GenerateWorkingPossibleApparelSetForOverride(isOverwritten, pawn, randomInRange, tmpApparelCandidates);
+                GenerateWorkingPossibleApparelSetForOverride(isOverwritten, pawn, randomInRange, PawnApparelGenerator.tmpApparelCandidates);
             }
             else
             {
                 int num = 0;
                 while (true)
                 {
-                    GenerateWorkingPossibleApparelSetForOverride(isOverwritten, pawn, randomInRange, tmpApparelCandidates);
+                    GenerateWorkingPossibleApparelSetForOverride(isOverwritten, pawn, randomInRange, PawnApparelGenerator.tmpApparelCandidates);
                     if (num < 10 && Rand.Value < 0.85f && randomInRange < 9999999f)
                     {
                         float num2 = Rand.Range(0.45f, 0.8f);
-                        float totalPrice = workingSet.TotalPrice;
+                        float totalPrice = PawnApparelGenerator.workingSet.TotalPrice;
                         if (totalPrice < randomInRange * num2)
                         {
                             goto IL_0399;
                         }
                     }
-                    if (num < 20 && Rand.Value < 0.97f && !workingSet.Covers(BodyPartGroupDefOf.Torso))
+                    if (num < 20 && Rand.Value < 0.97f && !PawnApparelGenerator.workingSet.Covers(BodyPartGroupDefOf.Torso))
                     {
                     }
-                    else if (num < 30 && Rand.Value < 0.8f && workingSet.CoatButNoShirt())
+                    else if (num < 30 && Rand.Value < 0.8f && PawnApparelGenerator.workingSet.CoatButNoShirt())
                     {
                     }
                     else
@@ -221,12 +226,12 @@ namespace Rimedieval
                         if (num < 50)
                         {
                             bool mustBeSafe = num < 17;
-                            if (!workingSet.SatisfiesNeededWarmth(neededWarmth, mustBeSafe, mapTemperature))
+                            if (!PawnApparelGenerator.workingSet.SatisfiesNeededWarmth(neededWarmth, mustBeSafe, mapTemperature))
                             {
                                 goto IL_0399;
                             }
                         }
-                        if (num >= 80 || !workingSet.IsNaked(pawn.gender))
+                        if (num >= 80 || !PawnApparelGenerator.workingSet.IsNaked(pawn.gender))
                         {
                             break;
                         }
@@ -236,16 +241,16 @@ namespace Rimedieval
                     num++;
                 }
             }
-            if ((!pawn.kindDef.apparelIgnoreSeasons || request.ForceAddFreeWarmLayerIfNeeded) && !workingSet.SatisfiesNeededWarmth(neededWarmth, mustBeSafe: true, mapTemperature))
+            if ((!pawn.kindDef.apparelIgnoreSeasons || request.ForceAddFreeWarmLayerIfNeeded) && !PawnApparelGenerator.workingSet.SatisfiesNeededWarmth(neededWarmth, mustBeSafe: true, mapTemperature))
             {
-                workingSet.AddFreeWarmthAsNeeded(neededWarmth, mapTemperature);
+                PawnApparelGenerator.workingSet.AddFreeWarmthAsNeeded(neededWarmth, mapTemperature);
             }
         }
         private static void GenerateWorkingPossibleApparelSetForOverride(bool isOverwritten, Pawn pawn, float money, List<ThingStuffPair> apparelCandidates)
         {
             if (isOverwritten)
             {
-                workingSet.Reset(pawn.RaceProps.body, pawn.def);
+                PawnApparelGenerator.workingSet.Reset(pawn.RaceProps.body, pawn.def);
             }
             float num = money;
             List<SpecificApparelRequirement> att = pawn.kindDef.specificApparelRequirements;
@@ -254,9 +259,9 @@ namespace Rimedieval
                 int j;
                 for (j = 0; j < att.Count; j++)
                 {
-                    if ((!att[j].RequiredTag.NullOrEmpty() || !att[j].AlternateTagChoices.NullOrEmpty()) && allApparelPairs.Where((ThingStuffPair pa) => ApparelRequirementTagsMatch(att[j], pa.thing) && ApparelRequirementHandlesThing(att[j], pa.thing) && CanUseStuff(pawn, pa) && pa.thing.apparel.CorrectGenderForWearing(pawn.gender) && !workingSet.PairOverlapsAnything(pa)).TryRandomElementByWeight((ThingStuffPair pa) => pa.Commonality, out var result))
+                    if ((!att[j].RequiredTag.NullOrEmpty() || !att[j].AlternateTagChoices.NullOrEmpty()) && PawnApparelGenerator.allApparelPairs.Where((ThingStuffPair pa) => PawnApparelGenerator.ApparelRequirementTagsMatch(att[j], pa.thing) && PawnApparelGenerator.ApparelRequirementHandlesThing(att[j], pa.thing) && PawnApparelGenerator.CanUseStuff(pawn, pa) && pa.thing.apparel.CorrectGenderForWearing(pawn.gender) && !PawnApparelGenerator.workingSet.PairOverlapsAnything(pa)).TryRandomElementByWeight((ThingStuffPair pa) => pa.Commonality, out var result))
                     {
-                        workingSet.Add(result);
+                        PawnApparelGenerator.workingSet.Add(result);
                         num -= result.Price;
                     }
                 }
@@ -267,31 +272,32 @@ namespace Rimedieval
                 int i;
                 for (i = 0; i < reqApparel.Count; i++)
                 {
-                    if (allApparelPairs.Where((ThingStuffPair pa) => pa.thing == reqApparel[i] && CanUseStuff(pawn, pa) && !workingSet.PairOverlapsAnything(pa)).TryRandomElementByWeight((ThingStuffPair pa) => pa.Commonality, out var result2))
+                    if (PawnApparelGenerator.allApparelPairs.Where((ThingStuffPair pa) => pa.thing == reqApparel[i] && PawnApparelGenerator.CanUseStuff(pawn, pa) 
+                    && !PawnApparelGenerator.workingSet.PairOverlapsAnything(pa)).TryRandomElementByWeight((ThingStuffPair pa) => pa.Commonality, out var result2))
                     {
-                        workingSet.Add(result2);
+                        PawnApparelGenerator.workingSet.Add(result2);
                         num -= result2.Price;
                     }
                 }
             }
-            usableApparel.Clear();
+            PawnApparelGenerator.usableApparel.Clear();
             for (int k = 0; k < apparelCandidates.Count; k++)
             {
-                if (!workingSet.PairOverlapsAnything(apparelCandidates[k]))
+                if (!PawnApparelGenerator.workingSet.PairOverlapsAnything(apparelCandidates[k]))
                 {
-                    usableApparel.Add(apparelCandidates[k]);
+                    PawnApparelGenerator.usableApparel.Add(apparelCandidates[k]);
                 }
             }
             ThingStuffPair result3;
-            while ((pawn.Ideo == null || !pawn.Ideo.IdeoPrefersNudityForGender(pawn.gender) || (pawn.Faction != null && pawn.Faction.IsPlayer)) && (!(Rand.Value < 0.1f) || !(money < 9999999f)) && usableApparel.Where((ThingStuffPair pa) => CanUseStuff(pawn, pa)).TryRandomElementByWeight((ThingStuffPair pa) => pa.Commonality, out result3))
+            while ((pawn.Ideo == null || !pawn.Ideo.IdeoPrefersNudityForGender(pawn.gender) || (pawn.Faction != null && pawn.Faction.IsPlayer)) && (!(Rand.Value < 0.1f) || !(money < 9999999f)) && PawnApparelGenerator.usableApparel.Where((ThingStuffPair pa) => PawnApparelGenerator.CanUseStuff(pawn, pa)).TryRandomElementByWeight((ThingStuffPair pa) => pa.Commonality, out result3))
             {
-                workingSet.Add(result3);
+                PawnApparelGenerator.workingSet.Add(result3);
                 num -= result3.Price;
-                for (int num2 = usableApparel.Count - 1; num2 >= 0; num2--)
+                for (int num2 = PawnApparelGenerator.usableApparel.Count - 1; num2 >= 0; num2--)
                 {
-                    if (usableApparel[num2].Price > num || workingSet.PairOverlapsAnything(usableApparel[num2]))
+                    if (PawnApparelGenerator.usableApparel[num2].Price > num || PawnApparelGenerator.workingSet.PairOverlapsAnything(PawnApparelGenerator.usableApparel[num2]))
                     {
-                        usableApparel.RemoveAt(num2);
+                        PawnApparelGenerator.usableApparel.RemoveAt(num2);
                     }
                 }
             }
@@ -302,7 +308,7 @@ namespace Rimedieval
             {
                 return false;
             }
-            if (!allowHeadgear && IsHeadgear(pair.thing))
+            if (!allowHeadgear && PawnApparelGenerator.IsHeadgear(pair.thing))
             {
                 return false;
             }
@@ -310,7 +316,7 @@ namespace Rimedieval
             {
                 return false;
             }
-
+        
             var pairs = pawn.kindDef.IsWarrior() ? Utils.medievalArmors.ToList() : Utils.medievalApparels.ToList();
             if (!pairs.NullOrEmpty())
             {
@@ -351,7 +357,7 @@ namespace Rimedieval
             }
             return true;
         }
-        private static void Postfix(Pawn pawn, PawnGenerationRequest request)
+        public static void Postfix(Pawn pawn, PawnGenerationRequest request)
         {
             Commonality_Patch.pawnToLookInto = null;
         }
@@ -369,7 +375,8 @@ namespace Rimedieval
                 {
                     FactionTracker.Instance.SetNewTechLevelForFaction(pawnToLookInto.Faction.def);
                 }
-                if (Utils.GetTechLevelFor(__instance.thing) > TechLevel.Medieval)
+        
+                if (pawnToLookInto.Faction.def.techLevel <= TechLevel.Medieval && Utils.GetTechLevelFor(__instance.thing) > TechLevel.Medieval)
                 {
                     __result = 0f;
                     return false;
@@ -379,11 +386,14 @@ namespace Rimedieval
         }
         private static void Postfix(ThingStuffPair __instance, ref float __result)
         {
-            if (__instance.thing.IsRangedWeapon && __instance.thing.Verbs.Any(x => x.muzzleFlashScale > 0))
+            if (pawnToLookInto?.Faction != null && !pawnToLookInto.Faction.IsPlayer)
             {
-                if (__result > 0)
+                if (pawnToLookInto.Faction.def.techLevel <= TechLevel.Medieval && __instance.thing.IsRangedWeapon && __instance.thing.Verbs.Any(x => x.muzzleFlashScale > 0))
                 {
-                    __result *= 0.25f;
+                    if (__result > 0)
+                    {
+                        __result *= 0.25f;
+                    }
                 }
             }
         }
@@ -402,21 +412,6 @@ namespace Rimedieval
         }
     }
 
-    [HarmonyPatch(typeof(ThingSetMakerUtility), "GetAllowedThingDefs")]
-    public static class GetAllowedThingDefs_Patch
-    {
-        public static IEnumerable<ThingDef> Postfix(IEnumerable<ThingDef> __result)
-        {
-            foreach (var r in __result)
-            {
-                var techLevel = Utils.GetTechLevelFor(r);
-                if (techLevel < TechLevel.Industrial || Utils.IsAllowed(r))
-                {
-                    yield return r;
-                }
-            }
-        }
-    }
 
     [HarmonyPatch(typeof(ResearchProjectDef), "CanStartNow", MethodType.Getter)]
     public static class CanStartNow_Patch
@@ -437,22 +432,8 @@ namespace Rimedieval
         {
             if (!RimedievalMod.settings.disableTechRestriction)
             {
-                __result = GetAllowedProjectDefs(__result);
+                __result = __result.GetAllowedProjectDefs();
             }
-        }
-
-        public static List<ResearchProjectDef> GetAllowedProjectDefs(List<ResearchProjectDef> list)
-        {
-            if (RimedievalMod.settings.restrictTechToMedievalOnly)
-            {
-                list = list.Where(x => x.techLevel <= TechLevel.Medieval).ToList();
-            }
-            else
-            {
-                var microElectronics = DefDatabase<ResearchProjectDef>.GetNamed("MicroelectronicsBasics");
-                list = list.Where(x => !x.ContainsTechProjectAsPrerequisite(microElectronics)).ToList();
-            }
-            return list;
         }
     }
 
@@ -496,7 +477,7 @@ namespace Rimedieval
             if (!RimedievalMod.settings.disableTechRestriction)
             {
                 var list = DefDatabase<ResearchProjectDef>.AllDefsListForReading;
-                var alloweedDefs = VisibleResearchProjects_Patch.GetAllowedProjectDefs(list);
+                var alloweedDefs = list.GetAllowedProjectDefs();
                 for (int num = list.Count - 1; num >= 0; num--)
                 {
                     var def = list[num];
@@ -531,6 +512,24 @@ namespace Rimedieval
                 });
             }
             catch { };
+        }
+    }
+
+
+    [HarmonyPatch(typeof(WealthWatcher), "WealthTotal", MethodType.Getter)]
+    internal static class WealthTotalPatch
+    {
+        public static void Postfix(WealthWatcher __instance, Map ___map, ref float __result, float ___lastCountTick)
+        {
+            if (!FactionTracker.Instance.finalQuestIsInitialized && __result >= 100000)
+            {
+                FactionTracker.Instance.finalQuestIsInitialized = true;
+                var quest = QuestUtility.GenerateQuestAndMakeAvailable(RimedievalDefOf.RM_FinalQuest_NewCity, StorytellerUtility.DefaultThreatPointsNow(___map));
+                if (quest != null)
+                {
+                    FactionTracker.Instance.playerTechLevel = TechLevel.Industrial;
+                }
+            }
         }
     }
 

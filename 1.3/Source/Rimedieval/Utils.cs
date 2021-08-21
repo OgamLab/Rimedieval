@@ -24,6 +24,66 @@ namespace Rimedieval
         {
             AssignApparelLists();
             AssignWeaponLists();
+            DoubleResearchCostAfterElectricity();
+        }
+
+        public static IEnumerable<Thing> GetAllowedThings(this IEnumerable<Thing> things)
+        {
+            foreach (var thing in things)
+            {
+                if (thing.def.IsAllowed())
+                {
+                    yield return thing;
+                }
+            }
+        }
+        public static IEnumerable<ThingDef> GetAllowedThingDefs(this IEnumerable<ThingDef> things)
+        {
+            foreach (var def in things)
+            {
+                if (def.IsAllowed())
+                {
+                    yield return def;
+                }
+            }
+        }
+        public static bool IsAllowed(this ThingDef def)
+        {
+            var techLevel = GetTechLevelFor(def);
+            if (techLevel < TechLevel.Industrial)
+            {
+                return true;
+            }
+            var defName = def.defName;
+            if (defName.Contains("Psytrainer") || defName.Contains("Neurotrainer"))
+            {
+                return true;
+            }
+            return false;
+        }
+        private static void DoubleResearchCostAfterElectricity()
+        {
+            foreach (var def in DefDatabase<ResearchProjectDef>.AllDefsListForReading)
+            {
+                if (def.ContainsTechProjectAsPrerequisite(RimedievalDefOf.Electricity))
+                {
+                    def.baseCost *= 2;
+                }
+            }
+        }
+
+        public static List<ResearchProjectDef> GetAllowedProjectDefs(this List<ResearchProjectDef> list)
+        {
+            if (RimedievalMod.settings.restrictTechToMedievalOnly)
+            {
+                list = list.Where(x => x.techLevel <= TechLevel.Medieval).ToList();
+            }
+            else
+            {
+                var microElectronics = DefDatabase<ResearchProjectDef>.GetNamed("MicroelectronicsBasics");
+                list = list.Where(x => x.techLevel <= TechLevel.Industrial && x != microElectronics && !x.ContainsTechProjectAsPrerequisite(microElectronics)).ToList();
+            }
+            return list;
         }
         private static void AssignApparelLists()
         {
@@ -53,9 +113,9 @@ namespace Rimedieval
 
         private static bool IsArmor(this ThingDef apparelDef)
         {
-            return apparelDef.statBases.Any(x => x.stat == StatDefOf.ArmorRating_Blunt && x.value > 0 
+            return apparelDef.statBases != null && apparelDef.statBases.Any(x => x.stat == StatDefOf.ArmorRating_Blunt && x.value > 0 
             || x.stat == StatDefOf.ArmorRating_Sharp && x.value > 0
-            || x.stat == StatDefOf.StuffEffectMultiplierArmor && x.value >= 0.5f) || apparelDef.thingCategories.Contains(ThingCategoryDefOf.ApparelArmor);
+            || x.stat == StatDefOf.StuffEffectMultiplierArmor && x.value >= 0.5f) || apparelDef.thingCategories != null && apparelDef.thingCategories.Contains(ThingCategoryDefOf.ApparelArmor);
         }
 
         public static bool IsWarrior(this PawnKindDef pawnKindDef)
@@ -140,21 +200,13 @@ namespace Rimedieval
 
         public static readonly Dictionary<ThingDef, TechLevel> thingsByTechLevels = new Dictionary<ThingDef, TechLevel>
         {
+            {ThingDefOf.Chemfuel, TechLevel.Industrial },
             {ThingDefOf.ComponentIndustrial, TechLevel.Industrial },
             {ThingDefOf.ComponentSpacer, TechLevel.Spacer },
             {ThingDefOf.Plasteel, TechLevel.Spacer },
             {ThingDefOf.Hyperweave, TechLevel.Spacer },
         };
 
-        public static bool IsAllowed(this ThingDef thingDef)
-        {
-            var defName = thingDef.defName;
-            if (defName.Contains("Psytrainer") || defName.Contains("Neurotrainer"))
-            {
-                return true;
-            }
-            return false;
-        }
         public static TechLevel GetTechLevelFor(ThingDef thingDef)
         {
             if (thingDef.GetCompProperties<CompProperties_Techprint>() != null)

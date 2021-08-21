@@ -15,11 +15,31 @@ namespace Rimedieval
 {
     class RimedievalMod : Mod
     {
+        public const string ModName = "Rimedieval";
         public static RimedievalSettings settings;
+
+        public static Harmony harmony;
         public RimedievalMod(ModContentPack pack) : base(pack)
         {
             settings = GetSettings<RimedievalSettings>();
+            harmony = new Harmony("Ogam.Rimedieval");
+            var methodToCall = AccessTools.Method(typeof(HarmonyPatches), nameof(HarmonyPatches.AllowedThings));
+            foreach (var stockGeneratorType in typeof(StockGenerator).AllSubclasses())
+            {
+                try
+                {
+                    var method = AccessTools.Method(stockGeneratorType, "GenerateThings");
+                    harmony.Patch(method, null, new HarmonyMethod(methodToCall));
+                    Log.Message("Patched " + method + " - " + methodToCall);
+                }
+                catch
+                {
+            
+                }
+            }
         }
+
+
         public override void DoSettingsWindowContents(Rect inRect)
         {
             base.DoSettingsWindowContents(inRect);
@@ -27,9 +47,8 @@ namespace Rimedieval
         }
         public override string SettingsCategory()
         {
-            return "Rimedieval";
+            return ModName;
         }
-
         public override void WriteSettings()
         {
             base.WriteSettings();
@@ -44,7 +63,6 @@ namespace Rimedieval
             Setup();
             DoDefsAlter();
         }
-
         public static void Setup()
         {
             if (!RimedievalMod.settings.rimedievalMechAddonWasLoaded && ModLister.HasActiveModWithName(RimedievalSettings.RimedievalMechAddonModName))

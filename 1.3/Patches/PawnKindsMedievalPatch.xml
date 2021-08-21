@@ -713,7 +713,7 @@
 				</value>
 			</li>
 			<li Class="PatchOperationReplace"> 
-				<xpath>/Defs/PawnKindDef[defName="Empire_Fighter_StellicGuardMelee"]</xpath>
+				<xpath>/Defs/PawnKindDef[defName="Empire_Fighter_StellicGuardMelee"]/apparelRequired</xpath>
 				<value>
 					<apparelRequired Inherit="False">
 						<li>Apparel_PlateArmor</li>

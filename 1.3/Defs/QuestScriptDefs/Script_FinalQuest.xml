@@ -1,0 +1,108 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Defs>
+
+	<QuestScriptDef>
+		<defName>RM_FinalQuest_NewCity</defName>
+		<isRootSpecial>true</isRootSpecial>
+		<autoAccept>true</autoAccept>
+		<rootMinPoints>0</rootMinPoints>
+		<questNameRules>
+			<rulesStrings>
+				<li>questName->Final quest</li>
+			</rulesStrings>
+		</questNameRules>
+		<questDescriptionRules>
+			<rulesStrings>
+				<li>questDescription->Final quest</li>
+			</rulesStrings>
+		</questDescriptionRules>
+		<root Class="QuestNode_Sequence">
+			<nodes>
+
+				<li Class="QuestNode_SubScript">
+					<def>Util_RandomizePointsChallengeRating</def>
+				</li>
+
+				<li Class="Rimedieval.QuestNode_CreateNewColony"/>
+				
+				<li Class="Rimedieval.QuestNode_CreateNewIndustrialFactions">
+					<factionDefs>
+						<li>RM_FactionOne</li>
+						<li>RM_FactionTwo</li>
+						<li>RM_FactionThree</li>
+					</factionDefs>
+				</li>
+
+
+				<li Class="Rimedieval.QuestNode_GetNewCitySketch">
+					<storeAs>newCitySketch</storeAs>
+				</li>
+
+				<!-- Make new city marker -->
+				<li Class="Rimedieval.QuestNode_GenerateNewCityMarker">
+					<storeAs>monumentMarker</storeAs>
+					<sketch>$newCitySketch</sketch>
+				</li>
+
+				<li Class="QuestNode_DestroyOrPassToWorldOnCleanup">
+					<things>$monumentMarker</things>
+				</li>
+
+				<!-- Success -->
+				<li Class="QuestNode_Signal">
+					<inSignal>monumentMarker.MonumentCompleted</inSignal>
+					<node Class="QuestNode_Sequence">
+						<nodes>
+							<li Class="QuestNode_Set">
+								<name>raidDuration</name>
+								<value>$(roundToTicksRough(randInt(2, 3) * 60000))</value>
+							</li>
+
+							<li Class="Rimedieval.QuestNode_SendRaids">
+								<randomIncidents>10</randomIncidents>
+								<startOffsetTicks>600</startOffsetTicks>
+								<duration>$raidDuration</duration>
+								<points>$points</points>
+								<enemyFactions>$enemyFactions</enemyFactions>
+							</li>
+
+							<!-- End conditions -->
+							<li Class="QuestNode_Delay">
+								<delayTicks>$raidDuration</delayTicks>
+								<outSignalComplete>FinalQuestCheck</outSignalComplete>
+							</li>
+
+							<li Class="QuestNode_Signal">
+								<inSignal>FinalQuestCheck</inSignal>
+							</li>
+						</nodes>
+					</node>
+				</li>
+				
+				<!-- End if new city ruined -->
+				<li Class="QuestNode_End">
+					<inSignal>monumentMarker.NewCityRuined</inSignal>
+					<outcome>Fail</outcome>
+					<goodwillChangeAmount>-5</goodwillChangeAmount>
+					<goodwillChangeFactionOf>$asker</goodwillChangeFactionOf>
+					<goodwillChangeReason>NewCityConstructionMapRemoved</goodwillChangeReason>
+				</li>
+				
+				<!-- End if map removed -->
+				<li Class="QuestNode_End">
+					<inSignal>map.MapRemoved</inSignal>
+					<outcome>Fail</outcome>
+					<goodwillChangeAmount>-5</goodwillChangeAmount>
+					<goodwillChangeFactionOf>$asker</goodwillChangeFactionOf>
+					<goodwillChangeReason>NewCityConstructionMapRemoved</goodwillChangeReason>
+				</li>
+
+				<li Class="Rimedieval.QuestNode_EndedSuccessfully">
+					<inSignalEnable>FinalQuestCheck</inSignalEnable>
+				</li>
+				
+			</nodes>
+		</root>
+	</QuestScriptDef>
+
+</Defs>

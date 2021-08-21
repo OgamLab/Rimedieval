@@ -10,10 +10,14 @@ namespace Rimedieval
 {
     public class FactionTracker : GameComponent
     {
+        public bool finalQuestIsInitialized;
+
+        public List<FactionDef> ignoredFactions;
         public Dictionary<FactionDef, TechLevel> originalTechLevelValues;
         public Dictionary<FactionDef, TechLevel> changedTechLevelValues;
-
         public TechLevel playerTechLevel = TechLevel.Neolithic;
+
+        public bool isTechLimitDisabled;
 
         public static FactionTracker Instance;
         public FactionTracker()
@@ -31,6 +35,7 @@ namespace Rimedieval
         {
             if (this.originalTechLevelValues == null) this.originalTechLevelValues = new Dictionary<FactionDef, TechLevel>();
             if (this.changedTechLevelValues == null) this.changedTechLevelValues = new Dictionary<FactionDef, TechLevel>();
+            if (this.ignoredFactions == null) this.ignoredFactions = new List<FactionDef>();
             Instance = this;
         }
         public override void LoadedGame()
@@ -49,13 +54,12 @@ namespace Rimedieval
             playerTechLevel = TechLevel.Neolithic;
         }
 
-
         public void ChangeTechLevelForFactions()
         {
             RestoreTechLevelForAllFactions();
             foreach (var factionDef in DefDatabase<FactionDef>.AllDefs)
             {
-                if (factionDef != Faction.OfPlayer.def && factionDef.humanlikeFaction)
+                if (factionDef != Faction.OfPlayer.def)
                 {
                     originalTechLevelValues[factionDef] = factionDef.techLevel;
                     if (factionDef.techLevel > TechLevel.Medieval)
@@ -69,15 +73,20 @@ namespace Rimedieval
         public void SetNewTechLevelForFaction(FactionDef factionDef)
         {
             this.PreInit();
-            if (factionDef == FactionDefOf.Empire || factionDef == DefDatabase<FactionDef>.GetNamedSilentFail("Pirate"))
+            if (!ignoredFactions.Contains(factionDef) && factionDef.humanlikeFaction)
             {
-                factionDef.techLevel = TechLevel.Medieval;
+                if (factionDef == FactionDefOf.Empire || factionDef == DefDatabase<FactionDef>.GetNamedSilentFail("Pirate"))
+                {
+                    factionDef.techLevel = TechLevel.Medieval;
+                }
+                else
+                {
+                    factionDef.techLevel = GetRandomTechLevel();
+                }
+                Log.Message("Changing " + factionDef + " - " + factionDef.techLevel);
+                changedTechLevelValues[factionDef] = factionDef.techLevel;
             }
-            else
-            {
-                factionDef.techLevel = GetRandomTechLevel();
-            }
-            changedTechLevelValues[factionDef] = factionDef.techLevel;
+
         }
 
         private TechLevel GetRandomTechLevel()
@@ -147,6 +156,9 @@ namespace Rimedieval
             base.ExposeData();
             Scribe_Collections.Look(ref changedTechLevelValues, "changedTechLevelValues", LookMode.Def, LookMode.Value, ref defKeys, ref levelValues);
             Scribe_Values.Look(ref playerTechLevel, "playerTechLevel", defaultValue: TechLevel.Neolithic);
+            Scribe_Values.Look(ref finalQuestIsInitialized, "finalQuestIsInitialized");
+            Scribe_Collections.Look(ref ignoredFactions, "ignoredFactions");
+            Scribe_Values.Look(ref isTechLimitDisabled, "isTechLimitDisabled");
             Instance = this;
         }
         private List<FactionDef> defKeys;
