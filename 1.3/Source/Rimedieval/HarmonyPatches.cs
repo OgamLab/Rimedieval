@@ -188,10 +188,12 @@ namespace Rimedieval
         
             int @int = Rand.Int;
             PawnApparelGenerator.tmpApparelCandidates.Clear();
+            var pairs = pawn.kindDef.apparelTags?.Any() ?? false ? pawn.kindDef.IsWarrior() ? Utils.medievalArmorTags : Utils.medievalApparelTags : new List<string>();
+
             for (int i = 0; i < PawnApparelGenerator.allApparelPairs.Count; i++)
             {
                 ThingStuffPair thingStuffPair = PawnApparelGenerator.allApparelPairs[i];
-                if (CanUsePairCustom(thingStuffPair, pawn, randomInRange, allowHeadgear, @int))
+                if (CanUsePairCustom(pairs, thingStuffPair, pawn, randomInRange, allowHeadgear, @int))
                 {
                     PawnApparelGenerator.tmpApparelCandidates.Add(thingStuffPair);
                 }
@@ -302,7 +304,7 @@ namespace Rimedieval
                 }
             }
         }
-        private static bool CanUsePairCustom(ThingStuffPair pair, Pawn pawn, float moneyLeft, bool allowHeadgear, int fixedSeed)
+        private static bool CanUsePairCustom(List<string> pairs, ThingStuffPair pair, Pawn pawn, float moneyLeft, bool allowHeadgear, int fixedSeed)
         {
             if (pair.Price > moneyLeft)
             {
@@ -317,7 +319,6 @@ namespace Rimedieval
                 return false;
             }
         
-            var pairs = pawn.kindDef.IsWarrior() ? Utils.medievalArmors.ToList() : Utils.medievalApparels.ToList();
             if (!pairs.NullOrEmpty())
             {
                 bool flag = false;
@@ -369,14 +370,15 @@ namespace Rimedieval
         public static Pawn pawnToLookInto;
         private static bool Prefix(ThingStuffPair __instance, ref float __result)
         {
-            if (pawnToLookInto?.Faction != null && !pawnToLookInto.Faction.IsPlayer)
+            var faction = pawnToLookInto?.Faction;
+            if (faction != null && !faction.IsPlayer)
             {
-                if (pawnToLookInto.Faction.def.techLevel > TechLevel.Medieval)
+                if (faction.def.techLevel > TechLevel.Medieval)
                 {
-                    FactionTracker.Instance.SetNewTechLevelForFaction(pawnToLookInto.Faction.def);
+                    FactionTracker.Instance.SetNewTechLevelForFaction(faction.def);
                 }
         
-                if (pawnToLookInto.Faction.def.techLevel <= TechLevel.Medieval && Utils.GetTechLevelFor(__instance.thing) > TechLevel.Medieval)
+                if (faction.def.techLevel <= TechLevel.Medieval && Utils.GetTechLevelFor(__instance.thing) > TechLevel.Medieval)
                 {
                     __result = 0f;
                     return false;

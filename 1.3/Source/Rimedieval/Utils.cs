@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Reflection.Emit;
 using System.Text;
@@ -17,14 +18,24 @@ namespace Rimedieval
         public static HashSet<string> medievalMeleeWeaponTags = new HashSet<string>();
         public static HashSet<string> medievalRangeWeaponTags = new HashSet<string>();
 
-        public static HashSet<string> medievalArmors = new HashSet<string>();
-        public static HashSet<string> medievalApparels = new HashSet<string>();
+        public static List<string> medievalArmorTags = new List<string>();
+        public static List<string> medievalApparelTags = new List<string>();
 
+        public static Dictionary<string, List<ThingDef>> apparelsByTags = new Dictionary<string, List<ThingDef>>();
+
+        public static HashSet<ThingDef> armoredApparels = new HashSet<ThingDef>();
+
+        public static List<ThingDef> allApparels;
         static Utils()
         {
+            var stopwatch = new Stopwatch();
+            stopwatch.Start();
+            Log.Message("Rimedieval is starting apparel caching");
             AssignApparelLists();
             AssignWeaponLists();
             DoubleResearchCostAfterElectricity();
+            stopwatch.Stop();
+            Log.Message("Cache is completed! It took " + stopwatch.Elapsed);
         }
 
         public static IEnumerable<Thing> GetAllowedThings(this IEnumerable<Thing> things)
@@ -87,23 +98,58 @@ namespace Rimedieval
         }
         private static void AssignApparelLists()
         {
-            List<ThingStuffPair> allApparelPairs = PawnApparelGenerator.allApparelPairs;
-            foreach (var apparel in allApparelPairs)
+            allApparels = DefDatabase<ThingDef>.AllDefs.Where(x => x.IsApparel).ToList();
+            foreach (var thingDef in allApparels)
             {
-                if (GetTechLevelFor(apparel.thing) <= TechLevel.Medieval)
+                if (thingDef.statBases != null && thingDef.statBases.Any(x => x.stat == StatDefOf.ArmorRating_Blunt && x.value > 0
+                    || x.stat == StatDefOf.ArmorRating_Sharp && x.value > 0
+                        || x.stat == StatDefOf.StuffEffectMultiplierArmor && x.value >= 0.5f) || thingDef.thingCategories != null && thingDef.thingCategories.Contains(ThingCategoryDefOf.ApparelArmor))
                 {
-                    if (apparel.thing.IsArmor())
+                    armoredApparels.Add(thingDef);
+                }
+
+                if (GetTechLevelFor(thingDef) <= TechLevel.Medieval)
+                {
+                    if (thingDef.IsArmor())
                     {
-                        foreach (var tag in apparel.thing.apparel.tags)
+                        foreach (var tag in thingDef.apparel.tags)
                         {
-                            medievalArmors.Add(tag);
+                            if (apparelsByTags.ContainsKey(tag))
+                            {
+                                if (!apparelsByTags[tag].Contains(thingDef))
+                                {
+                                    apparelsByTags[tag].Add(thingDef);
+                                }
+                            }
+                            else
+                            {
+                                apparelsByTags[tag] = new List<ThingDef> { thingDef };
+                            }
+                            if (!medievalArmorTags.Contains(tag))
+                            {
+                                medievalArmorTags.Add(tag);
+                            }
                         }
                     }
                     else
                     {
-                        foreach (var tag in apparel.thing.apparel.tags)
+                        foreach (var tag in thingDef.apparel.tags)
                         {
-                            medievalApparels.Add(tag);
+                            if (apparelsByTags.ContainsKey(tag))
+                            {
+                                if (!apparelsByTags[tag].Contains(thingDef))
+                                {
+                                    apparelsByTags[tag].Add(thingDef);
+                                }
+                            }
+                            else
+                            {
+                                apparelsByTags[tag] = new List<ThingDef> { thingDef };
+                            }
+                            if (!medievalApparelTags.Contains(tag))
+                            {
+                                medievalApparelTags.Add(tag);
+                            }
                         }
                     }
                 }
@@ -113,38 +159,32 @@ namespace Rimedieval
 
         private static bool IsArmor(this ThingDef apparelDef)
         {
-            return apparelDef.statBases != null && apparelDef.statBases.Any(x => x.stat == StatDefOf.ArmorRating_Blunt && x.value > 0 
-            || x.stat == StatDefOf.ArmorRating_Sharp && x.value > 0
-            || x.stat == StatDefOf.StuffEffectMultiplierArmor && x.value >= 0.5f) || apparelDef.thingCategories != null && apparelDef.thingCategories.Contains(ThingCategoryDefOf.ApparelArmor);
+            return armoredApparels.Contains(apparelDef);
         }
-
         public static bool IsWarrior(this PawnKindDef pawnKindDef)
         {
-            if (pawnKindDef.apparelTags.NullOrEmpty())
+            var armoredCount = 0;
+            var regularCount = 0;
+
+            foreach (var tag in pawnKindDef.apparelTags)
             {
-                return true;
-            }
-            var armorApparels = new List<ThingStuffPair>();
-            var regularApparels = new List<ThingStuffPair>();
-            foreach (var apparel in PawnApparelGenerator.allApparelPairs)
-            {
-                foreach (var tag in pawnKindDef.apparelTags)
+                if (apparelsByTags.TryGetValue(tag, out var list))
                 {
-                    if (apparel.thing.apparel.tags.Contains(tag))
+                    foreach (var thingDef in list)
                     {
-                        if (apparel.thing.IsArmor())
+                        if (thingDef.IsArmor())
                         {
-                            armorApparels.Add(apparel);
+                            armoredCount++;
                         }
                         else
                         {
-                            regularApparels.Add(apparel);
+                            regularCount++;
                         }
                     }
                 }
             }
 
-            return armorApparels.Count >= regularApparels.Count;
+            return armoredCount >= regularCount;
         }
         private static void AssignWeaponLists()
         {
@@ -176,8 +216,8 @@ namespace Rimedieval
             {
                 return true;
             }
-            var meleeWeapons = new List<ThingStuffPair>();
-            var rangeWeapons = new List<ThingStuffPair>();
+            var meleeWeapons = 0;
+            var rangeWeapons = 0;
             foreach (var weapon in PawnWeaponGenerator.allWeaponPairs)
             {
                 foreach (var tag in pawnKindDef.weaponTags)
@@ -186,16 +226,16 @@ namespace Rimedieval
                     {
                         if (weapon.thing.IsRangedWeapon)
                         {
-                            rangeWeapons.Add(weapon);
+                            rangeWeapons++;
                         }
                         else
                         {
-                            meleeWeapons.Add(weapon);
+                            meleeWeapons++;
                         }
                     }
                 }
             }
-            return meleeWeapons.Count >= rangeWeapons.Count;
+            return meleeWeapons >= rangeWeapons;
         }
 
         public static readonly Dictionary<ThingDef, TechLevel> thingsByTechLevels = new Dictionary<ThingDef, TechLevel>
@@ -207,7 +247,16 @@ namespace Rimedieval
             {ThingDefOf.Hyperweave, TechLevel.Spacer },
         };
 
+        private static Dictionary<ThingDef, TechLevel> cachedTechLevelValues = new Dictionary<ThingDef, TechLevel>();
         public static TechLevel GetTechLevelFor(ThingDef thingDef)
+        {
+            if (!cachedTechLevelValues.TryGetValue(thingDef, out TechLevel techLevel))
+            {
+                cachedTechLevelValues[thingDef] = techLevel = GetTechLevelForInt(thingDef);
+            }
+            return techLevel;
+        }
+        private static TechLevel GetTechLevelForInt(ThingDef thingDef)
         {
             if (thingDef.GetCompProperties<CompProperties_Techprint>() != null)
             {
@@ -254,7 +303,6 @@ namespace Rimedieval
             }
             return thingDef.techLevel;
         }
-
         public static bool ContainsTechProjectAsPrerequisite(this ResearchProjectDef def, ResearchProjectDef techProject)
         {
             if (def.prerequisites != null)
