@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
 using System.Reflection.Emit;
@@ -17,10 +18,24 @@ namespace Rimedieval
         static HarmonyPatches()
         {
             RimedievalMod.harmony.PatchAll();
+
+            var allowedPrecepts = AccessTools.Method(typeof(HarmonyPatches), nameof(HarmonyPatches.AllowedPrecepts));
+            foreach (var preceptWorkerType in typeof(PreceptWorker).AllSubclasses().AddItem(typeof(PreceptWorker)))
+            {
+                try
+                {
+                    var method = AccessTools.Method(preceptWorkerType, "get_ThingDefs");
+                    RimedievalMod.harmony.Patch(method, null, new HarmonyMethod(allowedPrecepts));
+                }
+                catch
+                {
+                }
+            }
         }
-        public static IEnumerable<Thing> AllowedThings(IEnumerable<Thing> __result)
+
+        public static IEnumerable<PreceptThingChance> AllowedPrecepts(IEnumerable<PreceptThingChance> __result)
         {
-            return __result.GetAllowedThings();
+            return __result.Where(x => x.def.IsAllowed());
         }
     }
 
@@ -371,13 +386,12 @@ namespace Rimedieval
         private static bool Prefix(ThingStuffPair __instance, ref float __result)
         {
             var faction = pawnToLookInto?.Faction;
-            if (faction != null && !faction.IsPlayer)
+            if (faction != null)
             {
                 if (faction.def.techLevel > TechLevel.Medieval)
                 {
                     FactionTracker.Instance.SetNewTechLevelForFaction(faction.def);
                 }
-        
                 if (faction.def.techLevel <= TechLevel.Medieval && Utils.GetTechLevelFor(__instance.thing) > TechLevel.Medieval)
                 {
                     __result = 0f;

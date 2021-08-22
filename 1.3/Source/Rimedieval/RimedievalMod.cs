@@ -23,14 +23,13 @@ namespace Rimedieval
         {
             settings = GetSettings<RimedievalSettings>();
             harmony = new Harmony("Ogam.Rimedieval");
-            var methodToCall = AccessTools.Method(typeof(HarmonyPatches), nameof(HarmonyPatches.AllowedThings));
+            var allowedThings = AccessTools.Method(typeof(RimedievalMod), nameof(RimedievalMod.AllowedThings));
             foreach (var stockGeneratorType in typeof(StockGenerator).AllSubclasses())
             {
                 try
                 {
                     var method = AccessTools.Method(stockGeneratorType, "GenerateThings");
-                    harmony.Patch(method, null, new HarmonyMethod(methodToCall));
-                    Log.Message("Patched " + method + " - " + methodToCall);
+                    harmony.Patch(method, null, new HarmonyMethod(allowedThings));
                 }
                 catch
                 {
@@ -38,7 +37,10 @@ namespace Rimedieval
                 }
             }
         }
-
+        public static IEnumerable<Thing> AllowedThings(IEnumerable<Thing> __result)
+        {
+            return __result.GetAllowedThings();
+        }
 
         public override void DoSettingsWindowContents(Rect inRect)
         {

@@ -36,8 +36,35 @@ namespace Rimedieval
             DoubleResearchCostAfterElectricity();
             stopwatch.Stop();
             Log.Message("Cache is completed! It took " + stopwatch.Elapsed);
+            if (ModsConfig.IdeologyActive)
+            {
+                DoIdeologyPatches();
+            }
         }
 
+        private static List<string> preceptsToRemove = new List<string>
+        {
+            "SleepAccelerator_Preferred",
+            "NeuralSupercharge_Preferred",
+            "Biosculpting_Accelerated",
+            "AgeReversal_Demanded",
+            "BioSculpter_Despised",
+            "NutrientPasteEating_DontMind",
+            "NutrientPasteEating_Disgusting",
+        };
+        public static void DoIdeologyPatches()
+        {
+            foreach (var def in DefDatabase<PreceptDef>.defsList.Where(x => preceptsToRemove.Contains(x.defName)))
+            {
+                foreach (var meme in def.requiredMemes)
+                {
+                    meme.requireOne.RemoveAll(x => x.Any(y => preceptsToRemove.Contains(y.defName)));
+                }
+                def.requiredMemes.Clear();
+            }
+            DefDatabase<PreceptDef>.defsList.RemoveAll(x => preceptsToRemove.Contains(x.defName));
+
+        }
         public static IEnumerable<Thing> GetAllowedThings(this IEnumerable<Thing> things)
         {
             foreach (var thing in things)
@@ -258,13 +285,16 @@ namespace Rimedieval
         }
         private static TechLevel GetTechLevelForInt(ThingDef thingDef)
         {
+            List<TechLevel> techLevelSources = new List<TechLevel>();
             if (thingDef.GetCompProperties<CompProperties_Techprint>() != null)
             {
-                return thingDef.GetCompProperties<CompProperties_Techprint>().project.techLevel;
+                //Log.Message("0 Result: " + thingDef.GetCompProperties<CompProperties_Techprint>().project.techLevel + " - " + thingDef);
+                techLevelSources.Add(thingDef.GetCompProperties<CompProperties_Techprint>().project.techLevel);
             }
             if (thingsByTechLevels.TryGetValue(thingDef, out var level))
             {
-                return level;
+                //Log.Message("1 Result: " + level + " - " + thingDef);
+                techLevelSources.Add(level);
             }
             if (thingDef.recipeMaker != null)
             {
@@ -273,7 +303,8 @@ namespace Rimedieval
                     var techLevel = thingDef.recipeMaker.researchPrerequisite.techLevel;
                     if (techLevel != TechLevel.Undefined)
                     {
-                        return techLevel;
+                        //Log.Message("2 Result: " + techLevel + " - " + thingDef);
+                        techLevelSources.Add(techLevel);
                     }
                 }
                 if (thingDef.recipeMaker.researchPrerequisites?.Any() ?? false)
@@ -282,7 +313,25 @@ namespace Rimedieval
                     var techLevel = (TechLevel)num;
                     if (techLevel != TechLevel.Undefined)
                     {
-                        return techLevel;
+                        //Log.Message("3 Result: " + techLevel + " - " + thingDef);
+                        techLevelSources.Add(techLevel);
+                    }
+                }
+                if (thingDef.recipeMaker.recipeUsers?.Any() ?? false)
+                {
+                    TechLevel techLevel = TechLevel.Undefined;
+                    foreach (var recipeUser in thingDef.recipeMaker.recipeUsers)
+                    {
+                        var curTechLevel = GetTechLevelFor(recipeUser);
+                        if (curTechLevel > TechLevel.Undefined || curTechLevel < techLevel)
+                        {
+                            techLevel = curTechLevel;
+                        }
+                    }
+                    if (techLevel != TechLevel.Undefined)
+                    {
+                        //Log.Message("4 Result: " + techLevel + " - " + thingDef);
+                        techLevelSources.Add(techLevel);
                     }
                 }
             }
@@ -292,16 +341,22 @@ namespace Rimedieval
                 var techLevel = (TechLevel)num;
                 if (techLevel != TechLevel.Undefined)
                 {
-                    return techLevel;
+                    //Log.Message("5 Result: " + techLevel + " - " + thingDef);
+                    techLevelSources.Add(techLevel);
                 }
             }
             if (thingDef.techLevel == TechLevel.Undefined && (thingDef.costList?.Any() ?? false))
             {
                 var maxTechMaterial = thingDef.costList.MaxBy(x => GetTechLevelFor(x.thingDef));
                 var techLevel = GetTechLevelFor(maxTechMaterial.thingDef);
-                return techLevel;
+                ///Log.Message("6 Result: " + techLevel + " - " + thingDef);
+                techLevelSources.Add(techLevel);
             }
-            return thingDef.techLevel;
+            //Log.Message("7 Result: " + thingDef.techLevel + " - " + thingDef);
+            //Log.ResetMessageCount();
+            techLevelSources.Add(thingDef.techLevel);
+            //Log.Message(thingDef + " - FINAL: " + techLevelSources.Max());
+            return techLevelSources.Max();
         }
         public static bool ContainsTechProjectAsPrerequisite(this ResearchProjectDef def, ResearchProjectDef techProject)
         {
