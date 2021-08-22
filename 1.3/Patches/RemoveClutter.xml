@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Patch>
+
+	<Operation Class="PatchOperationRemove">
+		<xpath>Defs/GenStepDef[defName="AncientConcreteBarrier" or defName="AncientLamppost" or defName="ScatterRoadDebris" or defName="ScatterCaveDebris" or defName="AncientUtilityBuilding" or defName="MechanoidRemains" or defName="AncientTurret" or defName="AncientMechs" or defName="AncientLandingPad" or defName="AncientFences" or defName="AncientJunkClusters"]/order</xpath>
+	</Operation>
+
+	<Operation Class="PatchOperationAdd">
+		<xpath>Defs/GenStepDef[defName="AncientPipelineSection"]</xpath>
+			<value>
+				<order>0</order>
+			</value>
+	</Operation>
+
+</Patch>
