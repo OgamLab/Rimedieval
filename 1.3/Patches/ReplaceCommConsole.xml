@@ -13,11 +13,11 @@
 					<ThingDef ParentName="BuildingBase">
 						<defName>CommsConsole</defName>
 						<label>big campfire</label>
-						<description>Allows radio contact with other factions and orbital traders.</description>
+						<description>Allows contact via smoke signals with other factions for trade and diplomacy.</description>
 						<thingClass>Building_CommsConsole</thingClass>
 						<category>Building</category>
 						<graphicData>
-							<texPath>Things/Building/Misc/Campfire</texPath>
+							<texPath>Things/Signal_Fire/Signal_Fire</texPath>
 							<graphicClass>Graphic_Single</graphicClass>
 							<drawRotated>false</drawRotated>
 							<allowFlip>false</allowFlip>
@@ -80,6 +80,7 @@
 							</li>
 							<li Class="CompProperties_FireOverlay">
 								<fireSize>2</fireSize>
+								<offset>(0.2,0,1.5)</offset>
 							</li>
 							<li>
 								<compClass>CompGatherSpot</compClass>
@@ -114,6 +115,9 @@
 							<artificialForMeditationPurposes>false</artificialForMeditationPurposes>
 							<destroySound>BuildingDestroyed_Wood_Small</destroySound>
 						</building>
+						<researchPrerequisites>
+						<li>ComplexFurniture</li>
+						</researchPrerequisites>
 					</ThingDef>
 				</value>
 			</li>
