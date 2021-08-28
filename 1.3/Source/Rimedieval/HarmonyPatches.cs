@@ -537,7 +537,7 @@ namespace Rimedieval
     {
         public static void Postfix(WealthWatcher __instance, Map ___map, ref float __result, float ___lastCountTick)
         {
-            if (!FactionTracker.Instance.finalQuestIsInitialized && __result >= 100000)
+            if (!FactionTracker.Instance.finalQuestIsInitialized && __result >= 350000)
             {
                 FactionTracker.Instance.finalQuestIsInitialized = true;
                 var quest = QuestUtility.GenerateQuestAndMakeAvailable(RimedievalDefOf.RM_FinalQuest_NewCity, StorytellerUtility.DefaultThreatPointsNow(___map));
