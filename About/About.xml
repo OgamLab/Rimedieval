@@ -8,32 +8,42 @@
 	<li>1.3</li>
 	</supportedVersions>
 	<packageId>Ogam.Rimedieval</packageId>
-	<description> OPEN BETA Version
-	What is Rimedieval?
-	Rimedieval is ultimately compatible replacement for "Medieval - Vanilla". A new way to immerse yourself in a true medieval RPG with all your favorite mods and provide you a new end game quest!
-	
-	How it works?
-	Instead of removing technologies and things, mod patches each pawn and faction, hiding technologies higher than the medieval ones.
-	Now every faction have it`s own marker with current tech level in the description.
-	And even more! We've patched all the quest rewards, which Medieval - Vanilla didn't. 
-	
-	Compatibility:
-	Compatible with almost any mod and currently compatible with saved games. 
-	However, given that the mod hides all technology after the Middle Ages, adding high-tech mods makes no sense and will be completely useless.
-	Any modded race and faction will be automaticaly patched to hide all the advanced technology and prevent it from spawn.
-	Combat Extended compatibility planned.
-	
-	Features to do:
-	- Hide mechanoids
-	- Patch for Royalty DLC to make it permanent medieval. Replace shuttle and drop pod textures made by Ogam and AOBA.
-	- Integrate the system of progress on technical levels as in Tech Advancing. Make a patch for Tech Advancing.
-	- Bug fix according to the results of tests with mods to make the build as efficient as possible under any conditions. Patch for CE.
-	- Limit player technologies to industrial ones. When the industrial level is reached, start the end game quest.
-	- Make new end game quest. If the quest is completed, remove the restrictions on the player's and NPC's technologies in order to continue the endless adventure, or offer to finish the game.
+	<description>
 
-	Credits:
-	Commissioned by Ogam, SirLalaPyon, Mio Hondai
-	Code: C# - Taranchuk, XML - ILuvSilicon
-	Art: Ogam
-	</description>
+What is Rimedieval?
+Rimedieval is ultimately compatible replacement for "Medieval - Vanilla". A new way to immerse yourself in a true medieval RPG with all your favorite mods and provide you a new end game quest!
+	
+How it works?
+Instead of removing technologies and things, mod patches each pawn and faction, hiding technologies higher than the medieval ones.
+Now every faction have it`s own marker with current tech level in the description.
+And even more! We've patched all the quest rewards, which Medieval - Vanilla didn't. 
+	
+Features available now:
+- Auto-patching every pawn and faction to be medieval or neolithic via transpilers. Even modded.
+- Medieval Royalty DLC and Ideology DLC without technological memes and clutter.
+- Royalty shuttle and drop-pods retextured as well.
+- All quest rewards patched to fit medieval game.
+- Players researches limited to medieval. Inplants removed to accept wooden ones. 	
+- New end game quest, starts in a week since your arrival.
+- Compact machinery and plasteel excluded from spawn as ore. You have to raid and trade for it.
+- Mechanoids removed, you can toggle it on or off via mod settings. But to be sure better uncheck them on world gene screen too.
+- Ancient danger patched to have medieval loot and enemy, also crypto casket art changed. 
+- Vanilla Furniture Expanded - Security compatible and wanted. Now your enemy will have to use Ballista and Catapult as artillery.
+- New end game quest, currently filled with placeholders but works. To start new quest your colony have to reach at least 100k of wealth.
+- New analog of comm - Signal fire. Contact with your friends and enemy like your grandgrandgrandfathers did. 
+- CE compatible but CE not patched 
+- Vanilla Furniture Expanded - Security compatible and wanted. Now your enemy will have to use Ballista and Catapult as an artillery.
+	
+Compatibility:
+Compatible with almost any mod and compatible with saved games. 
+However, given that the mod hides all technology from player and spawning right after medieval tech level, adding high-tech mods makes no sense and will be completely useless.
+Any modded race and faction will be automaticaly patched to hide all the advanced technology and prevent it from spawn. So some balance from developer`s side may be required.
+Any cyborgs or robots will be usless and broken.
+Combat Extended compatible but not patched.
+
+Credits:
+Commissioned by Ogam
+Code: C# - Taranchuk, XML - ILuvSilicon, Chisato
+Art: Ogam, AOBA, Morgante
+</description>
 </ModMetaData>
