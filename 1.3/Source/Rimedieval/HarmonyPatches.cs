@@ -35,7 +35,7 @@ namespace Rimedieval
 
         public static IEnumerable<PreceptThingChance> AllowedPrecepts(IEnumerable<PreceptThingChance> __result)
         {
-            return __result.Where(x => x.def.IsAllowed());
+            return __result.Where(x => x.def.IsAllowed() && x.chance > 0);
         }
     }
 
@@ -434,7 +434,7 @@ namespace Rimedieval
     {
         public static void Postfix(ResearchProjectDef __instance, ref bool __result)
         {
-            if (__result)
+            if (__result && !RimedievalMod.settings.disableTechRestriction)
             {
                 __result = FactionTracker.Instance.AllowedTechLevels().Contains(__instance);
             }
@@ -450,6 +450,7 @@ namespace Rimedieval
             {
                 __result = __result.GetAllowedProjectDefs();
             }
+            Log.Message("__result: " + __result.Count);
         }
     }
 

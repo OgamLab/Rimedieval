@@ -291,6 +291,7 @@ namespace Rimedieval
                 //Log.Message("0 Result: " + thingDef.GetCompProperties<CompProperties_Techprint>().project.techLevel + " - " + thingDef);
                 techLevelSources.Add(thingDef.GetCompProperties<CompProperties_Techprint>().project.techLevel);
             }
+
             if (thingsByTechLevels.TryGetValue(thingDef, out var level))
             {
                 //Log.Message("1 Result: " + level + " - " + thingDef);
@@ -319,19 +320,16 @@ namespace Rimedieval
                 }
                 if (thingDef.recipeMaker.recipeUsers?.Any() ?? false)
                 {
-                    TechLevel techLevel = TechLevel.Undefined;
+                    List<TechLevel> techLevels = new List<TechLevel>();
                     foreach (var recipeUser in thingDef.recipeMaker.recipeUsers)
                     {
-                        var curTechLevel = GetTechLevelFor(recipeUser);
-                        if (curTechLevel > TechLevel.Undefined || curTechLevel < techLevel)
-                        {
-                            techLevel = curTechLevel;
-                        }
+                        techLevels.Add(GetTechLevelFor(recipeUser));
                     }
-                    if (techLevel != TechLevel.Undefined)
+                    var minTechLevel = techLevels.Min();
+                    if (minTechLevel != TechLevel.Undefined)
                     {
-                        //Log.Message("4 Result: " + techLevel + " - " + thingDef);
-                        techLevelSources.Add(techLevel);
+                        //Log.Message("4 Result: " + minTechLevel + " - " + thingDef);
+                        techLevelSources.Add(minTechLevel);
                     }
                 }
             }
@@ -349,13 +347,13 @@ namespace Rimedieval
             {
                 var maxTechMaterial = thingDef.costList.MaxBy(x => GetTechLevelFor(x.thingDef));
                 var techLevel = GetTechLevelFor(maxTechMaterial.thingDef);
-                ///Log.Message("6 Result: " + techLevel + " - " + thingDef);
+                //Log.Message("6 Result: " + techLevel + " - " + thingDef);
                 techLevelSources.Add(techLevel);
             }
             //Log.Message("7 Result: " + thingDef.techLevel + " - " + thingDef);
             //Log.ResetMessageCount();
             techLevelSources.Add(thingDef.techLevel);
-            //Log.Message(thingDef + " - FINAL: " + techLevelSources.Max());
+            Log.Message(thingDef + " - FINAL: " + techLevelSources.Max());
             return techLevelSources.Max();
         }
         public static bool ContainsTechProjectAsPrerequisite(this ResearchProjectDef def, ResearchProjectDef techProject)
