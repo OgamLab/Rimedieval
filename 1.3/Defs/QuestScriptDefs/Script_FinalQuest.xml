@@ -25,7 +25,7 @@
 		<root Class="QuestNode_Sequence">
 			<nodes>
 				<li Class="Rimedieval.QuestNode_WealthRequirement">
-					<wealth>5000</wealth>
+					<wealth>350000</wealth>
 				</li>
 
 				<li Class="QuestNode_GetSiteTile">
