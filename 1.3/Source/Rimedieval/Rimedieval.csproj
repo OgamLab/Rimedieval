@@ -46,12 +46,15 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Quest\QuestNode_SendRaids.cs" />
+    <Compile Include="Quest\QuestGen_NewHome.cs" />
+    <Compile Include="Quest\QuestNode_GenerateNewHome.cs" />
     <Compile Include="Quest\QuestNode_CreateNewIndustrialFactions.cs" />
-    <Compile Include="Quest\QuestNode_EndedSuccessfully.cs" />
     <Compile Include="Quest\QuestNode_GenerateNewCityMarker.cs" />
-    <Compile Include="Quest\QuestNode_CreateNewColony.cs" />
     <Compile Include="Quest\QuestNode_GetNewCitySketch.cs" />
+    <Compile Include="Quest\QuestNode_WealthRequirement.cs" />
+    <Compile Include="Quest\QuestNode_SendRaids.cs" />
+    <Compile Include="Quest\QuestNode_EndedSuccessfully.cs" />
+    <Compile Include="Quest\QuestNode_CreateNewColony.cs" />
     <Compile Include="Quest\NewCityMarker.cs" />
     <Compile Include="Quest\SketchResolver_NewCity.cs" />
     <Compile Include="RimedievalMod.cs" />

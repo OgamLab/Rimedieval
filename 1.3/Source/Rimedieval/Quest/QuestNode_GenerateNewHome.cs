@@ -16,24 +16,25 @@ using Verse.AI;
 
 namespace Rimedieval
 {
-	public class QuestNode_GenerateNewCityMarker : QuestNode
+	public class QuestNode_GenerateNewHome : QuestNode
 	{
+		public SlateRef<int> tile;
 		[NoTranslate]
 		public SlateRef<string> storeAs;
 
-		public SlateRef<Sketch> sketch;
-
+		private const string RootSymbol = "root";
 		public override bool TestRunInt(Slate slate)
 		{
 			return true;
 		}
-
 		public override void RunInt()
 		{
 			Slate slate = QuestGen.slate;
-			NewCityMarker newCityMarker = ThingMaker.MakeThing(RimedievalDefOf.RM_NewCityMarker) as NewCityMarker;
-			newCityMarker.sketch = sketch.GetValue(slate);
-			slate.Set(storeAs.GetValue(slate), newCityMarker);
+			WorldObject var = QuestGen_NewHome.GenerateSettlement(tile.GetValue(slate), Faction.OfPlayer);
+			if (storeAs.GetValue(slate) != null)
+			{
+				QuestGen.slate.Set(storeAs.GetValue(slate), var);
+			}
 		}
 	}
 }

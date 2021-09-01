@@ -353,7 +353,7 @@ namespace Rimedieval
             //Log.Message("7 Result: " + thingDef.techLevel + " - " + thingDef);
             //Log.ResetMessageCount();
             techLevelSources.Add(thingDef.techLevel);
-            Log.Message(thingDef + " - FINAL: " + techLevelSources.Max());
+            //Log.Message(thingDef + " - FINAL: " + techLevelSources.Max());
             return techLevelSources.Max();
         }
         public static bool ContainsTechProjectAsPrerequisite(this ResearchProjectDef def, ResearchProjectDef techProject)

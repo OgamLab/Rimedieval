@@ -20,6 +20,8 @@ namespace Rimedieval
 	public class QuestNode_EndedSuccessfully : QuestNode
 	{
 		public SlateRef<string> inSignalEnable;
+
+		public SlateRef<WorldObject> worldObject;
 		public override bool TestRunInt(Slate slate)
 		{
 			return true;
@@ -29,22 +31,21 @@ namespace Rimedieval
 		{
 			Slate slate = QuestGen.slate;
 			var questPart_EndedSuccessfully = new QuestPart_EndedSuccessfully();
-			questPart_EndedSuccessfully.map = slate.Get<Map>("map");
+			questPart_EndedSuccessfully.mapParent = worldObject.GetValue(slate) as MapParent;
 			questPart_EndedSuccessfully.newCityMarker = slate.Get<NewCityMarker>("monumentMarker");
 			questPart_EndedSuccessfully.inSignalEnable = QuestGenUtility.HardcodedSignalWithQuestID(inSignalEnable.GetValue(slate)) ?? QuestGen.slate.Get<string>("inSignalEnable");
 			QuestGen.quest.AddPart(questPart_EndedSuccessfully);
 		}
 	}
-
 	public class QuestPart_EndedSuccessfully : QuestPartActivable
     {
-		public Map map;
+		public MapParent mapParent;
 
 		public NewCityMarker newCityMarker;
         public override void QuestPartTick()
         {
             base.QuestPartTick();
-			if (!GenHostility.AnyHostileActiveThreatToPlayer_NewTemp(map))
+			if (!GenHostility.AnyHostileActiveThreatToPlayer_NewTemp(mapParent.Map))
             {
 				DiaNode diaNode = new DiaNode("RM.YouHaveEndedFinalQuestSuccessfully".Translate());
 				DiaOption diaOption = new DiaOption("RM.KeepPlaying".Translate());
@@ -85,7 +86,7 @@ namespace Rimedieval
         public override void ExposeData()
         {
             base.ExposeData();
-			Scribe_References.Look(ref map, "map");
+			Scribe_References.Look(ref mapParent, "mapParent");
 			Scribe_References.Look(ref newCityMarker, "newCityMarker");
         }
     }

@@ -47,15 +47,6 @@ namespace Rimedieval
 				}
 			}
 
-			foreach (var faction in newFactions)
-			{
-				Settlement settlement = (Settlement)WorldObjectMaker.MakeWorldObject(WorldObjectDefOf.Settlement);
-				settlement.SetFaction(faction);
-				settlement.Tile = TileFinder.RandomSettlementTileFor(faction);
-				settlement.Name = SettlementNameGenerator.GenerateSettlementName(settlement);
-				Find.WorldObjects.Add(settlement);
-			}
-
 			slate.Set("enemyFactions", newFactions);
 			Find.IdeoManager.SortIdeos();
 		}

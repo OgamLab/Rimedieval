@@ -35,6 +35,8 @@ namespace Rimedieval
 		public SlateRef<float> points;
 
 		public SlateRef<List<Faction>> enemyFactions;
+
+		public SlateRef<WorldObject> worldObject;
 		public override bool TestRunInt(Slate slate)
 		{
 			if (points.GetValue(slate) < IncidentDefOf.RaidEnemy.minThreatPoints)
@@ -47,10 +49,8 @@ namespace Rimedieval
 		{
 			Slate slate = QuestGen.slate;
 			int value = duration.GetValue(slate);
-			_ = QuestGen.quest;
 			int value2 = startOffsetTicks.GetValue(slate);
 			IncidentDef value3 = IncidentDefOf.RaidEnemy;
-			Map map = slate.Get<Map>("map");
 			float value4 = points.GetValue(slate);
 			string delayInSignal = slate.Get<string>("inSignal");
 			string disableSignal = QuestGenUtility.HardcodedSignalWithQuestID(inSignalDisable.GetValue(slate));
@@ -59,22 +59,12 @@ namespace Rimedieval
 			{
 				for (int i = 0; i < value6; i++)
 				{
-					CreateDelayedIncident(slate, Rand.Range(value2, value), delayInSignal, disableSignal, value3, map, value4);
-				}
-			}
-			int? value7 = intervalTicks.GetValue(slate);
-			if (value7.HasValue)
-			{
-				int num = Mathf.FloorToInt((float)value / (float)value7.Value);
-				for (int j = 0; j < num; j++)
-				{
-					int delayTicks = Mathf.Max(j * value7.Value, value2);
-					CreateDelayedIncident(slate, delayTicks, delayInSignal, disableSignal, value3, map, value4);
+					CreateDelayedIncident(slate, Rand.Range(value2, value), delayInSignal, disableSignal, value3, value4);
 				}
 			}
 		}
 
-		private void CreateDelayedIncident(Slate slate, int delayTicks, string delayInSignal, string disableSignal, IncidentDef incident, Map map, float points)
+		private void CreateDelayedIncident(Slate slate, int delayTicks, string delayInSignal, string disableSignal, IncidentDef incident, float points)
 		{
 			Quest quest = QuestGen.quest;
 			QuestPart_Delay questPart_Delay = new QuestPart_Delay();
@@ -86,14 +76,15 @@ namespace Rimedieval
 			QuestPart_Incident questPart_Incident = new QuestPart_Incident();
 			questPart_Incident.incident = incident;
 			questPart_Incident.inSignal = questPart_Delay.OutSignalCompleted;
-			questPart_Incident.SetIncidentParmsAndRemoveTarget(new IncidentParms
+			questPart_Incident.MapParent = worldObject.GetValue(slate) as MapParent;
+			questPart_Incident.incidentParms = new IncidentParms
 			{
 				forced = true,
-				target = map,
 				points = points,
-
+				raidArrivalMode = PawnsArrivalModeDefOf.EdgeWalkIn,
+				raidStrategy = RaidStrategyDefOf.ImmediateAttack,
 				faction = enemyFactions.GetValue(slate).RandomElement()
-			});
+			};
 			quest.AddPart(questPart_Incident);
 		}
 	}

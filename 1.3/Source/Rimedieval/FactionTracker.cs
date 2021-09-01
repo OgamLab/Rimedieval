@@ -54,6 +54,19 @@ namespace Rimedieval
             playerTechLevel = TechLevel.Neolithic;
         }
 
+        public override void GameComponentTick()
+        {
+            base.GameComponentTick();
+            if (GenDate.DaysPassed >= 7 && !finalQuestIsInitialized)
+            {
+                if (Rand.Chance(0.001f))
+                {
+                    finalQuestIsInitialized = true;
+                    var quest = QuestUtility.GenerateQuestAndMakeAvailable(RimedievalDefOf.RM_FinalQuest_NewCity, StorytellerUtility.DefaultThreatPointsNow(Find.World));
+                    QuestUtility.SendLetterQuestAvailable(quest);
+                }
+            }
+        }
         public void ChangeTechLevelForFactions()
         {
             RestoreTechLevelForAllFactions();
@@ -83,7 +96,6 @@ namespace Rimedieval
                 {
                     factionDef.techLevel = GetRandomTechLevel();
                 }
-                Log.Message("Changing " + factionDef + " - " + factionDef.techLevel);
                 changedTechLevelValues[factionDef] = factionDef.techLevel;
             }
 

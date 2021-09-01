@@ -18,5 +18,6 @@ namespace Rimedieval
         public static ResearchProjectDef Electricity;
         public static QuestScriptDef RM_FinalQuest_NewCity;
         public static ThingDef RM_NewCityMarker;
+        public static WorldObjectDef RM_NewCityObj;
     }
 }

@@ -450,7 +450,6 @@ namespace Rimedieval
             {
                 __result = __result.GetAllowedProjectDefs();
             }
-            Log.Message("__result: " + __result.Count);
         }
     }
 
@@ -529,24 +528,6 @@ namespace Rimedieval
                 });
             }
             catch { };
-        }
-    }
-
-
-    [HarmonyPatch(typeof(WealthWatcher), "WealthTotal", MethodType.Getter)]
-    internal static class WealthTotalPatch
-    {
-        public static void Postfix(WealthWatcher __instance, Map ___map, ref float __result, float ___lastCountTick)
-        {
-            if (!FactionTracker.Instance.finalQuestIsInitialized && __result >= 100000)
-            {
-                FactionTracker.Instance.finalQuestIsInitialized = true;
-                var quest = QuestUtility.GenerateQuestAndMakeAvailable(RimedievalDefOf.RM_FinalQuest_NewCity, StorytellerUtility.DefaultThreatPointsNow(___map));
-                if (quest != null)
-                {
-                    FactionTracker.Instance.playerTechLevel = TechLevel.Industrial;
-                }
-            }
         }
     }
 
@@ -793,6 +774,15 @@ namespace Rimedieval
         private static bool CanPlaceBlueprintAt(IntVec3 root, Rot4 rot, ThingDef buildingDef, Map map, ThingDef stuffDef)
         {
             return GenConstruct.CanPlaceBlueprintAt(buildingDef, root, rot, map, godMode: false, null, null, stuffDef).Accepted;
+        }
+    }
+
+    [HarmonyPatch(typeof(QuestPart), "Notify_QuestSignalReceived")]
+    public class Patch_Notify_QuestSignalReceived
+    {
+        private static void Prefix(QuestPart __instance, Signal signal)
+        {
+            Log.Message("__instance: " + __instance + " - signal.tag: " + signal.tag);
         }
     }
 }
