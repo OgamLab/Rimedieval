@@ -14,18 +14,20 @@
 		<rootMinPoints>0</rootMinPoints>
 		<questNameRules>
 			<rulesStrings>
-				<li>questName->Final quest</li>
+				<li>questName->Looking for a new home</li>
 			</rulesStrings>
 		</questNameRules>
 		<questDescriptionRules>
 			<rulesStrings>
-				<li>questDescription->Final quest</li>
+				<li>questDescription->During your stay on this planet, you have achieved a lot. It's time to expand your domain. Your colonists are sure that somewhere out there they will be able to find a new home and prove to the surrounding tribes and kingdoms the seriousness of their intentions.
+
+Travel to a new region and establish a new city. Enemies will come to your territory immediately upon completion of construction. Get ready to defend a series of 10 raids and stay alive. At least half of the city should survive.</li>
 			</rulesStrings>
 		</questDescriptionRules>
 		<root Class="QuestNode_Sequence">
 			<nodes>
 				<li Class="Rimedieval.QuestNode_WealthRequirement">
-					<wealth>350000</wealth>
+					<wealth>300</wealth>
 				</li>
 
 				<li Class="QuestNode_GetSiteTile">

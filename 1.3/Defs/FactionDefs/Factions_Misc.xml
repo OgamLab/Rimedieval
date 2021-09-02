@@ -159,7 +159,7 @@
   
   <FactionDef ParentName="RM_OutlanderFactionBase">
     <defName>RM_FactionOne</defName>
-    <label>faction one</label>
+    <label>Outlanders Covenant</label>
     <description>These people have lived here for decades or centuries, and have lost most of the technology that brought them to this world. They usually work with simple machinery and defend themselves with advanced gunpowder weapons.\n\nThey are concerned with the practical matters of trade, trust, and survival.\n\nThis particular group holds civil behavior in high regard.</description>
 	<colorSpectrum>
       <li>(0.35, 0.30, 0.60)</li>
@@ -170,7 +170,7 @@
 
   <FactionDef ParentName="RM_OutlanderFactionBase">
     <defName>RM_FactionTwo</defName>
-    <label>faction two</label>
+    <label>Raiders Empire</label>
     <description>These people have lived here for decades or centuries, and have lost most of the technology that brought them to this world. They usually work with simple machinery and defend themselves with advanced gunpowder weapons.\n\nThey are concerned with the practical matters of trade, trust, and survival.\n\nThis particular group has a streak of barbarity in them.</description>
     <colorSpectrum>
       <li>(0, 0.4, 0.94)</li>
@@ -181,7 +181,7 @@
 
   <FactionDef ParentName="RM_OutlanderFactionBase">
     <defName>RM_FactionThree</defName>
-    <label>faction three</label>
+    <label>Adventurers guild</label>
     <description>These people have lived here for decades or centuries, and have lost most of the technology that brought them to this world. They usually work with simple machinery and defend themselves with advanced gunpowder weapons.\n\nThey are concerned with the practical matters of trade, trust, and survival.\n\nThis particular group holds civil behavior in high regard.</description>
 	<colorSpectrum>
       <li>(0.35, 0.30, 0.60)</li>

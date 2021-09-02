@@ -777,12 +777,16 @@ namespace Rimedieval
         }
     }
 
-    [HarmonyPatch(typeof(QuestPart), "Notify_QuestSignalReceived")]
-    public class Patch_Notify_QuestSignalReceived
+    [HarmonyPatch(typeof(MonumentMarker), "FirstDisallowedBuilding", MethodType.Getter)]
+    public class Patch_FirstDisallowedBuilding
     {
-        private static void Prefix(QuestPart __instance, Signal signal)
+        private static bool Prefix(MonumentMarker __instance)
         {
-            Log.Message("__instance: " + __instance + " - signal.tag: " + signal.tag);
+            if (__instance is NewCityMarker)
+            {
+                return false;
+            }
+            return true;
         }
     }
 }

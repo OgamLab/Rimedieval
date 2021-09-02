@@ -59,12 +59,19 @@ namespace Rimedieval
             base.GameComponentTick();
             if (GenDate.DaysPassed >= 7 && !finalQuestIsInitialized)
             {
-                if (Rand.Chance(0.001f))
+                finalQuestIsInitialized = true;
+                var quest = QuestUtility.GenerateQuestAndMakeAvailable(RimedievalDefOf.RM_FinalQuest_NewCity, StorytellerUtility.DefaultThreatPointsNow(Find.World));
+
+                TaggedString label = IncidentDefOf.GiveQuest_Random.letterLabel + ": " + quest.name;
+                TaggedString text = "RM.QuestDescription".Translate(); ;
+                if (quest.initiallyAccepted)
                 {
-                    finalQuestIsInitialized = true;
-                    var quest = QuestUtility.GenerateQuestAndMakeAvailable(RimedievalDefOf.RM_FinalQuest_NewCity, StorytellerUtility.DefaultThreatPointsNow(Find.World));
-                    QuestUtility.SendLetterQuestAvailable(quest);
+                    label = "LetterQuestAutomaticallyAcceptedTitle".Translate(quest.name);
                 }
+
+                ChoiceLetter choiceLetter = LetterMaker.MakeLetter(label, text, (quest.root != null && quest.root.questAvailableLetterDef != null) ? quest.root.questAvailableLetterDef : IncidentDefOf.GiveQuest_Random.letterDef, LookTargets.Invalid, null, quest);
+                choiceLetter.title = quest.name;
+                Find.LetterStack.ReceiveLetter(choiceLetter);
             }
         }
         public void ChangeTechLevelForFactions()

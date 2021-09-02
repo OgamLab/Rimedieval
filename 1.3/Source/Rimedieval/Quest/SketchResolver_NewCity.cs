@@ -82,7 +82,7 @@ namespace Rimedieval
         }
         public override void ResolveInt(ResolveParams parms)
 		{
-            var path = Path.GetFullPath(ModLister.GetActiveModWithIdentifier("Ogam.Rimedieval").RootDir + "/Presets/TEST.xml");
+            var path = Path.GetFullPath(ModLister.GetActiveModWithIdentifier("Ogam.Rimedieval").RootDir + "/Presets/RimedievalNewCityQuest.xml");
             List<Building> buildings = new List<Building>();
             List<Thing> things = new List<Thing>();
             Dictionary<IntVec3, TerrainDef> terrains = new Dictionary<IntVec3, TerrainDef>();

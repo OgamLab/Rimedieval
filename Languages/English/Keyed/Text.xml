@@ -7,11 +7,12 @@
 	<RM.RestrictTechToMedievalOnly>Restrict tech research level to medieval only</RM.RestrictTechToMedievalOnly>
 	<RM.Locked>To access it you have to research 50% of current tech level.</RM.Locked>
 	
-	<RM.YouHaveEndedFinalQuestSuccessfully>You have ended the quest</RM.YouHaveEndedFinalQuestSuccessfully>
+	<RM.YouHaveEndedFinalQuestSuccessfully>Congratulations on your successful conquests. Now this place belongs to you and it is up to you whether you want to continue or stop.</RM.YouHaveEndedFinalQuestSuccessfully>
 	<RM.KeepPlaying>Keep playing</RM.KeepPlaying>
 	<RM.KeepPlayingNoTechLimit>Keep playing, no tech limit</RM.KeepPlayingNoTechLimit>
 	<RM.FinishGame>Finish game</RM.FinishGame>
 	<RM.GameOverMedievalInvokedIntro>Game over, medieval 1</RM.GameOverMedievalInvokedIntro>
 	<RM.GameOverMedievalInvokedEnding>Game over, medieval 2</RM.GameOverMedievalInvokedEnding>
 	<RM.GameOverColonistsAdvanced>Game over, colonists advanced</RM.GameOverColonistsAdvanced>
+	<RM.QuestDescription>During your stay on this planet, you have achieved a lot. It's time to expand your domain. Your colonists are sure that somewhere out there they will be able to find a new home and prove to the surrounding tribes and kingdoms the seriousness of their intentions.</RM.QuestDescription>
 </LanguageData>
