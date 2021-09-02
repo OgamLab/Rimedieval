@@ -50,14 +50,18 @@ namespace Rimedieval
 				DiaNode diaNode = new DiaNode("RM.YouHaveEndedFinalQuestSuccessfully".Translate());
 				DiaOption diaOption = new DiaOption("RM.KeepPlaying".Translate());
 				diaOption.resolveTree = true;
-				diaNode.options.Add(diaOption);
 				diaOption.action = delegate ()
 				{
-					newCityMarker.canDestroy = true;
-					newCityMarker?.Destroy();
+					if (!newCityMarker.Destroyed)
+                    {
+						newCityMarker.canDestroy = true;
+						newCityMarker?.Destroy();
+					}
+					this.quest.End(QuestEndOutcome.Success);
 				};
-				DiaOption diaOption3 = new DiaOption("RM.FinishGame".Translate());
-				diaOption3.action = delegate
+				diaNode.options.Add(diaOption);
+				DiaOption diaOption2 = new DiaOption("RM.FinishGame".Translate());
+				diaOption2.action = delegate
 				{
 					StringBuilder stringBuilder = new StringBuilder();
 					List<Pawn> list = (from p in PawnsFinder.AllMapsCaravansAndTravelingTransportPods_Alive_Colonists where p.RaceProps.Humanlike select p).ToList();
@@ -70,10 +74,10 @@ namespace Rimedieval
 					}
 					GameVictoryUtility.ShowCredits(GameVictoryUtility.MakeEndCredits("RM.GameOverMedievalInvokedIntro".Translate(), 
 						"RM.GameOverMedievalInvokedEnding".Translate(), stringBuilder.ToString(), "RM.GameOverColonistsAdvanced", list), SongDefOf.EndCreditsSong, exitToMainMenu: true, 2.5f);
-
 				};
-				diaOption3.resolveTree = true;
-				diaNode.options.Add(diaOption3);
+				diaOption2.resolveTree = true;
+				diaNode.options.Add(diaOption2);
+
 				Dialog_NodeTree dialog_NodeTree = new Dialog_NodeTree(diaNode, delayInteractivity: true);
 				dialog_NodeTree.screenFillColor = Color.clear;
 				dialog_NodeTree.silenceAmbientSound = !true;

@@ -731,7 +731,7 @@ namespace Rimedieval
         public static List<Blueprint_Build> PlaceArtilleryBlueprints(ref float points, Map map, Faction ___faction, IntVec3 ___center)
         {
             var list = new List<Blueprint_Build>();
-            IEnumerable<ThingDef> artyDefs = DefDatabase<ThingDef>.AllDefs.Where((ThingDef def) => def.building != null &&
+            IEnumerable<ThingDef> artyDefs = DefDatabase<ThingDef>.AllDefs.Where((ThingDef def) => def.building != null && def.blueprintDef != null &&
             (def.building.buildingTags.Contains("ArtilleryMedieval_BaseDestroyer") || def.building.buildingTags.Contains("ArtilleryMedieval")));
             if (artyDefs.Any())
             {
@@ -787,6 +787,26 @@ namespace Rimedieval
                 return false;
             }
             return true;
+        }
+    }
+
+    [HarmonyPatch(typeof(IncidentWorker_ShipChunkDrop), "CanFireNowSub")]
+    public class Patch_CanFireNowSub
+    {
+        [HarmonyPriority(Priority.First)]
+        private static bool Prefix()
+        {
+            return false;
+        }
+    }
+
+    [HarmonyPatch(typeof(StorytellerComp_ShipChunkDrop), "MakeIntervalIncidents")]
+    public class Patch_MakeIntervalIncidents
+    {
+        [HarmonyPriority(Priority.Last)]
+        private static IEnumerable<FiringIncident> Postfix(IEnumerable<FiringIncident> __result)
+        {
+            yield break;
         }
     }
 }

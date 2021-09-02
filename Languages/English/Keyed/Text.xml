@@ -11,8 +11,8 @@
 	<RM.KeepPlaying>Keep playing</RM.KeepPlaying>
 	<RM.KeepPlayingNoTechLimit>Keep playing, no tech limit</RM.KeepPlayingNoTechLimit>
 	<RM.FinishGame>Finish game</RM.FinishGame>
-	<RM.GameOverMedievalInvokedIntro>Game over, medieval 1</RM.GameOverMedievalInvokedIntro>
-	<RM.GameOverMedievalInvokedEnding>Game over, medieval 2</RM.GameOverMedievalInvokedEnding>
+	<RM.GameOverMedievalInvokedIntro> </RM.GameOverMedievalInvokedIntro>
+	<RM.GameOverMedievalInvokedEnding> </RM.GameOverMedievalInvokedEnding>
 	<RM.GameOverColonistsAdvanced>Game over, colonists advanced</RM.GameOverColonistsAdvanced>
 	<RM.QuestDescription>During your stay on this planet, you have achieved a lot. It's time to expand your domain. Your colonists are sure that somewhere out there they will be able to find a new home and prove to the surrounding tribes and kingdoms the seriousness of their intentions.</RM.QuestDescription>
 </LanguageData>

@@ -27,7 +27,7 @@ Travel to a new region and establish a new city. Enemies will come to your terri
 		<root Class="QuestNode_Sequence">
 			<nodes>
 				<li Class="Rimedieval.QuestNode_WealthRequirement">
-					<wealth>300</wealth>
+					<wealth>350000</wealth>
 				</li>
 
 				<li Class="QuestNode_GetSiteTile">
@@ -48,15 +48,6 @@ Travel to a new region and establish a new city. Enemies will come to your terri
 					<inSignal>newCity.MapGenerated</inSignal>
 					<node Class="QuestNode_Sequence">
 						<nodes>
-
-							<li Class="Rimedieval.QuestNode_CreateNewIndustrialFactions">
-								<factionDefs>
-									<li>RM_FactionOne</li>
-									<li>RM_FactionTwo</li>
-									<li>RM_FactionThree</li>
-								</factionDefs>
-							</li>
-
 							<li Class="Rimedieval.QuestNode_GetNewCitySketch">
 								<storeAs>newCitySketch</storeAs>
 							</li>
@@ -78,11 +69,20 @@ Travel to a new region and establish a new city. Enemies will come to your terri
 								<inSignal>monumentMarker.MonumentCompleted</inSignal>
 								<node Class="QuestNode_Sequence">
 									<nodes>
+										<li Class="Rimedieval.QuestNode_CreateNewIndustrialFactions">
+											<inSignal>monumentMarker.MonumentCompleted</inSignal>
+											<factionDefs>
+												<li>RM_FactionOne</li>
+												<li>RM_FactionTwo</li>
+												<li>RM_FactionThree</li>
+											</factionDefs>
+										</li>
+							
 										<li Class="QuestNode_Set">
 											<name>raidDuration</name>
 											<value>$(roundToTicksRough(randInt(2, 3) * 60000))</value>
 										</li>
-
+										
 										<li Class="Rimedieval.QuestNode_SendRaids">
 											<randomIncidents>10</randomIncidents>
 											<startOffsetTicks>600</startOffsetTicks>
@@ -107,17 +107,11 @@ Travel to a new region and establish a new city. Enemies will come to your terri
 							<li Class="QuestNode_End">
 								<inSignal>monumentMarker.NewCityRuined</inSignal>
 								<outcome>Fail</outcome>
-								<goodwillChangeAmount>-5</goodwillChangeAmount>
-								<goodwillChangeFactionOf>$asker</goodwillChangeFactionOf>
-								<goodwillChangeReason>NewCityConstructionMapRemoved</goodwillChangeReason>
 							</li>
 
 							<li Class="QuestNode_End">
 								<inSignal>map.MapRemoved</inSignal>
 								<outcome>Fail</outcome>
-								<goodwillChangeAmount>-5</goodwillChangeAmount>
-								<goodwillChangeFactionOf>$asker</goodwillChangeFactionOf>
-								<goodwillChangeReason>NewCityConstructionMapRemoved</goodwillChangeReason>
 							</li>
 
 							<li Class="Rimedieval.QuestNode_EndedSuccessfully">
@@ -134,8 +128,8 @@ Travel to a new region and establish a new city. Enemies will come to your terri
 					<node Class="QuestNode_Sequence">
 						<nodes>
 							<li Class="QuestNode_Letter">
-								<label TKey="LetterLabelQuestFailed">Quest failed: [resolvedQuestName]</label>
-								<text TKey="LetterTextQuestFailed">After being discovered, the bandit camp has dispersed. The quest [resolvedQuestName] has ended.</text>
+								<label TKey="LetterLabelFinalQuestFailed">Quest failed: [resolvedQuestName]</label>
+								<text TKey="LetterTextFinalQuestFailed">You failed but lives goes on. Maybe someday you will have another chance.</text>
 							</li>
 							<li Class="QuestNode_End">
 								<outcome>Fail</outcome>

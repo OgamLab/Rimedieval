@@ -11,7 +11,6 @@ namespace Rimedieval
     public class FactionTracker : GameComponent
     {
         public bool finalQuestIsInitialized;
-
         public List<FactionDef> ignoredFactions;
         public Dictionary<FactionDef, TechLevel> originalTechLevelValues;
         public Dictionary<FactionDef, TechLevel> changedTechLevelValues;
@@ -176,7 +175,7 @@ namespace Rimedieval
             Scribe_Collections.Look(ref changedTechLevelValues, "changedTechLevelValues", LookMode.Def, LookMode.Value, ref defKeys, ref levelValues);
             Scribe_Values.Look(ref playerTechLevel, "playerTechLevel", defaultValue: TechLevel.Neolithic);
             Scribe_Values.Look(ref finalQuestIsInitialized, "finalQuestIsInitialized");
-            Scribe_Collections.Look(ref ignoredFactions, "ignoredFactions");
+            Scribe_Collections.Look(ref ignoredFactions, "ignoredFactions", LookMode.Def);
             Scribe_Values.Look(ref isTechLimitDisabled, "isTechLimitDisabled");
             Instance = this;
         }

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <Patch>
-	<!--
+<!--
 	<Operation Class="PatchOperationFindMod">
 		<mods>
 			<li>Ideology</li>
@@ -8,11 +8,10 @@
 		<match Class="PatchOperationSequence">
 			<operations>
 				<li Class="PatchOperationRemove">
-					<xpath>/Defs/PreceptDef[defName = "SleepAccelerator_Preferred" or defName="NeuralSupercharge_Preferred" or defName="Biosculpting_Accelerated" 
-					or defName="AgeReversal_Demanded" or defName="BioSculpter_Despised"]</xpath>
+					<xpath>/Defs/MemeDef[defName = "Transhumanist"]</xpath>
 				</li>
 			</operations>
 		</match>
 	</Operation>
-	-->
+-->
 </Patch>

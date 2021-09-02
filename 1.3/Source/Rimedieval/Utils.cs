@@ -30,12 +30,10 @@ namespace Rimedieval
         {
             var stopwatch = new Stopwatch();
             stopwatch.Start();
-            Log.Message("Rimedieval is starting apparel caching");
             AssignApparelLists();
             AssignWeaponLists();
             DoubleResearchCostAfterElectricity();
             stopwatch.Stop();
-            Log.Message("Cache is completed! It took " + stopwatch.Elapsed);
             if (ModsConfig.IdeologyActive)
             {
                 DoIdeologyPatches();
@@ -52,6 +50,47 @@ namespace Rimedieval
             "NutrientPasteEating_DontMind",
             "NutrientPasteEating_Disgusting",
         };
+
+        private static List<string> memesToRemove = new List<string>
+        {
+            "Transhumanist",
+        };
+
+        private static List<string> genStepsToRemove = new List<string>
+        {
+            "ScatterRoadDebris",
+            "ScatterCaveDebris",
+            "AncientUtilityBuilding",
+            "MechanoidRemains",
+            "AncientTurret",
+            "AncientMechs",
+            "AncientLandingPad",
+            "AncientFences",
+            "AncientPipelineSection",
+            "AncientJunkClusters",
+        };
+
+        public static List<string> incidentsToRemove = new List<string>
+        {
+            "DefoliatorShipPartCrash",
+            "PsychicEmanatorShipPartCrash",
+            "MechCluster",
+            "PsychicSoothe",
+            "PsychicDrone",
+            "ToxicFallout",
+            "VolcanicWinter",
+            "ShortCircuit",
+            "ShipChunkDrop",
+            "OrbitalTraderArrival",
+            "GiveQuest_EndGame_ShipEscape",
+            "ProblemCauser",
+        };
+
+        public static List<string> ideoPresetsToRemove = new List<string>
+        {
+            "Techno_Utopians",
+            "Progressive_Humanism"
+        };
         public static void DoIdeologyPatches()
         {
             foreach (var def in DefDatabase<PreceptDef>.defsList.Where(x => preceptsToRemove.Contains(x.defName)))
@@ -63,7 +102,23 @@ namespace Rimedieval
                 def.requiredMemes.Clear();
             }
             DefDatabase<PreceptDef>.defsList.RemoveAll(x => preceptsToRemove.Contains(x.defName));
+            foreach (var precept in DefDatabase<PreceptDef>.AllDefs)
+            {
+                precept.associatedMemes.RemoveAll(x => memesToRemove.Contains(x.defName));
+                precept.conflictingMemes.RemoveAll(x => memesToRemove.Contains(x.defName));
+                precept.requiredMemes.RemoveAll(x => memesToRemove.Contains(x.defName));
+            }
+            DefDatabase<MemeDef>.defsList.RemoveAll(x => memesToRemove.Contains(x.defName));
 
+            foreach (var mapGen in DefDatabase<MapGeneratorDef>.AllDefs)
+            {
+                mapGen.genSteps.RemoveAll(x => genStepsToRemove.Contains(x.defName));
+            }
+            DefDatabase<GenStepDef>.defsList.RemoveAll(x => genStepsToRemove.Contains(x.defName));
+
+            DefDatabase<IncidentDef>.defsList.RemoveAll(x => incidentsToRemove.Contains(x.defName));
+
+            DefDatabase<IdeoPresetDef>.defsList.RemoveAll(x => ideoPresetsToRemove.Contains(x.defName));
         }
         public static IEnumerable<Thing> GetAllowedThings(this IEnumerable<Thing> things)
         {
@@ -272,6 +327,7 @@ namespace Rimedieval
             {ThingDefOf.ComponentSpacer, TechLevel.Spacer },
             {ThingDefOf.Plasteel, TechLevel.Spacer },
             {ThingDefOf.Hyperweave, TechLevel.Spacer },
+            {ThingDefOf.ReinforcedBarrel, TechLevel.Industrial }
         };
 
         private static Dictionary<ThingDef, TechLevel> cachedTechLevelValues = new Dictionary<ThingDef, TechLevel>();

@@ -66,13 +66,15 @@ namespace Rimedieval
 
 		private void CreateDelayedIncident(Slate slate, int delayTicks, string delayInSignal, string disableSignal, IncidentDef incident, float points)
 		{
+			var faction = enemyFactions.GetValue(slate).RandomElement();
 			Quest quest = QuestGen.quest;
 			QuestPart_Delay questPart_Delay = new QuestPart_Delay();
 			questPart_Delay.delayTicks = delayTicks;
 			questPart_Delay.inSignalEnable = delayInSignal;
 			questPart_Delay.inSignalDisable = disableSignal;
-			questPart_Delay.debugLabel = questPart_Delay.delayTicks.ToStringTicksToDays() + "_" + IncidentDefOf.RaidEnemy.ToString();
+			questPart_Delay.debugLabel = questPart_Delay.delayTicks.ToStringTicksToDays() + "_" + faction;
 			quest.AddPart(questPart_Delay);
+
 			QuestPart_Incident questPart_Incident = new QuestPart_Incident();
 			questPart_Incident.incident = incident;
 			questPart_Incident.inSignal = questPart_Delay.OutSignalCompleted;
@@ -83,7 +85,7 @@ namespace Rimedieval
 				points = points,
 				raidArrivalMode = PawnsArrivalModeDefOf.EdgeWalkIn,
 				raidStrategy = RaidStrategyDefOf.ImmediateAttack,
-				faction = enemyFactions.GetValue(slate).RandomElement()
+				faction = faction
 			};
 			quest.AddPart(questPart_Incident);
 		}
