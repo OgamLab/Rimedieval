@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Patch>
+
+	<Operation Class="PatchOperationSequence">
+		<operations>
+
+			<li Class="PatchOperationReplace">
+				<xpath>/Defs/ThingDef[defName="AncientCryptosleepCasket"]/graphicData</xpath>
+				<value>
+					<graphicData>
+						<texPath>Things/Building/AncientCryptoCasketReplace/AncientCryptoCasketReplace</texPath>
+						<graphicClass>Graphic_Multi</graphicClass>
+						<drawSize>(2,5)</drawSize>
+						<drawOffset>(0.25,0,0)</drawOffset>
+						<shadowData>
+							<volume>(0.83, 0.3, 1.7)</volume>
+						</shadowData>
+					</graphicData>
+				</value>
+			</li>
+			<li Class="PatchOperationReplace">
+				<xpath>/Defs/ThingDef[defName="AncientCryptosleepCasket"]/comps/li[@Class="CompProperties_EmptyStateGraphic"]/graphicData</xpath>
+				<value>
+					<graphicData>
+						<texPath>Things/Building/AncientCryptoCasketReplace/AncientCryptoCasketReplace_Open</texPath>
+						<graphicClass>Graphic_Multi</graphicClass>
+						<drawSize>(2.1,5)</drawSize>
+						<drawOffset>(0, 0, 0.25)</drawOffset>
+					</graphicData>
+				</value>
+			</li>
+
+		</operations>
+	</Operation>
+
+</Patch>

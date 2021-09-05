@@ -476,7 +476,7 @@ namespace Rimedieval
     {
         private static bool Prepare()
         {
-            return ModLister.HasActiveModWithName("ResearchPal");
+            return ModLister.HasActiveModWithName("ResearchPal") || ModLister.HasActiveModWithName("ResearchPal - Forked");
         }
 
         private static IEnumerable<MethodBase> TargetMethods()
@@ -600,21 +600,6 @@ namespace Rimedieval
         }
     }
 
-    [HarmonyPatch(typeof(GenStep_ScatterShrines))]
-    [HarmonyPatch("CanScatterAt")]
-    public static class CanScatterAt
-    {
-        public static bool Prefix(ref bool __result)
-        {
-            if (RimedievalMod.settings.disableMechanoids)
-            {
-                __result = false;
-                return false;
-            }
-            return true;
-        }
-    }
-
     [HarmonyPatch(typeof(GenStep_MechCluster))]
     [HarmonyPatch("Generate")]
     public static class Generate
@@ -727,12 +712,27 @@ namespace Rimedieval
                 yield return r;
             }
         }
-
+    
+        private static bool IsMedievalArtillery(ThingDef thingDef)
+        {
+            if (thingDef.building?.turretGunDef != null)
+            {
+                if (thingDef.building.buildingTags.Contains("ArtilleryMedieval_BaseDestroyer") || thingDef.building.buildingTags.Contains("ArtilleryMedieval"))
+                {
+                    return true;
+                }
+                //var defName = thingDef.defName.ToLower();
+                //if (defName.Contains("trebuchet") || defName.Contains("ballista"))
+                //{
+                //    return true;
+                //}
+            }
+            return false;
+        }
         public static List<Blueprint_Build> PlaceArtilleryBlueprints(ref float points, Map map, Faction ___faction, IntVec3 ___center)
         {
             var list = new List<Blueprint_Build>();
-            IEnumerable<ThingDef> artyDefs = DefDatabase<ThingDef>.AllDefs.Where((ThingDef def) => def.building != null && def.blueprintDef != null &&
-            (def.building.buildingTags.Contains("ArtilleryMedieval_BaseDestroyer") || def.building.buildingTags.Contains("ArtilleryMedieval")));
+            IEnumerable<ThingDef> artyDefs = DefDatabase<ThingDef>.AllDefs.Where((ThingDef def) => IsMedievalArtillery(def));
             if (artyDefs.Any())
             {
                 int numArtillery = Mathf.RoundToInt(points / 60f);
@@ -749,6 +749,10 @@ namespace Rimedieval
                     list.Add(GenConstruct.PlaceBlueprintForBuild(thingDef, intVec, map, random, ___faction, ThingDefOf.WoodLog));
                     points -= 60f;
                 }
+            }
+            else
+            {
+                Log.Message("Failed to find arty");
             }
             points = 0;
             return list;
