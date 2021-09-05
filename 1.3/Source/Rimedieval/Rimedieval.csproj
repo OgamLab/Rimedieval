@@ -46,6 +46,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="CompFireOverlay.cs" />
+    <Compile Include="CompEmptyStateGraphic.cs" />
     <Compile Include="Quest\QuestGen_NewHome.cs" />
     <Compile Include="Quest\QuestNode_GenerateNewHome.cs" />
     <Compile Include="Quest\QuestNode_CreateNewIndustrialFactions.cs" />

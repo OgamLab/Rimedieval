@@ -20,7 +20,7 @@ namespace Rimedieval
 	[HarmonyPatch(typeof(CaravanArrivalAction_VisitSettlement), "Arrived")]
 	public class Patch_Arrived
 	{
-		private static void Prefix(CaravanArrivalAction_VisitSettlement __instance, Caravan caravan)
+		public static void Prefix(CaravanArrivalAction_VisitSettlement __instance, Caravan caravan)
 		{
 			if (__instance.settlement is NewCity newCity)
             {

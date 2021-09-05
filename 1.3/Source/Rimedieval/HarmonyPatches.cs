@@ -5,6 +5,7 @@ using System.Reflection;
 using System.Reflection.Emit;
 using HarmonyLib;
 using RimWorld;
+using RimWorld.BaseGen;
 using RimWorld.QuestGen;
 using UnityEngine;
 using Verse;
@@ -383,7 +384,7 @@ namespace Rimedieval
     public class Commonality_Patch
     {
         public static Pawn pawnToLookInto;
-        private static bool Prefix(ThingStuffPair __instance, ref float __result)
+        public static bool Prefix(ThingStuffPair __instance, ref float __result)
         {
             var faction = pawnToLookInto?.Faction;
             if (faction != null)
@@ -400,7 +401,7 @@ namespace Rimedieval
             }
             return true;
         }
-        private static void Postfix(ThingStuffPair __instance, ref float __result)
+        public static void Postfix(ThingStuffPair __instance, ref float __result)
         {
             if (pawnToLookInto?.Faction != null && !pawnToLookInto.Faction.IsPlayer)
             {
@@ -784,7 +785,7 @@ namespace Rimedieval
     [HarmonyPatch(typeof(MonumentMarker), "FirstDisallowedBuilding", MethodType.Getter)]
     public class Patch_FirstDisallowedBuilding
     {
-        private static bool Prefix(MonumentMarker __instance)
+        public static bool Prefix(MonumentMarker __instance)
         {
             if (__instance is NewCityMarker)
             {
@@ -798,7 +799,7 @@ namespace Rimedieval
     public class Patch_CanFireNowSub
     {
         [HarmonyPriority(Priority.First)]
-        private static bool Prefix()
+        public static bool Prefix()
         {
             return false;
         }
@@ -808,9 +809,38 @@ namespace Rimedieval
     public class Patch_MakeIntervalIncidents
     {
         [HarmonyPriority(Priority.Last)]
-        private static IEnumerable<FiringIncident> Postfix(IEnumerable<FiringIncident> __result)
+        public static IEnumerable<FiringIncident> Postfix(IEnumerable<FiringIncident> __result)
         {
             yield break;
+        }
+    }
+
+    [HarmonyPatch(typeof(SymbolResolver_AncientCryptosleepCasket), "Resolve")]
+    public class SymbolResolver_AncientCryptosleepCasket_Resolve
+    {
+        public static IEnumerable<CodeInstruction> Transpiler(IEnumerable<CodeInstruction> instructions, ILGenerator generator)
+        {
+            var codes = instructions.ToList();
+            var method = AccessTools.Method(typeof(ThingMaker), "MakeThing");
+            var methodToCall = AccessTools.Method(typeof(SymbolResolver_AncientCryptosleepCasket_Resolve), "GetRandomStuff");
+            bool found = false;
+            for (int i = 0; i < codes.Count; i++)
+            {
+                if (!found && codes[i].opcode == OpCodes.Ldnull && codes[i + 1].Calls(method))
+                {
+                    found = true;
+                    yield return new CodeInstruction(OpCodes.Call, methodToCall);
+                }
+                else
+                {
+                    yield return codes[i];
+                }
+            }
+        }
+
+        public static ThingDef GetRandomStuff()
+        {
+            return GenStuff.RandomStuffFor(ThingDefOf.AncientCryptosleepCasket);
         }
     }
 }

@@ -167,14 +167,14 @@ namespace Rimedieval
 
         public static List<ResearchProjectDef> GetAllowedProjectDefs(this List<ResearchProjectDef> list)
         {
-            if (RimedievalMod.settings.restrictTechToMedievalOnly)
-            {
-                list = list.Where(x => x.techLevel <= TechLevel.Medieval).ToList();
-            }
-            else
+            if (RimedievalMod.settings.restrictTechToPreIndustrialOnly)
             {
                 var microElectronics = DefDatabase<ResearchProjectDef>.GetNamed("MicroelectronicsBasics");
                 list = list.Where(x => x.techLevel <= TechLevel.Industrial && x != microElectronics && !x.ContainsTechProjectAsPrerequisite(microElectronics)).ToList();
+            }
+            else
+            {
+                list = list.Where(x => x.techLevel <= TechLevel.Medieval).ToList();
             }
             return list;
         }

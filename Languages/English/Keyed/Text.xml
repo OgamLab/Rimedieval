@@ -4,7 +4,7 @@
 	<RM.FactionTechLevelInfo>Tech level: {0}</RM.FactionTechLevelInfo>
 	<RM.DisableMechanoids>Disable mechanoids</RM.DisableMechanoids>
 	<RM.DisableTechRestriction>Disable research tech level restriction</RM.DisableTechRestriction>
-	<RM.RestrictTechToMedievalOnly>Restrict tech research level to medieval only</RM.RestrictTechToMedievalOnly>
+	<RM.RestrictTechToPreIndustrialOnly>Restrict tech research level to pre-industrial only</RM.RestrictTechToPreIndustrialOnly>
 	<RM.Locked>To access it you have to research 50% of current tech level.</RM.Locked>
 	
 	<RM.YouHaveEndedFinalQuestSuccessfully>Congratulations on your successful conquests. Now this place belongs to you and it is up to you whether you want to continue or stop.</RM.YouHaveEndedFinalQuestSuccessfully>

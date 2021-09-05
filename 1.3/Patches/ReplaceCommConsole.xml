@@ -13,8 +13,9 @@
 						<description>Allows radio contact with other factions and orbital traders.</description>
 						<thingClass>Building_CommsConsole</thingClass>
 						<category>Building</category>
+						<techLevel>Neolithic</techLevel>
 						<graphicData>
-							<texPath>Things/Building/Misc/Campfire</texPath>
+							<texPath>Things/Building/BigCampfire/Signal_Fire</texPath>
 							<graphicClass>Graphic_Single</graphicClass>
 							<drawRotated>false</drawRotated>
 							<allowFlip>false</allowFlip>
@@ -24,8 +25,7 @@
 							</damageData>
 						</graphicData>
 						<size>(2,2)</size>
-
-						<uiIconPath>Things/Building/Misc/Campfire_MenuIcon</uiIconPath>
+						<uiIconPath>Things/Building/BigCampfire/Signal_Fire</uiIconPath>
 						<altitudeLayer>Building</altitudeLayer>
 						<passability>PassThroughOnly</passability>
 						<pathCost>42</pathCost>
@@ -76,6 +76,7 @@
 								<heatPushMaxTemperature>28</heatPushMaxTemperature>
 							</li>
 							<li Class="CompProperties_FireOverlay">
+								<compClass>Rimedieval.CompFireOverlay</compClass>
 								<fireSize>2</fireSize>
 							</li>
 							<li>

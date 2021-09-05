@@ -18,14 +18,14 @@ namespace Rimedieval
         public bool disableMechanoids = true;
         public bool rimedievalMechAddonWasLoaded = false;
         public bool disableTechRestriction;
-        public bool restrictTechToMedievalOnly;
+        public bool restrictTechToPreIndustrialOnly;
         public override void ExposeData()
         {
             base.ExposeData();
             Scribe_Values.Look(ref disableMechanoids, "disableMechanoids", true);
             Scribe_Values.Look(ref rimedievalMechAddonWasLoaded, "rimedievalMechAddonWasLoaded", false);
             Scribe_Values.Look(ref disableTechRestriction, "disableTechRestriction", false);
-            Scribe_Values.Look(ref restrictTechToMedievalOnly, "restrictTechToMedievalOnly", false);
+            Scribe_Values.Look(ref restrictTechToPreIndustrialOnly, "restrictTechToPreIndustrialOnly", false);
         }
         public void DoSettingsWindowContents(Rect inRect)
         {
@@ -36,7 +36,7 @@ namespace Rimedieval
             listingStandard.Begin(rect2);
             listingStandard.CheckboxLabeled("RM.DisableMechanoids".Translate(), ref disableMechanoids);
             listingStandard.CheckboxLabeled("RM.DisableTechRestriction".Translate(), ref disableTechRestriction);
-            listingStandard.CheckboxLabeled("RM.RestrictTechToMedievalOnly".Translate(), ref restrictTechToMedievalOnly);
+            listingStandard.CheckboxLabeled("RM.RestrictTechToPreIndustrialOnly".Translate(), ref restrictTechToPreIndustrialOnly);
 
             listingStandard.End();
             Widgets.EndScrollView();
