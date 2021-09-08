@@ -36,7 +36,7 @@ namespace Rimedieval
 
         public static IEnumerable<PreceptThingChance> AllowedPrecepts(IEnumerable<PreceptThingChance> __result)
         {
-            return __result.Where(x => x.def.IsAllowed() && x.chance > 0);
+            return __result.Where(x => x.def.IsAllowedForMedieval() && x.chance > 0);
         }
     }
 
@@ -435,9 +435,9 @@ namespace Rimedieval
     {
         public static void Postfix(ResearchProjectDef __instance, ref bool __result)
         {
-            if (__result && !RimedievalMod.settings.disableTechRestriction)
+            if (__result)
             {
-                __result = FactionTracker.Instance.AllowedTechLevels().Contains(__instance);
+                __result = FactionTracker.Instance.AllowedResearchProjects(DefDatabase<ResearchProjectDef>.AllDefs).Contains(__instance);
             }
         }
     }
@@ -447,10 +447,7 @@ namespace Rimedieval
     {
         public static void Postfix(ref List<ResearchProjectDef> __result)
         {
-            if (!RimedievalMod.settings.disableTechRestriction)
-            {
-                __result = __result.GetAllowedProjectDefs();
-            }
+            __result = __result.GetAllowedProjectDefs();
         }
     }
 
@@ -461,14 +458,18 @@ namespace Rimedieval
         [TweakValue("000", 0, 80)] public static float xOffset = 12;
         public static void Postfix(ResearchProjectDef ___selectedProject, Rect leftOutRect)
         {
-            Rect position = leftOutRect;
-            GUI.BeginGroup(position);
-            if (___selectedProject != null && !___selectedProject.IsFinished && !FactionTracker.Instance.AllowedTechLevels().Contains(___selectedProject))
+            if (!RimedievalMod.settings.disableTechRestriction)
             {
-                Rect rect = new Rect(xOffset, yOffset, position.width, 50f);
-                Widgets.Label(rect, "RM.Locked".Translate());
+                Rect position = leftOutRect;
+                GUI.BeginGroup(position);
+                if (___selectedProject != null && !___selectedProject.IsFinished
+                    && !FactionTracker.Instance.AllowedResearchProjects(DefDatabase<ResearchProjectDef>.AllDefs).Contains(___selectedProject))
+                {
+                    Rect rect = new Rect(xOffset, yOffset, position.width, 50f);
+                    Widgets.Label(rect, "RM.Locked".Translate());
+                }
+                GUI.EndGroup();
             }
-            GUI.EndGroup();
         }
     }
 
@@ -491,18 +492,15 @@ namespace Rimedieval
         public static void Prefix(out List<ResearchProjectDef> __state)
         {
             __state = new List<ResearchProjectDef>();
-            if (!RimedievalMod.settings.disableTechRestriction)
+            var list = DefDatabase<ResearchProjectDef>.AllDefsListForReading;
+            var alloweedDefs = list.GetAllowedProjectDefs();
+            for (int num = list.Count - 1; num >= 0; num--)
             {
-                var list = DefDatabase<ResearchProjectDef>.AllDefsListForReading;
-                var alloweedDefs = list.GetAllowedProjectDefs();
-                for (int num = list.Count - 1; num >= 0; num--)
+                var def = list[num];
+                if (!alloweedDefs.Contains(def))
                 {
-                    var def = list[num];
-                    if (!alloweedDefs.Contains(def))
-                    {
-                        __state.Add(def);
-                        RemoveDef(def);
-                    }
+                    __state.Add(def);
+                    RemoveDef(def);
                 }
             }
         }
@@ -699,7 +697,6 @@ namespace Rimedieval
         }
     }
 
-
     [HarmonyPatch(typeof(SiegeBlueprintPlacer))]
     [HarmonyPatch("PlaceArtilleryBlueprints")]
     public static class PlaceArtilleryBlueprints_Patch
@@ -716,17 +713,18 @@ namespace Rimedieval
     
         private static bool IsMedievalArtillery(ThingDef thingDef)
         {
-            if (thingDef.building?.turretGunDef != null)
+            if (thingDef.building?.turretGunDef != null && thingDef.blueprintDef != null && thingDef.IsAllowedForMedieval())
             {
                 if (thingDef.building.buildingTags.Contains("ArtilleryMedieval_BaseDestroyer") || thingDef.building.buildingTags.Contains("ArtilleryMedieval"))
                 {
                     return true;
                 }
-                //var defName = thingDef.defName.ToLower();
-                //if (defName.Contains("trebuchet") || defName.Contains("ballista"))
-                //{
-                //    return true;
-                //}
+
+                var defName = thingDef.defName.ToLower();
+                if (defName.Contains("trebuchet"))
+                {
+                    return true;
+                }
             }
             return false;
         }

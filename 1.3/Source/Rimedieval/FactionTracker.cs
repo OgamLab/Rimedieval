@@ -133,9 +133,8 @@ namespace Rimedieval
             }
         }
 
-        public List<ResearchProjectDef> AllowedTechLevels()
+        public List<ResearchProjectDef> AllowedResearchProjects(IEnumerable<ResearchProjectDef> projects)
         {
-            var projects = DefDatabase<ResearchProjectDef>.AllDefs;
             playerTechLevel = DetermineCurrentPlayerTechLevel();
             var techLevelToUnlock = EnoughTechProgress() ? playerTechLevel + 1 : playerTechLevel;
             return projects.Where(x => x.techLevel <= techLevelToUnlock).ToList();

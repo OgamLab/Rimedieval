@@ -124,7 +124,7 @@ namespace Rimedieval
         {
             foreach (var thing in things)
             {
-                if (thing.def.IsAllowed())
+                if (thing.def.IsAllowedForMedieval())
                 {
                     yield return thing;
                 }
@@ -134,13 +134,13 @@ namespace Rimedieval
         {
             foreach (var def in things)
             {
-                if (def.IsAllowed())
+                if (def.IsAllowedForMedieval())
                 {
                     yield return def;
                 }
             }
         }
-        public static bool IsAllowed(this ThingDef def)
+        public static bool IsAllowedForMedieval(this ThingDef def)
         {
             var techLevel = GetTechLevelFor(def);
             if (techLevel < TechLevel.Industrial)
@@ -175,6 +175,10 @@ namespace Rimedieval
             else
             {
                 list = list.Where(x => x.techLevel <= TechLevel.Medieval).ToList();
+            }
+            if (!RimedievalMod.settings.disableTechRestriction)
+            {
+                list = FactionTracker.Instance.AllowedResearchProjects(list);
             }
             return list;
         }
