@@ -112,6 +112,9 @@
 							<artificialForMeditationPurposes>false</artificialForMeditationPurposes>
 							<destroySound>BuildingDestroyed_Wood_Small</destroySound>
 						</building>
+						<researchPrerequisites>
+							<li>RM_SignalFire</li>
+						</researchPrerequisites>
 					</ThingDef>
 				</value>
 			</li>

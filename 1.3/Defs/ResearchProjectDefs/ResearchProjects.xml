@@ -1,0 +1,20 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<Defs>
+
+  <!--=============================== Tier 1: pre-electricity ===================================-->
+  
+  <ResearchProjectDef>
+    <defName>RM_SignalFire</defName>
+    <label>signal fire</label>
+    <description>Adds a signal fire with which you can communicate from a distance.</description>
+    <baseCost>500</baseCost>
+    <techLevel>Neolithic</techLevel>
+    <tags>
+      <li>TribalStart</li>
+    </tags>
+	<researchViewX>0.00</researchViewX>
+	<researchViewY>3.50</researchViewY>
+	
+  </ResearchProjectDef>
+
+</Defs>
