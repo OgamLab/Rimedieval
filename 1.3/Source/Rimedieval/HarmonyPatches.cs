@@ -559,6 +559,16 @@ namespace Rimedieval
         }
     }
 
+    [HarmonyPatch(typeof(IncidentWorker_OrbitalTraderArrival))]
+    [HarmonyPatch("TryExecuteWorker")]
+    public static class IncidentWorker_OrbitalTraderArrival_TryExecuteWorkerPatch
+    {
+        public static bool Prefix(IncidentParms parms)
+        {
+            return false;
+        }
+    }
+
     [HarmonyPatch(typeof(IncidentWorker_RaidEnemy))]
     [HarmonyPatch("TryExecuteWorker")]
     public static class TryExecuteWorkerPatch

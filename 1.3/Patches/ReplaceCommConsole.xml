@@ -9,8 +9,8 @@
 				<value>
 					<ThingDef ParentName="BuildingBase">
 						<defName>CommsConsole</defName>
-						<label>big campfire</label>
-						<description>Allows radio contact with other factions and orbital traders.</description>
+						<label>signal fire</label>
+						<description>Allows distant contact with other factions.</description>
 						<thingClass>Building_CommsConsole</thingClass>
 						<category>Building</category>
 						<techLevel>Neolithic</techLevel>
