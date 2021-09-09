@@ -435,7 +435,7 @@ namespace Rimedieval
     {
         public static void Postfix(ResearchProjectDef __instance, ref bool __result)
         {
-            if (__result && RimedievalMod.settings.disableTechRestriction)
+            if (__result && !RimedievalMod.settings.disableTechRestriction)
             {
                 __result = FactionTracker.Instance.AllowedResearchProjects(DefDatabase<ResearchProjectDef>.AllDefs).Contains(__instance);
             }
