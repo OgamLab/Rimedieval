@@ -176,10 +176,6 @@ namespace Rimedieval
             {
                 list = list.Where(x => x.techLevel <= TechLevel.Medieval).ToList();
             }
-            if (!RimedievalMod.settings.disableTechRestriction)
-            {
-                list = FactionTracker.Instance.AllowedResearchProjects(list);
-            }
             return list;
         }
         private static void AssignApparelLists()
