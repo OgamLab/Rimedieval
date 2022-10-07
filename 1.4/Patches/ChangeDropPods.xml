@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Patch>
+
+	<Operation Class="PatchOperationSequence">
+		<operations>
+			<li Class="PatchOperationReplace">
+				<xpath>/Defs/ThingDef[defName="TransportPod" or defName="ActiveDropPod" or defName="DropPodIncoming" or defName="DropPodLeaving"]/graphicData/drawSize</xpath>
+				<value>
+					<drawSize>5</drawSize>
+				</value>
+			</li>
+		</operations>	
+	</Operation>
+
+</Patch>

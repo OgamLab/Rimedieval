@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Patch>
+
+	<Operation Class="PatchOperationSequence">
+		<operations>
+			<li Class="PatchOperationReplace">
+				<xpath>/Defs/ThingDef[defName = "MineablePlasteel" or defName = "MineableComponentsIndustrial"]/building/mineableScatterCommonality</xpath>
+				<value>
+					<mineableScatterCommonality>0</mineableScatterCommonality>
+				</value>
+			</li>
+		</operations>	
+	</Operation>
+
+</Patch>

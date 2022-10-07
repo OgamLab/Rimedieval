@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<Patch>
+	<Operation Class="PatchOperationSequence">
+		<operations>
+			<li Class="PatchOperationAddModExtension">
+				<xpath>Defs/ResearchProjectDef[defName = "RecurveBow" or defName = "Smithing" or defName = "Greatbow" or defName = "LongBlades" or defName = "LongBlades" 
+				or defName = "Electricity" or defName = "Machining" or defName = "Batteries" or defName = "BiofuelRefining"]</xpath>
+				<value>
+					<li Class="Rimedieval.TechExtension">
+						<isKeyProject>True</isKeyProject>
+					</li>
+				</value>
+			</li>
+		</operations>
+	</Operation>
+</Patch>
