@@ -1,18 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.IO;
-using System.Linq;
-using System.Reflection;
-using System.Runtime.CompilerServices;
-using HarmonyLib;
-using RimWorld;
+﻿using RimWorld;
 using RimWorld.Planet;
 using RimWorld.QuestGen;
-using RimWorld.SketchGen;
-using UnityEngine;
+using System.Collections.Generic;
+using System.Linq;
 using Verse;
-using Verse.AI;
 
 namespace Rimedieval
 {
@@ -37,18 +28,22 @@ namespace Rimedieval
 				newFactions.Add(faction);
 			}
 			slate.Set("enemyFactions", newFactions);
-			QuestPart_AddFactions questPart = new QuestPart_AddFactions();
-			questPart.inSignal = QuestGenUtility.HardcodedSignalWithQuestID(inSignal.GetValue(slate)) ?? slate.Get<string>("inSignal");
-			questPart.enemyFactions = newFactions;
+			QuestPart_AddFactions questPart = new QuestPart_AddFactions
+			{
+				inSignal = QuestGenUtility.HardcodedSignalWithQuestID(inSignal.GetValue(slate)) ?? slate.Get<string>("inSignal"),
+				enemyFactions = newFactions
+			};
 			QuestGen.quest.AddPart(questPart);
 		}
 		public static Faction NewGeneratedFaction(FactionGeneratorParms parms)
 		{
 			FactionDef factionDef = parms.factionDef;
 			parms.ideoGenerationParms.forFaction = factionDef;
-			Faction faction = new Faction();
-			faction.def = factionDef;
-			faction.loadID = Find.UniqueIDsManager.GetNextFactionID();
+			Faction faction = new Faction
+			{
+				def = factionDef,
+				loadID = Find.UniqueIDsManager.GetNextFactionID()
+			};
 			faction.colorFromSpectrum = FactionGenerator.NewRandomColorFromSpectrum(faction);
 			faction.hidden = parms.hidden;
 			if (factionDef.humanlikeFaction)
@@ -83,13 +78,12 @@ namespace Rimedieval
 					faction.Name = text;
 				}
 			}
-			faction.centralMelanin = Rand.Value;
 			return faction;
 		}
 	}
 	public class QuestPart_AddFactions : QuestPart
 	{
-		public string inSignal; 
+		public string inSignal;
 		public List<Faction> enemyFactions;
 		public override void Notify_QuestSignalReceived(Signal signal)
 		{
@@ -99,7 +93,7 @@ namespace Rimedieval
 				return;
 			}
 
-			foreach (var faction in enemyFactions)
+			foreach (Faction faction in enemyFactions)
 			{
 				foreach (Faction item in Find.FactionManager.AllFactionsListForReading)
 				{
@@ -122,7 +116,7 @@ namespace Rimedieval
 		public override void ExposeData()
 		{
 			base.ExposeData();
-			Scribe_Values.Look(ref inSignal, "inSignal"); 
+			Scribe_Values.Look(ref inSignal, "inSignal");
 			Scribe_Collections.Look(ref enemyFactions, "enemyFactions", LookMode.Deep);
 		}
 	}
