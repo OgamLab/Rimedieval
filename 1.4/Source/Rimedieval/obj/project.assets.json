@@ -16,7 +16,7 @@
           "build/Krafs.Publicizer.targets": {}
         }
       },
-      "Krafs.Rimworld.Ref/1.4.3523-beta": {
+      "Krafs.Rimworld.Ref/1.4.3563": {
         "type": "package",
         "compile": {
           "ref/net472/Assembly-CSharp-firstpass.dll": {},
@@ -142,7 +142,7 @@
           "build/Krafs.Publicizer.targets": {}
         }
       },
-      "Krafs.Rimworld.Ref/1.4.3523-beta": {
+      "Krafs.Rimworld.Ref/1.4.3563": {
         "type": "package",
         "compile": {
           "ref/net472/Assembly-CSharp-firstpass.dll": {},
@@ -268,7 +268,7 @@
           "build/Krafs.Publicizer.targets": {}
         }
       },
-      "Krafs.Rimworld.Ref/1.4.3523-beta": {
+      "Krafs.Rimworld.Ref/1.4.3563": {
         "type": "package",
         "compile": {
           "ref/net472/Assembly-CSharp-firstpass.dll": {},
@@ -394,7 +394,7 @@
           "build/Krafs.Publicizer.targets": {}
         }
       },
-      "Krafs.Rimworld.Ref/1.4.3523-beta": {
+      "Krafs.Rimworld.Ref/1.4.3563": {
         "type": "package",
         "compile": {
           "ref/net472/Assembly-CSharp-firstpass.dll": {},
@@ -525,17 +525,17 @@
         "krafs.publicizer.nuspec"
       ]
     },
-    "Krafs.Rimworld.Ref/1.4.3523-beta": {
-      "sha512": "Ef43bs0va28DKFcckDbpWSv2nzwl5fRP8SpG0X3ESBvUiXAp8nGuRhdM3Z4p3wRr63f0J/JTQq1I+ci3qNTFRw==",
+    "Krafs.Rimworld.Ref/1.4.3563": {
+      "sha512": "O1VIJk3inWgS6ZE3x2sPF77fLA4VRL77NSVB1Y0y7pdExAtlBMrVEA5CBaXpOY0jrGEyR5pyXdBInrJDbDjc/w==",
       "type": "package",
-      "path": "krafs.rimworld.ref/1.4.3523-beta",
+      "path": "krafs.rimworld.ref/1.4.3563",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
         "LICENSE.md",
         "README.md",
         "icon.png",
-        "krafs.rimworld.ref.1.4.3523-beta.nupkg.sha512",
+        "krafs.rimworld.ref.1.4.3563.nupkg.sha512",
         "krafs.rimworld.ref.nuspec",
         "ref/net472/Assembly-CSharp-firstpass.dll",
         "ref/net472/Assembly-CSharp.dll",
@@ -723,7 +723,7 @@
   "projectFileDependencyGroups": {
     ".NETFramework,Version=v4.7.2": [
       "Krafs.Publicizer >= 2.0.1",
-      "Krafs.Rimworld.Ref >= 1.4.3523-beta",
+      "Krafs.Rimworld.Ref >= 1.4.3563",
       "Lib.Harmony >= 2.2.2",
       "System.Linq >= 4.3.0"
     ]
@@ -769,7 +769,7 @@
           },
           "Krafs.Rimworld.Ref": {
             "target": "Package",
-            "version": "[1.4.3523-beta, )"
+            "version": "[1.4.3563, )"
           },
           "Lib.Harmony": {
             "target": "Package",

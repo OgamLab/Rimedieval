@@ -417,17 +417,7 @@ namespace Rimedieval
     }
 
 
-    [HarmonyPatch(typeof(ResearchProjectDef), "CanStartNow", MethodType.Getter)]
-    public static class CanStartNow_Patch
-    {
-        public static void Postfix(ResearchProjectDef __instance, ref bool __result)
-        {
-            if (__result && !RimedievalMod.settings.disableTechRestriction)
-            {
-                __result = FactionTracker.Instance.AllowedResearchProjects(DefDatabase<ResearchProjectDef>.AllDefs).Contains(__instance);
-            }
-        }
-    }
+
 
     [HarmonyPatch(typeof(MainTabWindow_Research), "VisibleResearchProjects", MethodType.Getter)]
     public static class VisibleResearchProjects_Patch
@@ -438,40 +428,28 @@ namespace Rimedieval
         }
     }
 
-    [HarmonyPatch(typeof(MainTabWindow_Research), "DrawLeftRect")]
-    public static class DrawLeftRect_Patch
-    {
-        [TweakValue("000", 500, 800)] public static float yOffset = 565;
-        [TweakValue("000", 0, 80)] public static float xOffset = 12;
-        public static void Postfix(ResearchProjectDef ___selectedProject, Rect leftOutRect)
-        {
-            if (!RimedievalMod.settings.disableTechRestriction)
-            {
-                Rect position = leftOutRect;
-                GUI.BeginGroup(position);
-                if (___selectedProject != null && !___selectedProject.IsFinished
-                    && !FactionTracker.Instance.AllowedResearchProjects(DefDatabase<ResearchProjectDef>.AllDefs).Contains(___selectedProject))
-                {
-                    Rect rect = new Rect(xOffset, yOffset, position.width, 50f);
-                    Widgets.Label(rect, "RM.Locked".Translate());
-                }
-                GUI.EndGroup();
-            }
-        }
-    }
-
     [HarmonyPatch]
     public class ResearchPal_Patch
     {
+        static List<MethodInfo> meths = new List<MethodInfo>();
         private static bool Prepare()
         {
-            return ModLister.HasActiveModWithName("ResearchPal") || ModLister.HasActiveModWithName("ResearchPal - Forked");
+            var meth = AccessTools.Method("ResearchPal.Tree:PopulateNodes");
+            if (meth != null)
+            {
+                meths.Add(meth);
+            }
+            meth = AccessTools.Method("ResearchPowl.Tree:PopulateNodes");
+            if (meth != null)
+            {
+                meths.Add(meth);
+            }
+            return meths.Any();
         }
 
         private static IEnumerable<MethodBase> TargetMethods()
         {
-            MethodInfo meth = AccessTools.Method("ResearchPal.Tree:PopulateNodes");
-            if (meth != null)
+            foreach (var meth in meths)
             {
                 yield return meth;
             }
@@ -683,98 +661,6 @@ namespace Rimedieval
                     yield return r;
                 }
             }
-        }
-    }
-
-    [HarmonyPatch(typeof(SiegeBlueprintPlacer))]
-    [HarmonyPatch("PlaceArtilleryBlueprints")]
-    public static class PlaceArtilleryBlueprints_Patch
-    {
-        [HarmonyPriority(Priority.Last)]
-        public static IEnumerable<Blueprint_Build> Postfix(IEnumerable<Blueprint_Build> __result, float points, Map map, Faction ___faction, IntVec3 ___center)
-        {
-            List<Blueprint_Build> list = PlaceArtilleryBlueprints(ref points, map, ___faction, ___center);
-            foreach (Blueprint_Build r in list)
-            {
-                yield return r;
-            }
-        }
-
-        private static bool IsMedievalArtillery(ThingDef thingDef)
-        {
-            if (thingDef.building?.turretGunDef != null && thingDef.blueprintDef != null && thingDef.IsAllowedForMedieval())
-            {
-                if (thingDef.building.buildingTags.Contains("ArtilleryMedieval_BaseDestroyer") || thingDef.building.buildingTags.Contains("ArtilleryMedieval"))
-                {
-                    return true;
-                }
-
-                string defName = thingDef.defName.ToLower();
-                if (defName.Contains("trebuchet"))
-                {
-                    return true;
-                }
-            }
-            return false;
-        }
-        public static List<Blueprint_Build> PlaceArtilleryBlueprints(ref float points, Map map, Faction ___faction, IntVec3 ___center)
-        {
-            List<Blueprint_Build> list = new List<Blueprint_Build>();
-            IEnumerable<ThingDef> artyDefs = DefDatabase<ThingDef>.AllDefs.Where((ThingDef def) => IsMedievalArtillery(def));
-            if (artyDefs.Any())
-            {
-                int numArtillery = Mathf.RoundToInt(points / 60f);
-                numArtillery = Mathf.Clamp(numArtillery, 1, 2);
-                for (int i = 0; i < numArtillery; i++)
-                {
-                    Rot4 random = Rot4.Random;
-                    ThingDef thingDef = artyDefs.RandomElement();
-                    IntVec3 intVec = FindArtySpot(thingDef, random, map, ___center);
-                    if (!intVec.IsValid)
-                    {
-                        break;
-                    }
-                    list.Add(GenConstruct.PlaceBlueprintForBuild(thingDef, intVec, map, random, ___faction, ThingDefOf.WoodLog));
-                    points -= 60f;
-                }
-            }
-            else
-            {
-                Log.Message("Failed to find arty");
-            }
-            points = 0;
-            return list;
-        }
-        private static IntVec3 FindArtySpot(ThingDef artyDef, Rot4 rot, Map map, IntVec3 center)
-        {
-            CellRect cellRect = CellRect.CenteredOn(center, 8);
-            cellRect.ClipInsideMap(map);
-            int num = 0;
-            IntVec3 randomCell;
-            do
-            {
-                num++;
-                if (num > 200)
-                {
-                    return IntVec3.Invalid;
-                }
-                randomCell = cellRect.RandomCell;
-            }
-            while (!map.reachability.CanReach(randomCell, center, PathEndMode.OnCell, TraverseMode.NoPassClosedDoors, Danger.Deadly) || randomCell.Roofed(map) || !CanPlaceBlueprintAt(randomCell, rot, artyDef, map, ThingDefOf.Steel));
-            return randomCell;
-        }
-        private static bool CanPlaceBlueprintAt(IntVec3 root, Rot4 rot, ThingDef buildingDef, Map map, ThingDef stuffDef)
-        {
-            return GenConstruct.CanPlaceBlueprintAt(buildingDef, root, rot, map, godMode: false, null, null, stuffDef).Accepted;
-        }
-    }
-
-    [HarmonyPatch(typeof(MonumentMarker), "FirstDisallowedBuilding", MethodType.Getter)]
-    public class Patch_FirstDisallowedBuilding
-    {
-        public static bool Prefix(MonumentMarker __instance)
-        {
-            return !(__instance is NewCityMarker);
         }
     }
 

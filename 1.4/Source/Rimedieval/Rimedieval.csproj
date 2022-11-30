@@ -43,17 +43,6 @@
   <ItemGroup>
     <Compile Include="CompFireOverlay.cs" />
     <Compile Include="CompEmptyStateGraphic.cs" />
-    <Compile Include="Quest\QuestGen_NewHome.cs" />
-    <Compile Include="Quest\QuestNode_GenerateNewHome.cs" />
-    <Compile Include="Quest\QuestNode_CreateNewIndustrialFactions.cs" />
-    <Compile Include="Quest\QuestNode_GenerateNewCityMarker.cs" />
-    <Compile Include="Quest\QuestNode_GetNewCitySketch.cs" />
-    <Compile Include="Quest\QuestNode_WealthRequirement.cs" />
-    <Compile Include="Quest\QuestNode_SendRaids.cs" />
-    <Compile Include="Quest\QuestNode_EndedSuccessfully.cs" />
-    <Compile Include="Quest\QuestNode_CreateNewColony.cs" />
-    <Compile Include="Quest\NewCityMarker.cs" />
-    <Compile Include="Quest\SketchResolver_NewCity.cs" />
     <Compile Include="RimedievalMod.cs" />
     <Compile Include="RimedievalSettings.cs" />
     <Compile Include="TechExtension.cs" />
@@ -70,7 +59,7 @@
       <PrivateAssets>all</PrivateAssets>
     </PackageReference>
     <PackageReference Include="Krafs.Rimworld.Ref">
-      <Version>1.4.3523-beta</Version>
+      <Version>1.4.3563</Version>
     </PackageReference>
     <PackageReference Include="Lib.Harmony">
       <Version>2.2.2</Version>

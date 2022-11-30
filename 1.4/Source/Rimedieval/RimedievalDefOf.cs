@@ -14,10 +14,6 @@ namespace Rimedieval
     [DefOf]
     public static class RimedievalDefOf
     {
-        public static SketchResolverDef RM_NewCity;
         public static ResearchProjectDef Electricity;
-        public static QuestScriptDef RM_FinalQuest_NewCity;
-        public static ThingDef RM_NewCityMarker;
-        public static WorldObjectDef RM_NewCityObj;
     }
 }

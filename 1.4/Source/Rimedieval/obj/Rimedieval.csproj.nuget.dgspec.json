@@ -42,7 +42,7 @@
             },
             "Krafs.Rimworld.Ref": {
               "target": "Package",
-              "version": "[1.4.3523-beta, )"
+              "version": "[1.4.3563, )"
             },
             "Lib.Harmony": {
               "target": "Package",

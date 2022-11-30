@@ -67,11 +67,6 @@ namespace Rimedieval
         }
         public static void Setup()
         {
-            if (!RimedievalMod.settings.rimedievalMechAddonWasLoaded && ModLister.HasActiveModWithName(RimedievalSettings.RimedievalMechAddonModName))
-            {
-                RimedievalMod.settings.rimedievalMechAddonWasLoaded = true;
-                RimedievalMod.settings.disableMechanoids = false;
-            }
             RemoveTechHediffs();
         }
 
