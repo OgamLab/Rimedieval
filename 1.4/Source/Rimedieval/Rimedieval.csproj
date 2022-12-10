@@ -43,6 +43,7 @@
   <ItemGroup>
     <Compile Include="CompFireOverlay.cs" />
     <Compile Include="CompEmptyStateGraphic.cs" />
+    <Compile Include="DefCleaner.cs" />
     <Compile Include="RimedievalMod.cs" />
     <Compile Include="RimedievalSettings.cs" />
     <Compile Include="TechExtension.cs" />

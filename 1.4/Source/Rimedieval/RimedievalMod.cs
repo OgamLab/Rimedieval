@@ -23,6 +23,8 @@ namespace Rimedieval
         {
             settings = GetSettings<RimedievalSettings>();
             harmony = new Harmony("Ogam.Rimedieval");
+            harmony.Patch(AccessTools.Method(typeof(PlayerKnowledgeDatabase), "ReloadAndRebind"),
+                postfix: new HarmonyMethod(AccessTools.Method(typeof(DefCleaner), nameof(DefCleaner.ClearDefs))));
             var allowedThings = AccessTools.Method(typeof(RimedievalMod), nameof(RimedievalMod.AllowedThings));
             foreach (var stockGeneratorType in typeof(StockGenerator).AllSubclasses())
             {
@@ -37,6 +39,7 @@ namespace Rimedieval
                 }
             }
         }
+
         public static IEnumerable<Thing> AllowedThings(IEnumerable<Thing> __result)
         {
             return __result.GetAllowedThings();
