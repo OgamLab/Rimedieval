@@ -155,6 +155,16 @@ namespace Rimedieval
         }
         public static bool IsAllowedForRimedieval(this ThingDef thingDef)
         {
+            var defName = thingDef.defName;
+            if (defName == "Genepack" || defName == "ArchiteCapsule")
+            {
+                return false;
+            }
+            if (defName.Contains("Psytrainer") || defName.Contains("Neurotrainer"))
+            {
+                return true;
+            }
+
             var allowedResearchProjects = DefDatabase<ResearchProjectDef>.AllDefsListForReading.GetAllowedProjectDefs();
             if (thingDef.recipeMaker != null)
             {
@@ -182,14 +192,8 @@ namespace Rimedieval
                     return true;
                 }
             }
-
             var techLevel = GetTechLevelFor(thingDef);
             if (techLevel < TechLevel.Industrial)
-            {
-                return true;
-            }
-            var defName = thingDef.defName;
-            if (defName.Contains("Psytrainer") || defName.Contains("Neurotrainer"))
             {
                 return true;
             }
@@ -274,6 +278,8 @@ namespace Rimedieval
             "AncientFences",
             "AncientPipelineSection",
             "AncientJunkClusters",
+            "AncientExostriderRemains",
+            "AncientPollutionJunk"
         };
 
         public static List<string> incidentsToRemove = new List<string>

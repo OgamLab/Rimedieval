@@ -26,17 +26,36 @@ namespace Rimedieval
                 try
                 {
                     MethodInfo method = AccessTools.Method(preceptWorkerType, "get_ThingDefs");
-                    RimedievalMod.harmony.Patch(method, null, new HarmonyMethod(allowedPrecepts));
+                    RimedievalMod.harmony.Patch(method, null, postfix: new HarmonyMethod(allowedPrecepts));
                 }
                 catch
                 {
                 }
+            }
+            MethodInfo filterItems = AccessTools.Method(typeof(HarmonyPatches), nameof(HarmonyPatches.FilterItems));
+            foreach (var subType in typeof(ThingSetMaker).AllSubclasses())
+            {
+                try
+                {
+                    var method = AccessTools.Method(subType, "Generate", new Type[] { typeof(ThingSetMakerParams), typeof(List<Thing>) });
+                    RimedievalMod.harmony.Patch(method, null, postfix: new HarmonyMethod(filterItems));
+                }
+                catch { }
             }
         }
 
         public static IEnumerable<PreceptThingChance> AllowedPrecepts(IEnumerable<PreceptThingChance> __result)
         {
             return __result.Where(x => x.def.IsAllowedForRimedieval() && x.chance > 0);
+        }
+
+        public static void FilterItems(ThingSetMakerParams __0, List<Thing> __1)
+        {
+            var count = __1.RemoveAll(x => x.def.IsAllowedForRimedieval() is false);
+            if (count > 0)
+            {
+                Log.Message("Removed " + count);
+            }
         }
     }
 
@@ -46,6 +65,21 @@ namespace Rimedieval
         public static IEnumerable<ThingDef> Postfix(IEnumerable<ThingDef> __result)
         {
             return __result.GetAllowedThingDefs();
+        }
+    }
+
+
+
+    [HarmonyPatch(typeof(SymbolResolver_SingleThing), "Resolve")]
+    public static class SymbolResolver_SingleThing_Resolve_Patch
+    {
+        public static bool Prefix(ResolveParams rp)
+        {
+            if (rp.singleThingDef.IsAllowedForRimedieval() is false || rp.singleThingToSpawn != null && rp.singleThingToSpawn.def.IsAllowedForRimedieval() is false)
+            {
+                return false;
+            }
+            return true;
         }
     }
 
