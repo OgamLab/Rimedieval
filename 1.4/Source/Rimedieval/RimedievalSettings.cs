@@ -18,6 +18,7 @@ namespace Rimedieval
         public bool disableMechanoids = true;
 
         public bool restrictTechToPreIndustrialOnly;
+        public bool disableTechRestriction;
         public override void ExposeData()
         {
             base.ExposeData();
@@ -32,6 +33,7 @@ namespace Rimedieval
             Listing_Standard listingStandard = new Listing_Standard();
             listingStandard.Begin(rect2);
             listingStandard.CheckboxLabeled("RM.DisableMechanoids".Translate(), ref disableMechanoids);
+            listingStandard.CheckboxLabeled("RM.RestrictTechToPreIndustrialOnly".Translate(), ref restrictTechToPreIndustrialOnly);
             listingStandard.End();
             Widgets.EndScrollView();
             base.Write();

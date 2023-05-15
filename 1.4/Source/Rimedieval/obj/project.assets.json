@@ -2,7 +2,7 @@
   "version": 3,
   "targets": {
     ".NETFramework,Version=v4.7.2": {
-      "Krafs.Publicizer/2.0.1": {
+      "Krafs.Publicizer/2.2.1": {
         "type": "package",
         "contentFiles": {
           "contentfiles/cs/any/Publicizer/IgnoresAccessChecksToAttribute.cs": {
@@ -16,7 +16,7 @@
           "build/Krafs.Publicizer.targets": {}
         }
       },
-      "Krafs.Rimworld.Ref/1.4.3563": {
+      "Krafs.Rimworld.Ref/1.4.3704": {
         "type": "package",
         "compile": {
           "ref/net472/Assembly-CSharp-firstpass.dll": {},
@@ -128,7 +128,7 @@
       }
     },
     ".NETFramework,Version=v4.7.2/win": {
-      "Krafs.Publicizer/2.0.1": {
+      "Krafs.Publicizer/2.2.1": {
         "type": "package",
         "contentFiles": {
           "contentfiles/cs/any/Publicizer/IgnoresAccessChecksToAttribute.cs": {
@@ -142,7 +142,7 @@
           "build/Krafs.Publicizer.targets": {}
         }
       },
-      "Krafs.Rimworld.Ref/1.4.3563": {
+      "Krafs.Rimworld.Ref/1.4.3704": {
         "type": "package",
         "compile": {
           "ref/net472/Assembly-CSharp-firstpass.dll": {},
@@ -254,7 +254,7 @@
       }
     },
     ".NETFramework,Version=v4.7.2/win-x64": {
-      "Krafs.Publicizer/2.0.1": {
+      "Krafs.Publicizer/2.2.1": {
         "type": "package",
         "contentFiles": {
           "contentfiles/cs/any/Publicizer/IgnoresAccessChecksToAttribute.cs": {
@@ -268,7 +268,7 @@
           "build/Krafs.Publicizer.targets": {}
         }
       },
-      "Krafs.Rimworld.Ref/1.4.3563": {
+      "Krafs.Rimworld.Ref/1.4.3704": {
         "type": "package",
         "compile": {
           "ref/net472/Assembly-CSharp-firstpass.dll": {},
@@ -380,7 +380,7 @@
       }
     },
     ".NETFramework,Version=v4.7.2/win-x86": {
-      "Krafs.Publicizer/2.0.1": {
+      "Krafs.Publicizer/2.2.1": {
         "type": "package",
         "contentFiles": {
           "contentfiles/cs/any/Publicizer/IgnoresAccessChecksToAttribute.cs": {
@@ -394,7 +394,7 @@
           "build/Krafs.Publicizer.targets": {}
         }
       },
-      "Krafs.Rimworld.Ref/1.4.3563": {
+      "Krafs.Rimworld.Ref/1.4.3704": {
         "type": "package",
         "compile": {
           "ref/net472/Assembly-CSharp-firstpass.dll": {},
@@ -507,10 +507,10 @@
     }
   },
   "libraries": {
-    "Krafs.Publicizer/2.0.1": {
-      "sha512": "X8swN3Wq42/g6HBrdx6B0BNBJzxVyLmrKdZNp6YYafTm5GTSh9WSVDm1Z3qtR4Qmjoe9NF1wN0QNFuoBLpmoaQ==",
+    "Krafs.Publicizer/2.2.1": {
+      "sha512": "QGI4nMGQbKsuFUUboixVHu4mv3lHB5RejIa7toIlzTmwLkuCYYEpUBJjmy3OpXYyj5dVSZAXVbr4oeMSloE67Q==",
       "type": "package",
-      "path": "krafs.publicizer/2.0.1",
+      "path": "krafs.publicizer/2.2.1",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
@@ -521,21 +521,21 @@
         "build/net472/dnlib.dll",
         "contentfiles/cs/any/Publicizer/IgnoresAccessChecksToAttribute.cs",
         "icon.png",
-        "krafs.publicizer.2.0.1.nupkg.sha512",
+        "krafs.publicizer.2.2.1.nupkg.sha512",
         "krafs.publicizer.nuspec"
       ]
     },
-    "Krafs.Rimworld.Ref/1.4.3563": {
-      "sha512": "O1VIJk3inWgS6ZE3x2sPF77fLA4VRL77NSVB1Y0y7pdExAtlBMrVEA5CBaXpOY0jrGEyR5pyXdBInrJDbDjc/w==",
+    "Krafs.Rimworld.Ref/1.4.3704": {
+      "sha512": "INLy9Od0/msMfI9LROUaueV3QL8mnIB18xRjei5/Sw7HAYaw10emQKzts7la6AfSoFmB8mEY20bLVTnXNdeU7g==",
       "type": "package",
-      "path": "krafs.rimworld.ref/1.4.3563",
+      "path": "krafs.rimworld.ref/1.4.3704",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
         "LICENSE.md",
         "README.md",
         "icon.png",
-        "krafs.rimworld.ref.1.4.3563.nupkg.sha512",
+        "krafs.rimworld.ref.1.4.3704.nupkg.sha512",
         "krafs.rimworld.ref.nuspec",
         "ref/net472/Assembly-CSharp-firstpass.dll",
         "ref/net472/Assembly-CSharp.dll",
@@ -722,8 +722,8 @@
   },
   "projectFileDependencyGroups": {
     ".NETFramework,Version=v4.7.2": [
-      "Krafs.Publicizer >= 2.0.1",
-      "Krafs.Rimworld.Ref >= 1.4.3563",
+      "Krafs.Publicizer >= 2.2.1",
+      "Krafs.Rimworld.Ref >= 1.4.3704",
       "Lib.Harmony >= 2.2.2",
       "System.Linq >= 4.3.0"
     ]
@@ -765,11 +765,11 @@
             "include": "Runtime, Build, Native, ContentFiles, Analyzers, BuildTransitive",
             "suppressParent": "All",
             "target": "Package",
-            "version": "[2.0.1, )"
+            "version": "[2.2.1, )"
           },
           "Krafs.Rimworld.Ref": {
             "target": "Package",
-            "version": "[1.4.3563, )"
+            "version": "[1.4.3704, )"
           },
           "Lib.Harmony": {
             "target": "Package",

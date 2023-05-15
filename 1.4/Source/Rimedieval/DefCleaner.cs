@@ -153,13 +153,19 @@ namespace Rimedieval
                 }
             }
         }
+
+        public static bool MedievalGenepacksModIsActive = ModsConfig.IsActive("DankPyon.MedievalGenepacks");
         public static bool IsAllowedForRimedieval(this ThingDef thingDef)
         {
             var defName = thingDef.defName;
-            if (defName == "Genepack" || defName == "ArchiteCapsule")
+            if (MedievalGenepacksModIsActive is false)
             {
-                return false;
+                if (defName == "Genepack" || defName == "ArchiteCapsule")
+                {
+                    return false;
+                }
             }
+
             if (defName.Contains("Psytrainer") || defName.Contains("Neurotrainer"))
             {
                 return true;
