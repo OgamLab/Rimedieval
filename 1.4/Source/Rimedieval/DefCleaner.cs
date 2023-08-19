@@ -157,6 +157,7 @@ namespace Rimedieval
         public static bool MedievalGenepacksModIsActive = ModsConfig.IsActive("DankPyon.MedievalGenepacks");
         public static bool IsAllowedForRimedieval(this ThingDef thingDef)
         {
+            if (thingDef is null) return true;
             var defName = thingDef.defName;
             if (MedievalGenepacksModIsActive is false)
             {
