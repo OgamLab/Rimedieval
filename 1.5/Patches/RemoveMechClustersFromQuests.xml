@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Patch>
+	<Operation Class="PatchOperationFindMod">
+		<mods>
+			<li>Royalty</li>
+		</mods>
+		<match Class="PatchOperationSequence">
+			<operations>
+				<li Class="PatchOperationReplace">
+					<xpath>/Defs/QuestScriptDef/*//li/incidentDef[text()="MechCluster"]</xpath>
+					<value>
+						<incidentDef>RaidEnemy</incidentDef>
+					</value>
+				</li>
+				<li Class="PatchOperationReplace">
+					<xpath>/Defs/QuestScriptDef/*//li/value[text()="MechClusters"]</xpath>
+					<value>
+						<value>Raids</value>
+					</value>
+				</li>
+
+				<li Class="PatchOperationReplace">
+					<xpath>/Defs/QuestScriptDef/*//li/value[text()="Mechanoids"]</xpath>
+					<value>
+						<value>Pirate</value>
+					</value>
+				</li>
+			</operations>
+		</match>
+	</Operation>
+
+</Patch>
