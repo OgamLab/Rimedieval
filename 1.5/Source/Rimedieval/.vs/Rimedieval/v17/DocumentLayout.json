@@ -3,23 +3,23 @@
   "WorkspaceRootPath": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\RimWorld\\Mods\\Rimedieval\\1.5\\Source\\Rimedieval\\",
   "Documents": [
     {
-      "AbsoluteMoniker": "D:0:0:{B60900A1-7A44-43D8-B42C-C945CEC427AF}|Rimedieval.csproj|C:\\Program Files (x86)\\Steam\\steamapps\\common\\RimWorld\\Mods\\Rimedieval\\1.5\\Source\\Rimedieval\\harmonypatches.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{B60900A1-7A44-43D8-B42C-C945CEC427AF}|Rimedieval.csproj|solutionrelative:harmonypatches.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{B60900A1-7A44-43D8-B42C-C945CEC427AF}|Rimedieval.csproj|C:\\Program Files (x86)\\Steam\\steamapps\\common\\RimWorld\\Mods\\Rimedieval\\1.5\\Source\\Rimedieval\\defcleaner.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B60900A1-7A44-43D8-B42C-C945CEC427AF}|Rimedieval.csproj|solutionrelative:defcleaner.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{B60900A1-7A44-43D8-B42C-C945CEC427AF}|Rimedieval.csproj|C:\\Program Files (x86)\\Steam\\steamapps\\common\\RimWorld\\Mods\\Rimedieval\\1.5\\Source\\Rimedieval\\utils.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{B60900A1-7A44-43D8-B42C-C945CEC427AF}|Rimedieval.csproj|solutionrelative:utils.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
-      "AbsoluteMoniker": "D:0:0:{B60900A1-7A44-43D8-B42C-C945CEC427AF}|Rimedieval.csproj|c:\\program files (x86)\\steam\\steamapps\\common\\rimworld\\mods\\rimedieval\\1.5\\source\\rimedieval\\defcleaner.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
-      "RelativeMoniker": "D:0:0:{B60900A1-7A44-43D8-B42C-C945CEC427AF}|Rimedieval.csproj|solutionrelative:defcleaner.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
+      "AbsoluteMoniker": "D:0:0:{00000000-0000-0000-0000-000000000000}|\u003CSolution\u003E|Rimedieval||{04B8AB82-A572-4FEF-95CE-5222444B6B64}|"
+    },
+    {
+      "AbsoluteMoniker": "D:0:0:{B60900A1-7A44-43D8-B42C-C945CEC427AF}|Rimedieval.csproj|c:\\program files (x86)\\steam\\steamapps\\common\\rimworld\\mods\\rimedieval\\1.5\\source\\rimedieval\\harmonypatches.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
+      "RelativeMoniker": "D:0:0:{B60900A1-7A44-43D8-B42C-C945CEC427AF}|Rimedieval.csproj|solutionrelative:harmonypatches.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
     },
     {
       "AbsoluteMoniker": "D:0:0:{B60900A1-7A44-43D8-B42C-C945CEC427AF}|Rimedieval.csproj|C:\\Program Files (x86)\\Steam\\steamapps\\common\\RimWorld\\Mods\\Rimedieval\\1.5\\Source\\Rimedieval\\rimedievaldefof.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
       "RelativeMoniker": "D:0:0:{B60900A1-7A44-43D8-B42C-C945CEC427AF}|Rimedieval.csproj|solutionrelative:rimedievaldefof.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}"
-    },
-    {
-      "AbsoluteMoniker": "D:0:0:{00000000-0000-0000-0000-000000000000}|\u003CSolution\u003E|Rimedieval||{04B8AB82-A572-4FEF-95CE-5222444B6B64}|"
     },
     {
       "AbsoluteMoniker": "D:0:0:{B60900A1-7A44-43D8-B42C-C945CEC427AF}|Rimedieval.csproj|C:\\Program Files (x86)\\Steam\\steamapps\\common\\RimWorld\\Mods\\Rimedieval\\1.5\\Source\\Rimedieval\\rimedievalsettings.cs||{A6C744A8-0E4A-4FC6-886A-064283054674}",
@@ -52,17 +52,17 @@
       "DocumentGroups": [
         {
           "DockedWidth": 200,
-          "SelectedChildIndex": 5,
+          "SelectedChildIndex": 0,
           "Children": [
             {
               "$type": "Document",
-              "DocumentIndex": 2,
+              "DocumentIndex": 0,
               "Title": "DefCleaner.cs",
               "DocumentMoniker": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\RimWorld\\Mods\\Rimedieval\\1.5\\Source\\Rimedieval\\DefCleaner.cs",
               "RelativeDocumentMoniker": "DefCleaner.cs",
-              "ToolTip": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\RimWorld\\Mods\\Rimedieval\\1.5\\Source\\Rimedieval\\DefCleaner.cs",
-              "RelativeToolTip": "DefCleaner.cs",
-              "ViewState": "AQIAAAUAAAAAAAAAAAAmwBIAAAAKAAAA",
+              "ToolTip": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\RimWorld\\Mods\\Rimedieval\\1.5\\Source\\Rimedieval\\DefCleaner.cs*",
+              "RelativeToolTip": "DefCleaner.cs*",
+              "ViewState": "AQIAAO8AAAAAAAAAAAAcwPwAAABrAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-04-23T13:52:36.3Z",
               "EditorCaption": ""
@@ -82,7 +82,7 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 3,
+              "DocumentIndex": 4,
               "Title": "RimedievalDefOf.cs",
               "DocumentMoniker": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\RimWorld\\Mods\\Rimedieval\\1.5\\Source\\Rimedieval\\RimedievalDefOf.cs",
               "RelativeDocumentMoniker": "RimedievalDefOf.cs",
@@ -121,20 +121,20 @@
             },
             {
               "$type": "Document",
-              "DocumentIndex": 0,
+              "DocumentIndex": 3,
               "Title": "HarmonyPatches.cs",
               "DocumentMoniker": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\RimWorld\\Mods\\Rimedieval\\1.5\\Source\\Rimedieval\\HarmonyPatches.cs",
               "RelativeDocumentMoniker": "HarmonyPatches.cs",
-              "ToolTip": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\RimWorld\\Mods\\Rimedieval\\1.5\\Source\\Rimedieval\\HarmonyPatches.cs*",
-              "RelativeToolTip": "HarmonyPatches.cs*",
-              "ViewState": "AQIAANAAAAAAAAAAAAAmwNcAAABEAAAA",
+              "ToolTip": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\RimWorld\\Mods\\Rimedieval\\1.5\\Source\\Rimedieval\\HarmonyPatches.cs",
+              "RelativeToolTip": "HarmonyPatches.cs",
+              "ViewState": "AQIAAAwBAAAAAAAAAAAmwOsAAAAQAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-04-23T13:52:36.541Z",
               "EditorCaption": ""
             },
             {
               "$type": "Document",
-              "DocumentIndex": 4,
+              "DocumentIndex": 2,
               "Title": "Rimedieval",
               "DocumentMoniker": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\RimWorld\\Mods\\Rimedieval\\1.5\\Source\\Rimedieval\\Rimedieval.csproj",
               "RelativeDocumentMoniker": "Rimedieval.csproj",
@@ -165,7 +165,7 @@
               "RelativeDocumentMoniker": "Utils.cs",
               "ToolTip": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\RimWorld\\Mods\\Rimedieval\\1.5\\Source\\Rimedieval\\Utils.cs",
               "RelativeToolTip": "Utils.cs",
-              "ViewState": "AQIAACcAAAAAAAAAAAAowBwAAAAWAAAA",
+              "ViewState": "AQIAAAYAAAAAAAAAAAAowC0AAAARAAAA",
               "Icon": "ae27a6b0-e345-4288-96df-5eaf394ee369.000738|",
               "WhenOpened": "2024-04-23T13:52:36.544Z",
               "EditorCaption": ""

@@ -7,7 +7,6 @@ namespace Rimedieval
 {
     public static class DefCleaner
     {
-
         public static readonly Dictionary<ThingDef, TechLevel> thingsByTechLevels = new Dictionary<ThingDef, TechLevel>
         {
             {ThingDefOf.Chemfuel, TechLevel.Industrial },
@@ -167,6 +166,11 @@ namespace Rimedieval
                 }
             }
 
+            //if (defName == "DankPyon_QuestFinder")
+            //{
+            //    return true;
+            //}
+
             if (defName.Contains("Psytrainer") || defName.Contains("Neurotrainer"))
             {
                 return true;
@@ -245,7 +249,8 @@ namespace Rimedieval
             }
             DefDatabase<GenStepDef>.defsList.RemoveAll(x => genStepsToRemove.Contains(x.defName));
             DefDatabase<IncidentDef>.defsList.RemoveAll(x => incidentsToRemove.Contains(x.defName));
-            DefDatabase<QuestScriptDef>.defsList.RemoveAll(x => questsToRemove.Contains(x.defName));
+            DefDatabase<QuestScriptDef>.defsList.RemoveAll(x => questsToRemove.Contains(x.defName) 
+            && x.modExtensions?.FirstOrDefault(y => y.GetType().Name.Contains("QuestInformation")) is null);
             DefDatabase<IdeoPresetDef>.defsList.RemoveAll(x => ideoPresetsToRemove.Contains(x.defName));
 
             foreach (var def in DefDatabase<ThingDef>.AllDefsListForReading)
