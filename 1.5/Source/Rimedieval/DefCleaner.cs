@@ -249,6 +249,11 @@ namespace Rimedieval
             }
             DefDatabase<GenStepDef>.defsList.RemoveAll(x => genStepsToRemove.Contains(x.defName));
             DefDatabase<IncidentDef>.defsList.RemoveAll(x => incidentsToRemove.Contains(x.defName));
+            if (ModsConfig.IsActive("BotchJob.medievalfantasythemedrelicquests"))
+            {
+                var questsToAllow = new List<string> { "AncientComplex_Standard", "Hack_Spacedrone", "OpportunitySite_AncientComplex", "AncientComplex_Mission", "Hack_WorshippedTerminal" };
+                questsToRemove.RemoveAll(x => questsToAllow.Contains(x));
+            }
             DefDatabase<QuestScriptDef>.defsList.RemoveAll(x => questsToRemove.Contains(x.defName) 
             && x.modExtensions?.FirstOrDefault(y => y.GetType().Name.Contains("QuestInformation")) is null);
             DefDatabase<IdeoPresetDef>.defsList.RemoveAll(x => ideoPresetsToRemove.Contains(x.defName));
