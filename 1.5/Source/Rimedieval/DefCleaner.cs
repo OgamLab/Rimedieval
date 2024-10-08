@@ -100,8 +100,19 @@ namespace Rimedieval
             //Log.Message(thingDef + " - FINAL: " + techLevelSources.Max());
             return techLevelSources.Max();
         }
-        public static bool ContainsTechProjectAsPrerequisite(this ResearchProjectDef def, ResearchProjectDef techProject)
+        public static bool ContainsTechProjectAsPrerequisite(this ResearchProjectDef def, ResearchProjectDef techProject, HashSet<ResearchProjectDef> visitedProjects = null)
         {
+            if (visitedProjects == null)
+            {
+                visitedProjects = new HashSet<ResearchProjectDef>();
+            }
+
+            if (visitedProjects.Contains(def))
+            {
+                return false;
+            }
+            visitedProjects.Add(def);
+
             if (def.prerequisites != null)
             {
                 for (int i = 0; i < def.prerequisites.Count; i++)
@@ -110,7 +121,7 @@ namespace Rimedieval
                     {
                         return true;
                     }
-                    else if (ContainsTechProjectAsPrerequisite(def.prerequisites[i], techProject))
+                    else if (ContainsTechProjectAsPrerequisite(def.prerequisites[i], techProject, visitedProjects))
                     {
                         return true;
                     }
@@ -124,14 +135,16 @@ namespace Rimedieval
                     {
                         return true;
                     }
-                    else if (ContainsTechProjectAsPrerequisite(def.hiddenPrerequisites[j], techProject))
+                    else if (ContainsTechProjectAsPrerequisite(def.hiddenPrerequisites[j], techProject, visitedProjects))
                     {
                         return true;
                     }
                 }
             }
+
             return false;
         }
+
         public static IEnumerable<Thing> GetAllowedThings(this IEnumerable<Thing> things)
         {
             foreach (var thing in things)
@@ -257,7 +270,7 @@ namespace Rimedieval
             DefDatabase<QuestScriptDef>.defsList.RemoveAll(x => questsToRemove.Contains(x.defName) 
             && x.modExtensions?.FirstOrDefault(y => y.GetType().Name.Contains("QuestInformation")) is null);
             DefDatabase<IdeoPresetDef>.defsList.RemoveAll(x => ideoPresetsToRemove.Contains(x.defName));
-
+            
             foreach (var def in DefDatabase<ThingDef>.AllDefsListForReading)
             {
                 if (def.designationCategory != null && def.IsAllowedForRimedieval() is false)

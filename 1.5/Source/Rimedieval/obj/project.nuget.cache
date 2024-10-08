@@ -1,11 +1,11 @@
 {
   "version": 2,
-  "dgSpecHash": "RwyYhYPGm1BEK2U/unk/BU06pAbtvqxnz2OdE6iqdy4EiS2nlEV0J+Oy6ER/c6WAv9yaaCoyCRkMld0kkMIBBA==",
+  "dgSpecHash": "/kfnBtFgSPI=",
   "success": true,
   "projectFilePath": "C:\\Program Files (x86)\\Steam\\steamapps\\common\\RimWorld\\Mods\\Rimedieval\\1.5\\Source\\Rimedieval\\Rimedieval.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\Vova\\.nuget\\packages\\krafs.publicizer\\2.2.1\\krafs.publicizer.2.2.1.nupkg.sha512",
-    "C:\\Users\\Vova\\.nuget\\packages\\krafs.rimworld.ref\\1.5.4104\\krafs.rimworld.ref.1.5.4104.nupkg.sha512",
+    "C:\\Users\\Vova\\.nuget\\packages\\krafs.rimworld.ref\\1.5.4241-beta\\krafs.rimworld.ref.1.5.4241-beta.nupkg.sha512",
     "C:\\Users\\Vova\\.nuget\\packages\\lib.harmony\\2.3.3\\lib.harmony.2.3.3.nupkg.sha512",
     "C:\\Users\\Vova\\.nuget\\packages\\system.linq\\4.3.0\\system.linq.4.3.0.nupkg.sha512"
   ],

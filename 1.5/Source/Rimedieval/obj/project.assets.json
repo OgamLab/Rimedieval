@@ -16,7 +16,7 @@
           "build/Krafs.Publicizer.targets": {}
         }
       },
-      "Krafs.Rimworld.Ref/1.5.4104": {
+      "Krafs.Rimworld.Ref/1.5.4241-beta": {
         "type": "package",
         "compile": {
           "ref/net472/Assembly-CSharp-firstpass.dll": {},
@@ -110,12 +110,12 @@
         "type": "package",
         "compile": {
           "lib/net472/0Harmony.dll": {
-            "related": ".pdb;.xml"
+            "related": ".pdb"
           }
         },
         "runtime": {
           "lib/net472/0Harmony.dll": {
-            "related": ".pdb;.xml"
+            "related": ".pdb"
           }
         }
       },
@@ -148,7 +148,7 @@
           "build/Krafs.Publicizer.targets": {}
         }
       },
-      "Krafs.Rimworld.Ref/1.5.4104": {
+      "Krafs.Rimworld.Ref/1.5.4241-beta": {
         "type": "package",
         "compile": {
           "ref/net472/Assembly-CSharp-firstpass.dll": {},
@@ -242,12 +242,12 @@
         "type": "package",
         "compile": {
           "lib/net472/0Harmony.dll": {
-            "related": ".pdb;.xml"
+            "related": ".pdb"
           }
         },
         "runtime": {
           "lib/net472/0Harmony.dll": {
-            "related": ".pdb;.xml"
+            "related": ".pdb"
           }
         }
       },
@@ -280,7 +280,7 @@
           "build/Krafs.Publicizer.targets": {}
         }
       },
-      "Krafs.Rimworld.Ref/1.5.4104": {
+      "Krafs.Rimworld.Ref/1.5.4241-beta": {
         "type": "package",
         "compile": {
           "ref/net472/Assembly-CSharp-firstpass.dll": {},
@@ -374,12 +374,12 @@
         "type": "package",
         "compile": {
           "lib/net472/0Harmony.dll": {
-            "related": ".pdb;.xml"
+            "related": ".pdb"
           }
         },
         "runtime": {
           "lib/net472/0Harmony.dll": {
-            "related": ".pdb;.xml"
+            "related": ".pdb"
           }
         }
       },
@@ -412,7 +412,7 @@
           "build/Krafs.Publicizer.targets": {}
         }
       },
-      "Krafs.Rimworld.Ref/1.5.4104": {
+      "Krafs.Rimworld.Ref/1.5.4241-beta": {
         "type": "package",
         "compile": {
           "ref/net472/Assembly-CSharp-firstpass.dll": {},
@@ -506,12 +506,12 @@
         "type": "package",
         "compile": {
           "lib/net472/0Harmony.dll": {
-            "related": ".pdb;.xml"
+            "related": ".pdb"
           }
         },
         "runtime": {
           "lib/net472/0Harmony.dll": {
-            "related": ".pdb;.xml"
+            "related": ".pdb"
           }
         }
       },
@@ -544,7 +544,7 @@
           "build/Krafs.Publicizer.targets": {}
         }
       },
-      "Krafs.Rimworld.Ref/1.5.4104": {
+      "Krafs.Rimworld.Ref/1.5.4241-beta": {
         "type": "package",
         "compile": {
           "ref/net472/Assembly-CSharp-firstpass.dll": {},
@@ -638,12 +638,12 @@
         "type": "package",
         "compile": {
           "lib/net472/0Harmony.dll": {
-            "related": ".pdb;.xml"
+            "related": ".pdb"
           }
         },
         "runtime": {
           "lib/net472/0Harmony.dll": {
-            "related": ".pdb;.xml"
+            "related": ".pdb"
           }
         }
       },
@@ -681,17 +681,17 @@
         "krafs.publicizer.nuspec"
       ]
     },
-    "Krafs.Rimworld.Ref/1.5.4104": {
-      "sha512": "/EQrSATOpDbBNtYDQJIT27FMNTuzL6fVuvyCxoqHWWdoINjljPna8s2/9wqD5AwDGiG9A8QN53zXnWTqUdy0Cw==",
+    "Krafs.Rimworld.Ref/1.5.4241-beta": {
+      "sha512": "HiplEPCr+76wjH4IUkuUAgXmAggzqWfmpMvCNR5R3O9SpmJWVgra051vvTbT2boNnNUZz+2CdEnXIQI5E0RjWw==",
       "type": "package",
-      "path": "krafs.rimworld.ref/1.5.4104",
+      "path": "krafs.rimworld.ref/1.5.4241-beta",
       "files": [
         ".nupkg.metadata",
         ".signature.p7s",
         "LICENSE.md",
         "README.md",
         "icon.png",
-        "krafs.rimworld.ref.1.5.4104.nupkg.sha512",
+        "krafs.rimworld.ref.1.5.4241-beta.nupkg.sha512",
         "krafs.rimworld.ref.nuspec",
         "ref/net472/Assembly-CSharp-firstpass.dll",
         "ref/net472/Assembly-CSharp.dll",
@@ -794,34 +794,24 @@
         "lib.harmony.nuspec",
         "lib/net35/0Harmony.dll",
         "lib/net35/0Harmony.pdb",
-        "lib/net35/0Harmony.xml",
         "lib/net452/0Harmony.dll",
         "lib/net452/0Harmony.pdb",
-        "lib/net452/0Harmony.xml",
         "lib/net472/0Harmony.dll",
         "lib/net472/0Harmony.pdb",
-        "lib/net472/0Harmony.xml",
         "lib/net48/0Harmony.dll",
         "lib/net48/0Harmony.pdb",
-        "lib/net48/0Harmony.xml",
         "lib/net5.0/0Harmony.dll",
         "lib/net5.0/0Harmony.pdb",
-        "lib/net5.0/0Harmony.xml",
         "lib/net6.0/0Harmony.dll",
         "lib/net6.0/0Harmony.pdb",
-        "lib/net6.0/0Harmony.xml",
         "lib/net7.0/0Harmony.dll",
         "lib/net7.0/0Harmony.pdb",
-        "lib/net7.0/0Harmony.xml",
         "lib/net8.0/0Harmony.dll",
         "lib/net8.0/0Harmony.pdb",
-        "lib/net8.0/0Harmony.xml",
         "lib/netcoreapp3.0/0Harmony.dll",
         "lib/netcoreapp3.0/0Harmony.pdb",
-        "lib/netcoreapp3.0/0Harmony.xml",
         "lib/netcoreapp3.1/0Harmony.dll",
         "lib/netcoreapp3.1/0Harmony.pdb",
-        "lib/netcoreapp3.1/0Harmony.xml",
         "lib/netstandard2.0/_._"
       ]
     },
@@ -901,7 +891,7 @@
   "projectFileDependencyGroups": {
     ".NETFramework,Version=v4.7.2": [
       "Krafs.Publicizer >= 2.2.1",
-      "Krafs.Rimworld.Ref >= 1.5.4104",
+      "Krafs.Rimworld.Ref >= 1.5.4241-beta",
       "Lib.Harmony >= 2.3.3",
       "System.Linq >= 4.3.0"
     ]
@@ -952,7 +942,7 @@
           },
           "Krafs.Rimworld.Ref": {
             "target": "Package",
-            "version": "[1.5.4104, )"
+            "version": "[1.5.4241-beta, )"
           },
           "Lib.Harmony": {
             "target": "Package",
