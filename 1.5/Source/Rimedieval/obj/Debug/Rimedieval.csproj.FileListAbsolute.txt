@@ -1,5 +1,0 @@
-C:\Program Files (x86)\Steam\steamapps\common\RimWorld\Mods\Rimedieval\1.5\Assemblies\Rimedieval.dll
-C:\Program Files (x86)\Steam\steamapps\common\RimWorld\Mods\Rimedieval\1.5\Source\Rimedieval\obj\Debug\Rimedieval.csproj.AssemblyReference.cache
-C:\Program Files (x86)\Steam\steamapps\common\RimWorld\Mods\Rimedieval\1.5\Source\Rimedieval\obj\Debug\Rimedieval.csproj.CoreCompileInputs.cache
-C:\Program Files (x86)\Steam\steamapps\common\RimWorld\Mods\Rimedieval\1.5\Source\Rimedieval\obj\Debug\Rimedieval.csproj.Up2Date
-C:\Program Files (x86)\Steam\steamapps\common\RimWorld\Mods\Rimedieval\1.5\Source\Rimedieval\obj\Debug\Rimedieval.dll

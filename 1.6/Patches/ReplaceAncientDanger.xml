@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<Patch>
+
+	<Operation Class="PatchOperationSequence">
+		<operations>
+
+			<li Class="PatchOperationReplace">
+				<xpath>/Defs/ThingDef[defName="AncientCryptosleepCasket"]/graphicData</xpath>
+				<value>
+					<graphicData>
+						<texPath>Things/Building/AncientCryptoCasketReplace/AncientCryptoCasketReplace</texPath>
+						<graphicClass>Graphic_Multi</graphicClass>
+						<drawSize>(2,5)</drawSize>
+						<drawOffset>(0.25,0,0)</drawOffset>
+						<shadowData>
+							<volume>(0.83, 0.3, 1.7)</volume>
+						</shadowData>
+					</graphicData>
+				</value>
+			</li>
+			<li Class="PatchOperationRemove">
+				<xpath>/Defs/ThingDef[defName="AncientCryptosleepCasket"]/comps/li[@Class="CompProperties_EmptyStateGraphic"]</xpath>
+			</li>
+
+			<li Class="PatchOperationAdd">
+				<xpath>/Defs/ThingDef[defName="AncientCryptosleepCasket"]/comps</xpath>
+				<value>
+					<li Class="CompProperties_EmptyStateGraphic">
+						<compClass>Rimedieval.CompEmptyStateGraphic</compClass>
+						<graphicData>
+							<texPath>Things/Building/AncientCryptoCasketReplace/AncientCryptoCasketReplace_Open</texPath>
+							<graphicClass>Graphic_Multi</graphicClass>
+							<drawSize>(2.1,5)</drawSize>
+							<drawOffset>(0, 0, 0.25)</drawOffset>
+						</graphicData>
+					</li>
+				</value>
+			</li>
+			<li Class="PatchOperationRemove">
+				<xpath>/Defs/ThingDef[defName="AncientCryptosleepCasket"]/costList</xpath>
+			</li>
+			<li Class="PatchOperationRemove">
+				<xpath>/Defs/ThingDef[defName="AncientCryptosleepCasket"]/killedLeavings</xpath>
+			</li>
+			<li Class="PatchOperationAdd">
+				<xpath>/Defs/ThingDef[defName="AncientCryptosleepCasket"]</xpath>
+				<value>
+					<stuffCategories>
+						<li>Stony</li>
+					</stuffCategories>
+					<costStuffCount>100</costStuffCount>
+				</value>
+			</li>
+		</operations>
+	</Operation>
+
+</Patch>
